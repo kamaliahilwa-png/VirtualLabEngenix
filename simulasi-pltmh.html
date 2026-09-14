@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENGENIX | Virtual Lab PLTMH Pro Dynamic Turbine</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Library -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --panel-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --primary: #0284c7;
+            --primary-hover: #0369a1;
+            --accent: #10b981;
+            --border-color: #e2e8f0;
+            --card-bg: #f8fafc;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .dark-mode {
+            --bg-color: #0f172a;
+            --panel-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #38bdf8;
+            --primary-hover: #0284c7;
+            --accent: #34d399;
+            --border-color: #334155;
+            --card-bg: #0f172a;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--panel-bg);
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-controls { display: flex; gap: 10px; }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+        }
+
+        .btn:hover { background: var(--primary-hover); }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); }
+        .btn-outline:hover { background: var(--card-bg); }
+        .btn-danger { background: #ef4444; }
+        .btn-danger:hover { background: #dc2626; }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-layout { grid-template-columns: 1fr; }
+        }
+
+        .sim-wrapper {
+            background: var(--panel-bg);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 520px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        canvas { width: 100%; height: 100%; display: block; cursor: pointer; }
+
+        .canvas-overlay {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(15, 23, 42, 0.8);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .controls-panel {
+            background: var(--panel-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .control-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .control-group input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+        }
+
+        .control-group select {
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            outline: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .dash-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .dash-card span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .dash-card h4 {
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin-top: 3px;
+            font-weight: 600;
+        }
+
+        .formula-card {
+            background: var(--card-bg);
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .formula-card span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .formula-details {
+            margin-top: 10px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .formula-details ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 5px;
+        }
+
+        .formula-details li {
+            margin-bottom: 2px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--panel-bg);
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px; right: 15px;
+            border: none; background: transparent;
+            font-size: 1.2rem; cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .audio-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    
+    <!-- HEADER -->
+    <header>
+        <h1>💧 ENGENIX - Virtual Lab PLTMH Pro</h1>
+        <div class="top-controls">
+            <button class="btn btn-outline" id="btnAudio" onclick="toggleAudio()">🔊 Sound SFX ON</button>
+            <button class="btn btn-outline" id="btnTheme" onclick="toggleTheme()">🌙 Mode Malam</button>
+        </div>
+    </header>
+
+    <!-- MAIN LAYOUT -->
+    <div class="main-layout">
+        
+        <!-- CANVAS & DASHBOARD -->
+        <div class="sim-wrapper">
+            <div class="canvas-container" id="canvasBox">
+                <canvas id="pltmhCanvas"></canvas>
+                <div class="canvas-overlay">
+                    👇 Klik elemen animasi (Sungai, Pipa, Turbin, Desa) untuk mendengar penjelasannya!
+                </div>
+            </div>
+
+            <!-- BUTTON CONTROLS -->
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="btn" id="btnStart" onclick="startSim()">▶ Jalankan</button>
+                <button class="btn btn-outline" onclick="pauseSim()">⏸ Pause</button>
+                <button class="btn btn-danger" onclick="resetSim()">🔄 Reset</button>
+            </div>
+
+            <!-- DASHBOARD -->
+            <div class="dashboard-grid">
+                <div class="dash-card">
+                    <span>Debit Air (Q)</span>
+                    <h4 id="dashQ">50 L/s</h4>
+                </div>
+                <div class="dash-card">
+                    <span>Head (H)</span>
+                    <h4 id="dashH">20 m</h4>
+                </div>
+                <div class="dash-card">
+                    <span>Efisiensi Turbin</span>
+                    <h4 id="dashEta">82 %</h4>
+                </div>
+                <div class="dash-card">
+                    <span>RPM Turbin</span>
+                    <h4 id="dashRpmT">450 RPM</h4>
+                </div>
+                <div class="dash-card">
+                    <span>Daya Hidrolik (P<sub>h</sub>)</span>
+                    <h4 id="dashPhid">9.81 kW</h4>
+                </div>
+                <div class="dash-card">
+                    <span>Daya Listrik (P<sub>e</sub>)</span>
+                    <h4 id="dashPelec">8.04 kW</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTROLS PANEL -->
+        <div class="controls-panel">
+            <h3>🎛️ Parameter Input</h3>
+            
+            <div class="control-group">
+                <label>Jenis Turbin:</label>
+                <select id="selectTurbine" onchange="updateSim()">
+                    <option value="Pelton">Turbin Pelton (Impuls - Head Tinggi)</option>
+                    <option value="Crossflow" selected>Turbin Crossflow / Banki (Sedang)</option>
+                    <option value="Francis">Turbin Francis (Reaksi - Sedang/Tinggi)</option>
+                    <option value="Kaplan">Turbin Kaplan (Propeller - Head Rendah)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>Debit Air (Q): <span id="lblQ">50</span> L/s</label>
+                <input type="range" id="inputQ" min="10" max="100" value="50" oninput="updateSim()">
+            </div>
+
+            <div class="control-group">
+                <label>Head / Beda Tinggi (H): <span id="lblH">20</span> m</label>
+                <input type="range" id="inputH" min="5" max="50" value="20" oninput="updateSim()">
+            </div>
+
+            <!-- FORMULA BOX MATHJAX -->
+            <div class="formula-card">
+                <span>📐 Persamaan Fisika PLTMH:</span>
+                <p style="margin-top: 10px; text-align: center; font-size: 1.1rem;">
+                    $$P_e = \rho \cdot g \cdot Q \cdot H \cdot \eta$$
+                </p>
+                <div class="formula-details">
+                    <strong>Keterangan Simbol & Satuan:</strong>
+                    <ul>
+                        <li><b>\(P_e\)</b> = Daya Listrik Output (Watt / kW)</li>
+                        <li><b>\(\rho\)</b> = Massa Jenis Air (1000 kg/m³)</li>
+                        <li><b>\(g\)</b> = Percepatan Gravitasi (9.81 m/s²)</li>
+                        <li><b>\(Q\)</b> = Debit Air (m³/s)</li>
+                        <li><b>\(H\)</b> = Head / Beda Tinggi Efektif (m)</li>
+                        <li><b>\(\eta\)</b> = Efisiensi Total System (%)</li>
+                    </ul>
+                </div>
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+                <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;" id="infoTurbineText">
+                    💡 <b>Crossflow</b>: Air melintasi bilah runner berbentuk silinder dua kali. Konstruksi simpel & efisiensi stabil.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MODAL INFO WITH VOICE SPEECH -->
+<div class="modal-overlay" id="infoModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">✖</button>
+        <h3 id="modalTitle" style="color:var(--primary); font-size: 1.1rem;">-</h3>
+        <p id="modalDesc" style="font-size: 0.88rem; line-height: 1.5; color: var(--text-muted); margin-top: 10px;"></p>
+        
+        <div class="audio-status">
+            🗣️ <span id="speechStatus">Membacakan penjelasan...</span>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ==========================================
+   STATE & VARIABLES
+   ========================================== */
+let isRunning = true;
+let isAudioOn = true;
+let isDarkMode = false;
+
+let paramQ = 50; 
+let paramH = 20; 
+let selectedTurbine = "Crossflow";
+let calculatedEta = 80;
+
+let density = 1000; 
+let g = 9.81; 
+let pHydraulic = 0; 
+let pElectric = 0; 
+let pressureBar = 0; 
+let rpmTurbine = 0;
+
+let rotationAngle = 0;
+
+// Coordinate anchor for Generator terminal box output wire
+let genTerminalBoxPos = { x: 375, y: 312 };
+
+// Water Particles inside pipe
+let pipeParticles = [];
+for(let i=0; i<35; i++) {
+    pipeParticles.push({
+        progress: Math.random(),
+        speedOffset: 0.8 + Math.random()*0.4,
+        size: 2.5 + Math.random()*3
+    });
+}
+
+// Electric Signal Pulses
+let electricPulses = [
+    { pos: 0.0, speed: 0.012 },
+    { pos: 0.33, speed: 0.012 },
+    { pos: 0.66, speed: 0.012 }
+];
+
+// Clouds
+let clouds = [
+    {x: 20, y: 35, speed: 0.22, size: 22},
+    {x: 220, y: 55, speed: 0.15, size: 28},
+    {x: 480, y: 35, speed: 0.30, size: 20},
+    {x: 720, y: 65, speed: 0.18, size: 32},
+    {x: 950, y: 40, speed: 0.25, size: 24}
+];
+
+// Birds Flying in Sky
+let birds = [
+    {x: 50, y: 80, speed: 1.2, scale: 0.8, flapOffset: 0},
+    {x: 90, y: 95, speed: 1.1, scale: 0.6, flapOffset: 1.2},
+    {x: 130, y: 75, speed: 1.25, scale: 0.7, flapOffset: 2.5},
+    {x: 400, y: 110, speed: 0.9, scale: 0.5, flapOffset: 0.8},
+    {x: 440, y: 125, speed: 0.85, scale: 0.45, flapOffset: 1.8}
+];
+
+// Grass Seeds Data
+let grassSeeds = [];
+for(let i=0; i<220; i++) {
+    grassSeeds.push({
+        xRatio: Math.random(),
+        height: 6 + Math.random() * 6,
+        tilt: (Math.random() - 0.5) * 4,
+        blades: Math.floor(2 + Math.random() * 3)
+    });
+}
+
+let stars = [];
+for(let i=0; i<45; i++) {
+    stars.push({x: Math.random()*1000, y: Math.random()*180, alpha: Math.random()});
+}
+
+const canvas = document.getElementById('pltmhCanvas');
+const ctx = canvas.getContext('2d');
+
+/* Audio Synthesizer (Ambient Noise) */
+let audioCtx, noiseNode, gainNode;
+
+function initAudio() {
+    if (audioCtx) return;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let bufferSize = audioCtx.sampleRate * 2;
+    let buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    let output = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+    }
+    noiseNode = audioCtx.createBufferSource();
+    noiseNode.buffer = buffer;
+    noiseNode.loop = true;
+    gainNode = audioCtx.createGain();
+    gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime);
+    noiseNode.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    noiseNode.start();
+}
+
+function updateAudioVolume() {
+    if (!audioCtx || !gainNode) return;
+    if (isAudioOn && isRunning) {
+        let vol = (paramQ / 100) * 0.04;
+        gainNode.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.1);
+    } else {
+        gainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
+    }
+}
+
+/* ==========================================
+   VOICE EXPLANATION (SPEECH SYNTHESIS)
+   ========================================== */
+function speakText(text) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); 
+
+        let cleanText = text.replace(/[*_#`$]/g, ''); 
+        let utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = 'id-ID'; 
+        utterance.rate = 0.95; 
+        utterance.pitch = 1.0;
+
+        let voices = window.speechSynthesis.getVoices();
+        let idVoice = voices.find(v => v.lang.includes('id') || v.lang.includes('ID'));
+        if (idVoice) utterance.voice = idVoice;
+
+        utterance.onstart = () => {
+            document.getElementById('speechStatus').innerText = "Membacakan penjelasan...";
+        };
+        
+        utterance.onend = () => {
+            document.getElementById('speechStatus').innerText = "Selesai membacakan.";
+        };
+
+        utterance.onerror = () => {
+            document.getElementById('speechStatus').innerText = "Gagal memutar suara.";
+        };
+
+        window.speechSynthesis.speak(utterance);
+    } else {
+        document.getElementById('speechStatus').innerText = "Browser tidak mendukung fitur suara.";
+    }
+}
+
+/* ==========================================
+   INITIALIZATION
+   ========================================== */
+window.onload = function() {
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.getVoices();
+    }
+
+    updateSim();
+    animate();
+    canvas.addEventListener('click', handleCanvasClick);
+};
+
+function resizeCanvas() {
+    const box = document.getElementById('canvasBox');
+    canvas.width = box.clientWidth;
+    canvas.height = box.clientHeight;
+}
+
+/* ==========================================
+   TURBINE PHYSICS & EFISIENSI REALISTIS
+   ========================================== */
+function calculateTurbineEfficiency(type, H, Q) {
+    let eta = 80;
+    if (type === "Pelton") {
+        if (H >= 25) eta = 88 - (50 - H) * 0.1;
+        else eta = 60 + (H / 25) * 20;
+    } else if (type === "Crossflow") {
+        if (H >= 10 && H <= 35) eta = 82;
+        else eta = 70;
+    } else if (type === "Francis") {
+        if (H >= 15) eta = 86;
+        else eta = 65;
+    } else if (type === "Kaplan") {
+        if (H <= 15) eta = 89;
+        else eta = 80 - (H - 15) * 0.8;
+    }
+    return Math.max(40, Math.min(92, Math.round(eta)));
+}
+
+function calculateRPM(type, H) {
+    if (type === "Pelton") return Math.round(650 * Math.sqrt(H / 20));
+    if (type === "Crossflow") return Math.round(420 * Math.sqrt(H / 20));
+    if (type === "Francis") return Math.round(550 * Math.sqrt(H / 20));
+    if (type === "Kaplan") return Math.round(320 * Math.sqrt(H / 20));
+    return 450;
+}
+
+function updateSim() {
+    paramQ = parseFloat(document.getElementById('inputQ').value);
+    paramH = parseFloat(document.getElementById('inputH').value);
+    selectedTurbine = document.getElementById('selectTurbine').value;
+
+    calculatedEta = calculateTurbineEfficiency(selectedTurbine, paramH, paramQ);
+    rpmTurbine = calculateRPM(selectedTurbine, paramH);
+
+    document.getElementById('lblQ').innerText = paramQ;
+    document.getElementById('lblH').innerText = paramH;
+
+    let qM3 = paramQ / 1000;
+    pHydraulic = (density * g * qM3 * paramH) / 1000;
+    pElectric = pHydraulic * (calculatedEta / 100);
+    pressureBar = paramH * 0.0981;
+
+    document.getElementById('dashQ').innerText = paramQ + " L/s";
+    document.getElementById('dashH').innerText = paramH + " m";
+    document.getElementById('dashEta').innerText = calculatedEta + " %";
+    document.getElementById('dashRpmT').innerText = isRunning ? rpmTurbine + " RPM" : "0 RPM";
+    document.getElementById('dashPhid').innerText = pHydraulic.toFixed(2) + " kW";
+    document.getElementById('dashPelec').innerText = pElectric.toFixed(2) + " kW";
+
+    let infoText = "";
+    if (selectedTurbine === "Pelton") infoText = "💡 <b>Pelton</b>: Karakteristik penyemprotan Jet Air pada Mangkok (<i>Buckets</i>). Sangat cocok untuk Head Tinggi.";
+    else if (selectedTurbine === "Crossflow") infoText = "💡 <b>Crossflow</b>: Air melintasi bilah runner berbentuk silinder dua kali. Konstruksi simpel & efisiensi stabil.";
+    else if (selectedTurbine === "Francis") infoText = "💡 <b>Francis</b>: Turbin reaksi aliran gabungan (<i>Radial-Axial</i>). Sangat umum di pembangkit kapasitas sedang-besar.";
+    else if (selectedTurbine === "Kaplan") infoText = "💡 <b>Kaplan</b>: Turbin baling-baling (<i>Propeller</i>). Mengandalkan debit air besar pada Head rendah.";
+    
+    document.getElementById('infoTurbineText').innerHTML = infoText;
+
+    updateAudioVolume();
+}
+
+function getHillTopY() {
+    let hVal = paramH; 
+    let minY = 240;
+    let maxY = 90;
+    return minY - ((hVal - 5) / (50 - 5)) * (minY - maxY);
+}
+
+function getTerrainY(x, topY) {
+    let groundY = 410;
+    if (x <= 180) {
+        return topY;
+    } else if (x <= 360) {
+        let t = (x - 180) / (360 - 180);
+        return (1-t)*(1-t)*topY + 2*(1-t)*t*(topY + 25) + t*t*groundY;
+    } else {
+        return groundY;
+    }
+}
+
+/* ==========================================
+   ANIMATION & RENDERING
+   ========================================== */
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (isRunning) {
+        rotationAngle += (rpmTurbine / 600) * 0.15;
+    }
+
+    let hillTopY = getHillTopY();
+
+    drawSkyCloudsAndBirds();
+    drawFullGreenHillLandscape(hillTopY);
+    drawWideUpperRiver(hillTopY);
+    drawGrassAndDetails(hillTopY);
+    drawTreesOnHillSurface(hillTopY);
+    draw3DPenstockAndFlow(hillTopY);
+    drawPowerHouseAndTurbine();
+    drawPowerGridAndPulses(hillTopY);
+    drawAestheticVillage();
+
+    requestAnimationFrame(animate);
+}
+
+/* 🌤️ SKY & ENVIRONMENT */
+function drawSkyCloudsAndBirds() {
+    let w = canvas.width;
+    let h = canvas.height;
+
+    let skyGrad = ctx.createLinearGradient(0, 0, 0, h * 0.75);
+    if (!isDarkMode) {
+        skyGrad.addColorStop(0, '#38bdf8');
+        skyGrad.addColorStop(0.5, '#7dd3fc');
+        skyGrad.addColorStop(1, '#e0f2fe');
+    } else {
+        skyGrad.addColorStop(0, '#0369a1');
+        skyGrad.addColorStop(0.7, '#0f172a');
+        skyGrad.addColorStop(1, '#1e293b');
+    }
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    if (!isDarkMode) {
+        let sunX = w - 90, sunY = 70;
+        let sunGlow = ctx.createRadialGradient(sunX, sunY, 10, sunX, sunY, 55);
+        sunGlow.addColorStop(0, 'rgba(254, 240, 138, 1)');
+        sunGlow.addColorStop(0.5, 'rgba(253, 224, 71, 0.4)');
+        sunGlow.addColorStop(1, 'rgba(253, 224, 71, 0)');
+        ctx.fillStyle = sunGlow;
+        ctx.beginPath(); ctx.arc(sunX, sunY, 55, 0, Math.PI*2); ctx.fill();
+
+        ctx.fillStyle = '#fde047';
+        ctx.beginPath(); ctx.arc(sunX, sunY, 25, 0, Math.PI*2); ctx.fill();
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.88)';
+        clouds.forEach(c => {
+            if (isRunning) c.x += c.speed;
+            if (c.x > w + 80) c.x = -80;
+
+            ctx.beginPath();
+            ctx.arc(c.x, c.y, c.size, 0, Math.PI * 2);
+            ctx.arc(c.x + c.size*0.7, c.y - c.size*0.4, c.size * 0.75, 0, Math.PI * 2);
+            ctx.arc(c.x + c.size*1.4, c.y, c.size * 0.85, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 1.8;
+        let time = Date.now() * 0.008;
+
+        birds.forEach(b => {
+            if (isRunning) b.x += b.speed;
+            if (b.x > w + 50) b.x = -40;
+
+            let wingY = Math.sin(time + b.flapOffset) * 7 * b.scale;
+
+            ctx.save();
+            ctx.translate(b.x, b.y);
+            ctx.scale(b.scale, b.scale);
+
+            ctx.beginPath();
+            ctx.moveTo(-12, -wingY);
+            ctx.quadraticCurveTo(-6, -wingY - 4, 0, 0);
+            ctx.quadraticCurveTo(6, -wingY - 4, 12, -wingY);
+            ctx.stroke();
+
+            ctx.restore();
+        });
+
+    } else {
+        ctx.fillStyle = '#fef08a';
+        ctx.beginPath(); ctx.arc(w - 90, 70, 24, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath(); ctx.arc(w - 82, 65, 22, 0, Math.PI * 2); ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        stars.forEach(s => {
+            ctx.globalAlpha = 0.2 + Math.sin(Date.now()*0.003 + s.x) * 0.6;
+            ctx.fillRect(s.x, s.y, 2, 2);
+        });
+        ctx.globalAlpha = 1.0;
+    }
+}
+
+/* ⛰️ BUKIT HIJAU */
+function drawFullGreenHillLandscape(topY) {
+    let w = canvas.width;
+    let h = canvas.height;
+    let groundY = 410;
+
+    let backHillGrad = ctx.createLinearGradient(0, topY, 0, h);
+    backHillGrad.addColorStop(0, isDarkMode ? '#1e293b' : '#86efac');
+    backHillGrad.addColorStop(1, isDarkMode ? '#0f172a' : '#22c55e');
+    
+    ctx.fillStyle = backHillGrad;
+    ctx.beginPath();
+    ctx.moveTo(0, h);
+    ctx.lineTo(0, topY - 30);
+    ctx.bezierCurveTo(w * 0.25, topY - 20, w * 0.5, groundY - 60, w * 0.75, groundY - 15);
+    ctx.lineTo(w, groundY);
+    ctx.lineTo(w, h);
+    ctx.fill();
+
+    let mainHillGrad = ctx.createLinearGradient(0, topY, 0, h);
+    if (!isDarkMode) {
+        mainHillGrad.addColorStop(0, '#4ade80');
+        mainHillGrad.addColorStop(0.3, '#22c55e');
+        mainHillGrad.addColorStop(0.7, '#16a34a');
+        mainHillGrad.addColorStop(1, '#15803d');
+    } else {
+        mainHillGrad.addColorStop(0, '#16a34a');
+        mainHillGrad.addColorStop(0.6, '#0f5123');
+        mainHillGrad.addColorStop(1, '#072410');
+    }
+
+    ctx.fillStyle = mainHillGrad;
+    ctx.beginPath();
+    ctx.moveTo(0, h);
+    ctx.lineTo(0, topY);
+    ctx.lineTo(180, topY);
+    ctx.quadraticCurveTo(270, topY + 25, 360, groundY);
+    ctx.lineTo(w, groundY);
+    ctx.lineTo(w, h);
+    ctx.fill();
+}
+
+/* 🌊 SUNGAI ATAS */
+function drawWideUpperRiver(topY) {
+    let riverWidth = 180;
+
+    ctx.fillStyle = '#475569';
+    ctx.fillRect(0, topY - 22, riverWidth, 26);
+
+    let waterGrad = ctx.createLinearGradient(0, topY - 20, 0, topY);
+    waterGrad.addColorStop(0, '#0284c7');
+    waterGrad.addColorStop(1, '#0369a1');
+    ctx.fillStyle = waterGrad;
+    ctx.fillRect(0, topY - 20, riverWidth, 20);
+
+    ctx.fillStyle = '#7dd3fc';
+    ctx.beginPath();
+    let time = Date.now() * 0.006;
+    ctx.moveTo(0, topY - 20);
+    for(let x = 0; x <= riverWidth; x += 10) {
+        let y = (topY - 18) + Math.sin(x * 0.08 + time) * 3;
+        ctx.lineTo(x, y);
+    }
+    ctx.lineTo(riverWidth, topY);
+    ctx.lineTo(0, topY);
+    ctx.fill();
+
+    ctx.fillStyle = '#334155';
+    ctx.fillRect(riverWidth - 8, topY - 24, 10, 24);
+}
+
+/* 🌿 DETAIL RUMPUT */
+function drawGrassAndDetails(topY) {
+    let w = canvas.width;
+    ctx.strokeStyle = isDarkMode ? '#4ade80' : '#86efac';
+    ctx.lineWidth = 1.2;
+    
+    grassSeeds.forEach(seed => {
+        let x = seed.xRatio * w;
+        let gy = getTerrainY(x, topY);
+
+        ctx.beginPath();
+        for(let b = 0; b < seed.blades; b++) {
+            let offsetX = (b - 1) * 2;
+            let tiltX = seed.tilt + (b - 1) * 2.5;
+            ctx.moveTo(x + offsetX, gy);
+            ctx.lineTo(x + offsetX + tiltX, gy - seed.height);
+        }
+        ctx.stroke();
+    });
+}
+
+/* 🌲 PEPOHONAN */
+function drawTreesOnHillSurface(topY) {
+    drawTreeAt(30, getTerrainY(30, topY), 'pine');
+    drawTreeAt(80, getTerrainY(80, topY), 'leafy');
+    drawTreeAt(130, getTerrainY(130, topY), 'pine');
+
+    drawTreeAt(210, getTerrainY(210, topY), 'leafy');
+    drawTreeAt(260, getTerrainY(260, topY), 'pine');
+    drawTreeAt(310, getTerrainY(310, topY), 'leafy');
+}
+
+function drawTreeAt(x, y, type) {
+    ctx.fillStyle = 'rgba(0,0,0,0.2)';
+    ctx.beginPath();
+    ctx.ellipse(x, y + 1, 10, 3, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    let trunkHeight = 16;
+    ctx.fillStyle = '#451a03';
+    ctx.fillRect(x - 3, y - trunkHeight, 6, trunkHeight);
+
+    let treeTopY = y - trunkHeight;
+
+    if (type === 'pine') {
+        let pineGrad = ctx.createLinearGradient(x, treeTopY - 30, x, treeTopY);
+        pineGrad.addColorStop(0, '#22c55e');
+        pineGrad.addColorStop(1, '#064e3b');
+
+        ctx.fillStyle = pineGrad;
+        ctx.beginPath(); ctx.moveTo(x - 14, treeTopY); ctx.lineTo(x, treeTopY - 16); ctx.lineTo(x + 14, treeTopY); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(x - 11, treeTopY - 10); ctx.lineTo(x, treeTopY - 24); ctx.lineTo(x + 11, treeTopY - 10); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(x - 8, treeTopY - 18); ctx.lineTo(x, treeTopY - 32); ctx.lineTo(x + 8, treeTopY - 18); ctx.fill();
+
+    } else {
+        let leafGrad = ctx.createRadialGradient(x - 3, treeTopY - 12, 3, x, treeTopY - 10, 15);
+        leafGrad.addColorStop(0, '#4ade80');
+        leafGrad.addColorStop(0.7, '#15803d');
+        leafGrad.addColorStop(1, '#022c22');
+
+        ctx.fillStyle = leafGrad;
+        ctx.beginPath(); ctx.arc(x, treeTopY - 10, 13, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(x - 8, treeTopY - 5, 9, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(x + 8, treeTopY - 5, 9, 0, Math.PI*2); ctx.fill();
+    }
+}
+
+/* 🚰 PIPA PESAT */
+function draw3DPenstockAndFlow(topY) {
+    const p1 = {x: 175, y: topY - 5};
+    const p2 = {x: 335, y: 395};
+
+    ctx.strokeStyle = '#1e293b';
+    ctx.lineWidth = 26;
+    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+
+    ctx.strokeStyle = '#64748b';
+    ctx.lineWidth = 20;
+    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+
+    ctx.strokeStyle = '#0284c7';
+    ctx.lineWidth = 14;
+    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+
+    let currentSpeed = (paramQ / 50) * 0.015;
+
+    pipeParticles.forEach(pt => {
+        if (isRunning) {
+            pt.progress += currentSpeed * pt.speedOffset;
+            if (pt.progress > 1) pt.progress = 0;
+        }
+
+        let px = p1.x + (p2.x - p1.x) * pt.progress;
+        let py = p1.y + (p2.y - p1.y) * pt.progress;
+
+        ctx.fillStyle = 'rgba(224, 242, 254, 0.9)';
+        ctx.beginPath();
+        ctx.arc(px, py, pt.size, 0, Math.PI * 2);
+        ctx.fill();
+    });
+
+    let midX = (p1.x + p2.x) / 2;
+    let midY = (p1.y + p2.y) / 2;
+    ctx.fillStyle = '#334155';
+    ctx.fillRect(midX - 4, midY - 6, 8, 22);
+}
+
+/* ⚙️ RUMAH TURBIN & GENERATOR REALISTIS */
+function drawPowerHouseAndTurbine() {
+    const tx = 345;
+    const ty = 405;
+
+    // Dinding Rumah Turbin
+    ctx.fillStyle = isDarkMode ? '#1e293b' : '#f8fafc';
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth = 2;
+    ctx.fillRect(305, 335, 115, 75);
+    ctx.strokeRect(305, 335, 115, 75);
+
+    // Atap Rumah Turbin
+    ctx.fillStyle = '#0284c7';
+    ctx.beginPath();
+    ctx.moveTo(300, 335);
+    ctx.lineTo(362, 310);
+    ctx.lineTo(425, 335);
+    ctx.fill();
+
+    // Efek Percikan Air Turbin
+    if (isRunning) {
+        ctx.fillStyle = 'rgba(56, 189, 248, 0.8)';
+        for(let i=0; i<6; i++) {
+            let splashX = tx - 15 + (Math.random()*10 - 5);
+            let splashY = ty + (Math.random()*10 - 5);
+            ctx.beginPath(); ctx.arc(splashX, splashY, 4 + Math.random()*5, 0, Math.PI*2); ctx.fill();
+        }
+    }
+
+    // Render Turbin Dinamis
+    ctx.save();
+    ctx.translate(tx, ty);
+
+    if (selectedTurbine === "Pelton") {
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath(); ctx.arc(0, 0, 24, 0, Math.PI * 2); ctx.fill();
+
+        ctx.fillStyle = '#0284c7';
+        ctx.fillRect(-38, -6, 16, 12);
+        if (isRunning) {
+            ctx.fillStyle = '#38bdf8';
+            ctx.fillRect(-22, -3, 10, 6);
+        }
+
+        ctx.rotate(rotationAngle);
+        ctx.fillStyle = '#e2e8f0';
+        for (let i = 0; i < 8; i++) {
+            ctx.rotate(Math.PI / 4);
+            ctx.beginPath();
+            ctx.arc(0, -20, 5, 0, Math.PI);
+            ctx.fill();
+            ctx.fillRect(-2, -20, 4, 12);
+        }
+
+    } else if (selectedTurbine === "Crossflow") {
+        ctx.fillStyle = '#0284c7';
+        ctx.beginPath(); ctx.arc(0, 0, 23, 0, Math.PI * 2); ctx.fill();
+
+        ctx.rotate(rotationAngle);
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.5;
+        for (let i = 0; i < 12; i++) {
+            ctx.rotate(Math.PI / 6);
+            ctx.beginPath();
+            ctx.arc(12, 0, 8, 0.2, Math.PI - 0.2);
+            ctx.stroke();
+        }
+
+    } else if (selectedTurbine === "Francis") {
+        ctx.fillStyle = '#334155';
+        ctx.beginPath(); ctx.arc(0, 0, 25, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#0284c7';
+        ctx.beginPath(); ctx.arc(0, 0, 18, 0, Math.PI * 2); ctx.fill();
+
+        ctx.rotate(rotationAngle);
+        ctx.fillStyle = '#f8fafc';
+        for (let i = 0; i < 6; i++) {
+            ctx.rotate(Math.PI / 3);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(14, 6);
+            ctx.lineTo(16, -2);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+    } else if (selectedTurbine === "Kaplan") {
+        ctx.fillStyle = '#475569';
+        ctx.fillRect(-6, 12, 12, 16);
+
+        ctx.fillStyle = '#0284c7';
+        ctx.beginPath(); ctx.arc(0, 0, 12, 0, Math.PI * 2); ctx.fill();
+
+        ctx.rotate(rotationAngle);
+        ctx.fillStyle = '#fbbf24';
+        for (let i = 0; i < 4; i++) {
+            ctx.rotate(Math.PI / 2);
+            ctx.beginPath();
+            ctx.ellipse(0, -15, 6, 14, 0, 0, Math.PI*2);
+            ctx.fill();
+        }
+    }
+
+    ctx.restore();
+
+    // ==========================================
+    // POROS KOPLING & GENERATOR REALISTIS 3D
+    // ==========================================
+    let gx = tx + 30; // Posisi Generator di kanan turbin
+    let gy = ty - 45; 
+
+    // Poros Utama (Connecting Shaft) dari Turbin ke Generator
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillRect(tx - 3, ty - 38, 6, 18);
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(tx - 3, ty - 38, 6, 18);
+
+    // Baut / Flange Kopling Poros
+    ctx.fillStyle = '#475569';
+    ctx.fillRect(tx - 7, ty - 32, 14, 5);
+
+    // Kaki / Dudukan Generator (Mounting Base)
+    ctx.fillStyle = '#334155';
+    ctx.fillRect(gx - 22, gy + 18, 44, 6);
+
+    // Bodi Utama Generator Silindris (Stator Frame)
+    let genGrad = ctx.createLinearGradient(gx - 20, 0, gx + 20, 0);
+    genGrad.addColorStop(0, '#d97706');
+    genGrad.addColorStop(0.3, '#f59e0b');
+    genGrad.addColorStop(0.7, '#fbbf24');
+    genGrad.addColorStop(1, '#b45309');
+
+    ctx.fillStyle = genGrad;
+    ctx.beginPath();
+    ctx.arc(gx, gy, 20, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#78350f';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Sirip Pendingin Generator (Cooling Fins)
+    ctx.strokeStyle = '#b45309';
+    ctx.lineWidth = 1.5;
+    for(let r = -15; r <= 15; r += 5) {
+        ctx.beginPath();
+        ctx.moveTo(gx + r, gy - Math.sqrt(400 - r*r));
+        ctx.lineTo(gx + r, gy + Math.sqrt(400 - r*r));
+        ctx.stroke();
+    }
+
+    // Penutup Tengah Rotor (Rotor End Cap)
+    ctx.fillStyle = '#1e293b';
+    ctx.beginPath();
+    ctx.arc(gx, gy, 8, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Efek Poros Generator Berputar jika berjalan
+    ctx.strokeStyle = '#f8fafc';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    let rotX = Math.cos(rotationAngle) * 5;
+    let rotY = Math.sin(rotationAngle) * 5;
+    ctx.moveTo(gx, gy);
+    ctx.lineTo(gx + rotX, gy + rotY);
+    ctx.stroke();
+
+    // Terminal Box Kabel di Atas Generator
+    let tbX = gx - 7;
+    let tbY = gy - 26;
+    ctx.fillStyle = '#1e293b';
+    ctx.fillRect(tbX, tbY, 14, 10);
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(tbX, tbY, 14, 10);
+
+    // Isolator Kabel Listrik Keluar (Bushing)
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillRect(tbX + 4, tbY - 4, 6, 4);
+
+    // Simpan koordinat jangkar kabel listrik agar presisi
+    genTerminalBoxPos = { x: tbX + 7, y: tbY - 4 };
+}
+
+/* ⚡ TIANG LISTRIK & KABEL PRESISI */
+function drawPowerGridAndPulses(topY) {
+    let w = canvas.width;
+    let pole1X = 470;
+    let pole2X = 610;
+    let pole3X = w - 100;
+
+    let pole1GroundY = getTerrainY(pole1X, topY);
+    let pole2GroundY = getTerrainY(pole2X, topY);
+    let pole3GroundY = getTerrainY(pole3X, topY);
+
+    let poleHeight = 95;
+
+    drawRealPowerPole(pole1X, pole1GroundY, poleHeight, true);
+    drawRealPowerPole(pole2X, pole2GroundY, poleHeight, false);
+    drawRealPowerPole(pole3X, pole3GroundY, poleHeight, false);
+
+    // Titik sambungan kabel dimulai dari Terminal Box Generator secara Presisi!
+    let wirePoints = [
+        {x: genTerminalBoxPos.x, y: genTerminalBoxPos.y},
+        {x: pole1X - 16, y: pole1GroundY - poleHeight + 8},
+        {x: pole2X - 16, y: pole2GroundY - poleHeight + 8},
+        {x: pole3X - 16, y: pole3GroundY - poleHeight + 8}
+    ];
+
+    ctx.strokeStyle = (pElectric > 0.5 && isRunning) ? '#f59e0b' : '#475569';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.moveTo(wirePoints[0].x, wirePoints[0].y);
+    for(let i = 0; i < wirePoints.length - 1; i++) {
+        let pStart = wirePoints[i];
+        let pEnd = wirePoints[i+1];
+        let cpX = (pStart.x + pEnd.x) / 2;
+        let cpY = (pStart.y + pEnd.y) / 2 + 18;
+        ctx.quadraticCurveTo(cpX, cpY, pEnd.x, pEnd.y);
+    }
+    ctx.stroke();
+
+    if (isRunning && pElectric > 0.5) {
+        electricPulses.forEach(pulse => {
+            pulse.pos += pulse.speed * (pElectric / 5);
+            if (pulse.pos > 1) pulse.pos = 0;
+
+            let currentPt = getCablePosition(wirePoints, pulse.pos);
+
+            let glow = ctx.createRadialGradient(currentPt.x, currentPt.y, 2, currentPt.x, currentPt.y, 10);
+            glow.addColorStop(0, '#fef08a');
+            glow.addColorStop(0.5, '#f59e0b');
+            glow.addColorStop(1, 'rgba(245, 158, 11, 0)');
+
+            ctx.fillStyle = glow;
+            ctx.beginPath(); ctx.arc(currentPt.x, currentPt.y, 10, 0, Math.PI*2); ctx.fill();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath(); ctx.arc(currentPt.x, currentPt.y, 3, 0, Math.PI*2); ctx.fill();
+        });
+    }
+}
+
+function getCablePosition(points, t) {
+    let numSegments = points.length - 1;
+    let segIndex = Math.min(Math.floor(t * numSegments), numSegments - 1);
+    let segT = (t * numSegments) - segIndex;
+
+    let pStart = points[segIndex];
+    let pEnd = points[segIndex + 1];
+    let cpX = (pStart.x + pEnd.x) / 2;
+    let cpY = (pStart.y + pEnd.y) / 2 + 18;
+
+    let x = (1 - segT) * (1 - segT) * pStart.x + 2 * (1 - segT) * segT * cpX + segT * segT * pEnd.x;
+    let y = (1 - segT) * (1 - segT) * pStart.y + 2 * (1 - segT) * segT * cpY + segT * segT * pEnd.y;
+
+    return {x: x, y: y};
+}
+
+function drawRealPowerPole(x, groundY, poleHeight, hasTransformer) {
+    let poleTopY = groundY - poleHeight;
+
+    ctx.fillStyle = 'rgba(0,0,0,0.2)';
+    ctx.beginPath(); ctx.ellipse(x, groundY, 7, 3, 0, 0, Math.PI*2); ctx.fill();
+
+    let poleGrad = ctx.createLinearGradient(x - 3, 0, x + 3, 0);
+    poleGrad.addColorStop(0, '#334155');
+    poleGrad.addColorStop(0.5, '#64748b');
+    poleGrad.addColorStop(1, '#1e293b');
+
+    ctx.fillStyle = poleGrad;
+    ctx.beginPath();
+    ctx.moveTo(x - 4, groundY);
+    ctx.lineTo(x - 2.5, poleTopY);
+    ctx.lineTo(x + 2.5, poleTopY);
+    ctx.lineTo(x + 4, groundY);
+    ctx.fill();
+
+    ctx.fillStyle = '#1e293b';
+    ctx.fillRect(x - 18, poleTopY + 8, 36, 4);
+    ctx.fillRect(x - 18, poleTopY + 22, 36, 4);
+
+    ctx.strokeStyle = '#475569';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(x - 12, poleTopY + 8); ctx.lineTo(x, poleTopY + 28);
+    ctx.moveTo(x + 12, poleTopY + 8); ctx.lineTo(x, poleTopY + 28);
+    ctx.stroke();
+
+    ctx.fillStyle = '#38bdf8';
+    [-16, 0, 16].forEach(offset => {
+        ctx.fillRect(x + offset - 2, poleTopY + 2, 4, 6);
+        ctx.fillRect(x + offset - 2, poleTopY + 16, 4, 6);
+    });
+
+    if (hasTransformer) {
+        ctx.fillStyle = '#475569';
+        ctx.fillRect(x + 4, poleTopY + 42, 14, 22);
+        ctx.strokeStyle = '#1e293b';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(x + 4, poleTopY + 42, 14, 22);
+
+        ctx.fillStyle = '#334155';
+        ctx.fillRect(x, poleTopY + 45, 5, 3);
+        ctx.fillRect(x, poleTopY + 58, 5, 3);
+    }
+}
+
+/* 🏡 PERUMAHAN DESA */
+function drawAestheticVillage() {
+    let w = canvas.width;
+    let groundY = 410;
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillRect(w - 230, groundY - 2, 220, 6);
+
+    ctx.strokeStyle = '#a16207';
+    ctx.lineWidth = 2;
+    for(let fx = w - 220; fx < w - 190; fx += 8) {
+        ctx.beginPath(); ctx.moveTo(fx, groundY); ctx.lineTo(fx, groundY - 10); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.moveTo(w - 222, groundY - 6); ctx.lineTo(w - 188, groundY - 6); ctx.stroke();
+
+    drawCreativeHouse(w - 180, groundY, 55, 45, '#f8fafc', '#dc2626', 'limasan');
+    drawCreativeHouse(w - 110, groundY, 50, 60, '#f1f5f9', '#2563eb', 'bertingkat');
+    drawCreativeHouse(w - 50, groundY, 42, 40, '#e2e8f0', '#7c3aed', 'miring');
+
+    let lampX = w - 130;
+    ctx.strokeStyle = '#475569';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(lampX, groundY);
+    ctx.lineTo(lampX, groundY - 32);
+    ctx.lineTo(lampX + 8, groundY - 32);
+    ctx.stroke();
+
+    let isLit = (pElectric > 0.5 && isRunning);
+
+    if (isLit) {
+        let lampGlow = ctx.createRadialGradient(lampX + 8, groundY - 32, 2, lampX + 8, groundY - 32, 20);
+        lampGlow.addColorStop(0, '#fde047');
+        lampGlow.addColorStop(1, 'rgba(253, 224, 71, 0)');
+        ctx.fillStyle = lampGlow;
+        ctx.beginPath(); ctx.arc(lampX + 8, groundY - 32, 20, 0, Math.PI*2); ctx.fill();
+    }
+}
+
+function drawCreativeHouse(x, groundY, w, h, wallColor, roofColor, style) {
+    let isLit = (pElectric > 0.5 && isRunning);
+    let y = groundY - h;
+
+    ctx.fillStyle = wallColor;
+    ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(x, y, w, h);
+
+    let windowColor = isLit ? '#fde047' : '#94a3b8';
+
+    if (style === 'limasan') {
+        ctx.fillStyle = roofColor;
+        ctx.beginPath();
+        ctx.moveTo(x - 6, y);
+        ctx.lineTo(x + w/2, y - 22);
+        ctx.lineTo(x + w + 6, y);
+        ctx.fill();
+
+        ctx.fillStyle = '#b45309';
+        ctx.fillRect(x + 4, y + 20, 22, 4);
+
+        ctx.fillStyle = '#78350f';
+        ctx.fillRect(x + 8, y + 24, 12, h - 24);
+
+        ctx.fillStyle = windowColor;
+        ctx.fillRect(x + w - 20, y + 12, 12, 14);
+        ctx.strokeRect(x + w - 20, y + 12, 12, 14);
+
+    } else if (style === 'bertingkat') {
+        ctx.fillStyle = roofColor;
+        ctx.beginPath();
+        ctx.moveTo(x - 4, y);
+        ctx.lineTo(x + w + 4, y - 14);
+        ctx.lineTo(x + w + 4, y);
+        ctx.fill();
+
+        ctx.strokeStyle = '#64748b';
+        ctx.beginPath(); ctx.moveTo(x, y + 28); ctx.lineTo(x + w, y + 28); ctx.stroke();
+
+        ctx.fillStyle = windowColor;
+        ctx.fillRect(x + 8, y + 8, 10, 12);
+        ctx.fillRect(x + w - 18, y + 8, 10, 12);
+
+        ctx.fillStyle = '#78350f';
+        ctx.fillRect(x + w/2 - 6, y + h - 22, 12, 22);
+
+    } else { 
+        ctx.fillStyle = roofColor;
+        ctx.beginPath();
+        ctx.moveTo(x - 4, y + 6);
+        ctx.lineTo(x + w + 4, y - 12);
+        ctx.lineTo(x + w + 4, y + 6);
+        ctx.fill();
+
+        ctx.fillStyle = windowColor;
+        ctx.fillRect(x + 6, y + 12, 16, 16);
+        ctx.strokeRect(x + 6, y + 12, 16, 16);
+
+        ctx.fillStyle = '#78350f';
+        ctx.fillRect(x + w - 14, y + h - 18, 10, 18);
+    }
+
+    if (isLit) {
+        ctx.fillStyle = 'rgba(253, 224, 71, 0.25)';
+        ctx.fillRect(x + 2, y + 2, w - 4, h - 4);
+    }
+}
+
+/* ==========================================
+   INTERACTIVITY & CONTROLS WITH VOICE SPEECH
+   ========================================== */
+function handleCanvasClick(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    let hillTopY = getHillTopY();
+
+    let title = "";
+    let speechMessage = "";
+
+    if (x >= 0 && x <= 180 && y >= hillTopY - 30 && y <= hillTopY + 30) {
+        title = "🌊 Sungai & Bak Penenang (Intake)";
+        speechMessage = "Ini adalah Sungai dan Bak Penenang. Air sungai dialirkan menuju bak penenang untuk menyaring kotoran sebelum masuk ke pipa pesat.";
+    } else if (x >= 170 && x <= 340 && y >= hillTopY && y <= 400) {
+        title = "🚰 Pipa Pesat (Penstock)";
+        speechMessage = "Ini adalah Pipa Pesat. Pipa besi bertekanan tinggi ini mengalirkan air melintasi lereng perbukitan menuju rumah turbin.";
+    } else if (x >= 300 && x <= 420 && y >= 320 && y <= 410) {
+        title = "⚙️ Turbin " + selectedTurbine + " & Generator Listrik";
+        speechMessage = "Ini adalah Turbin " + selectedTurbine + " yang terhubung langsung ke Generator Listrik. Putaran turbin memutar rotor generator untuk menghasilkan energi listrik sebesar " + pElectric.toFixed(2) + " kilo Watt.";
+    } else if (x >= canvas.width - 240 && y >= 320) {
+        title = "🏠 Pemukiman Desa";
+        speechMessage = "Ini adalah Pemukiman Desa. Listrik yang dihasilkan oleh generator dialirkan melalui kabel udara untuk menerangi rumah-rumah warga desa.";
+    }
+
+    if (title !== "") {
+        showModal(title, speechMessage);
+        speakText(speechMessage); 
+    }
+}
+
+function showModal(title, desc) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalDesc').innerHTML = desc;
+    document.getElementById('infoModal').style.display = 'flex';
+    if(window.MathJax) MathJax.typesetPromise();
+}
+
+function closeModal() {
+    document.getElementById('infoModal').style.display = 'none';
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); 
+    }
+}
+
+function startSim() { 
+    initAudio();
+    isRunning = true; 
+    updateSim();
+}
+
+function pauseSim() { 
+    isRunning = false; 
+    updateSim();
+}
+
+function resetSim() {
+    document.getElementById('inputQ').value = 50;
+    document.getElementById('inputH').value = 20;
+    document.getElementById('selectTurbine').value = "Crossflow";
+    isRunning = true;
+    updateSim();
+}
+
+function toggleAudio() {
+    isAudioOn = !isAudioOn;
+    document.getElementById('btnAudio').innerText = isAudioOn ? "🔊 Sound SFX ON" : "🔇 Sound SFX OFF";
+    if (isAudioOn) initAudio();
+    updateAudioVolume();
+}
+
+function toggleTheme() {
+    isDarkMode = !isDarkMode;
+    document.body.classList.toggle('dark-mode');
+    document.getElementById('btnTheme').innerText = isDarkMode ? "☀️ Mode Siang" : "🌙 Mode Malam";
+}
+</script>
+
+</body>
+</html>

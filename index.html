@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ENGENIX | Virtual Laboratory Energi Terbarukan</title>
+<!-- ================= GOOGLE FONTS ================= -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&amp;family=Montserrat:wght@700;800&amp;family=Poppins:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- ================= CSS UTAMA ================= -->
+<link href="/css/style.css" rel="stylesheet"/>
+<style>
+    .virtual-btn-secondary{
+        background:#ffffff !important;
+        color:#245DAB !important;
+        border:2px solid #245DAB;
+        box-shadow:none !important;
+    }
+    .virtual-btn-secondary:hover{
+        background:#245DAB !important;
+        color:#ffffff !important;
+        transform:translateY(-4px);
+    }
+    .virtual-cta-row{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:16px;
+        flex-wrap:wrap;
+    }
+    .virtual-pair-note{
+        max-width:640px;
+        margin:0 auto 24px;
+        padding:14px 22px;
+        background:#fff7ed;
+        border:1.5px dashed #f59e0b;
+        border-radius:14px;
+        font-size:14px;
+        color:#78350f;
+        line-height:1.8;
+    }
+    @media(max-width:640px){
+        .virtual-cta-row{
+            flex-direction:column;
+        }
+        .virtual-cta-row .virtual-btn{
+            width:100%;
+            text-align:center;
+        }
+    }
+</style>
+</head>
+<body>
+<!-- =====================================================
+         HEADER / NAVBAR
+         ===================================================== -->
+<header class="header">
+<div class="logo-brand">
+<h3 data-i18n="idx.001">ENGENIX</h3>
+<span data-i18n="idx.002">
+                Explore • Design • Innovate
+            </span>
+</div>
+<nav class="navbar">
+<a data-i18n="idx.003" href="#home">
+                Home
+            </a>
+<a data-i18n="idx.004" href="#about">
+                About
+            </a>
+<a data-i18n="idx.005" href="#learning">
+                Objectives
+            </a>
+<a data-i18n="idx.006" href="#physicsMenu">
+                Physics
+            </a>
+<a data-i18n="idx.007" href="#simulation-section">
+                Virtual Lab
+            </a>
+<button class="nav-login" data-i18n="idx.008" onclick="openLoginModal()" type="button">
+
+                Masuk
+
+            </button>
+</nav>
+</header>
+<!-- =====================================================
+         HERO
+         ===================================================== -->
+<section class="hero" id="home">
+<div class="hero-overlay"></div>
+<!-- ================= TEKS HERO ================= -->
+<div class="hero-content">
+<h1 data-i18n="idx.009">
+                Virtual Laboratory
+            </h1>
+<h2 data-i18n="idx.010">
+                Renewable Energy &amp;
+                Engineering Design
+            </h2>
+<p data-i18n="idx.011">
+
+                Selamat datang di Laboratorium Virtual Energi
+                Terbarukan. Di sini kamu dapat mempelajari konsep
+                energi terbarukan, menganalisis studi kasus,
+                serta merancang solusi energi menggunakan tahapan
+                <strong>Engineering Design Process</strong>.
+
+            </p>
+<div class="hero-actions">
+<a class="btn-start" data-i18n="idx.012" href="#about">
+<span class="rocket">
+                        🚀
+                    </span>
+
+                    Start Learning
+
+                </a>
+<button class="hero-login" data-i18n="idx.013" onclick="openLoginModal()" type="button">
+
+                    Masuk sebagai Peserta Didik
+
+                </button>
+</div>
+</div>
+<!-- =================================================
+             BADGE TEKNOLOGI
+             Dibuat HTML supaya tidak menyatu dengan gambar
+             ================================================= -->
+<div class="hero-tech-badge hero-tech-solar">
+<span>
+                ☀
+            </span>
+<div>
+<b data-i18n="idx.014">
+                    PLTS
+                </b>
+<small data-i18n="idx.015">
+                    Solar Energy
+                </small>
+</div>
+</div>
+<div class="hero-tech-badge hero-tech-wind">
+<span>
+                ↻
+            </span>
+<div>
+<b data-i18n="idx.016">
+                    PLTB
+                </b>
+<small data-i18n="idx.017">
+                    Wind Energy
+                </small>
+</div>
+</div>
+<div class="hero-tech-badge hero-tech-water">
+<span>
+                ≈
+            </span>
+<div>
+<b data-i18n="idx.018">
+                    PLTMH
+                </b>
+<small data-i18n="idx.019">
+                    Hydro Energy
+                </small>
+</div>
+</div>
+<div class="hero-scroll">
+
+            Scroll to explore
+
+            <span>
+                ↓
+            </span>
+</div>
+</section>
+<!-- =====================================================
+         LOGIN MODAL
+         ===================================================== -->
+<div aria-hidden="true" class="login-modal" id="loginModal">
+<div class="login-backdrop" onclick="closeLoginModal()">
+</div>
+<div aria-labelledby="loginTitle" aria-modal="true" class="login-card" role="dialog">
+<button aria-label="Tutup" class="login-close" onclick="closeLoginModal()" type="button">
+
+                ×
+
+            </button>
+<div class="login-icon">
+                ⚡
+            </div>
+<span class="login-label" data-i18n="idx.020">
+                PESERTA DIDIK
+            </span>
+<h2 data-i18n="idx.021" id="loginTitle">
+                Masuk ke ENGENIX
+            </h2>
+<p data-i18n="idx.022">
+                Masukkan identitasmu sebelum
+                memulai pembelajaran.
+            </p>
+<label data-i18n="idx.023" for="loginName">
+                Nama Lengkap
+            </label>
+<input autocomplete="name" id="loginName" placeholder="Contoh: Aisyah Camile" type="text"/>
+<label data-i18n="idx.024" for="loginEmail">
+                Email
+            </label>
+<input autocomplete="email" id="loginEmail" placeholder="nama@email.com" type="email"/>
+<p class="login-error" id="loginError">
+</p>
+<button class="login-submit" data-i18n="idx.025" onclick="saveStudentProfile()" type="button">
+
+                Lanjutkan →
+
+            </button>
+</div>
+</div>
+<!-- =====================================================
+         ABOUT
+         ===================================================== -->
+<section class="about" id="about">
+<div class="about-container">
+<div class="about-text">
+<span class="section-label" data-i18n="idx.026">
+                    ABOUT ENGENIX
+                </span>
+<h2 data-i18n="idx.027">
+                    Virtual Laboratory Energi Terbarukan
+                    Berbasis
+                    <em>Engineering Design Process</em>
+</h2>
+<p data-i18n="idx.028">
+<strong>ENGENIX</strong>
+                    merupakan media pembelajaran berbasis web
+                    yang dirancang sebagai laboratorium virtual
+                    untuk membantu peserta didik memahami konsep
+                    energi terbarukan melalui pendekatan
+                    <strong>Engineering Design Process (EDP)</strong>.
+
+                    Melalui media ini, peserta didik dapat
+                    menganalisis studi kasus, mengidentifikasi
+                    potensi energi di suatu wilayah, memilih
+                    sumber energi yang sesuai, merancang solusi
+                    teknik, serta mengevaluasi hasil berdasarkan
+                    konsep fisika dan prinsip rekayasa.
+
+                </p>
+</div>
+<div class="about-cards">
+<div class="feature-card">
+<div class="icon">
+                        ⚡
+                    </div>
+<h3 data-i18n="idx.029">
+                        Energi Terbarukan
+                    </h3>
+<p data-i18n="idx.030">
+                        Mengenal berbagai sumber energi terbarukan
+                        beserta potensinya.
+                    </p>
+</div>
+<div class="feature-card">
+<div class="icon">
+                        🔬
+                    </div>
+<h3 data-i18n="idx.031">
+                        Konsep Fisika
+                    </h3>
+<p data-i18n="idx.032">
+                        Memahami konsep fisika yang mendasari
+                        setiap teknologi energi.
+                    </p>
+</div>
+<div class="feature-card">
+<div class="icon">
+                        🛠️
+                    </div>
+<h3 data-i18n="idx.033">
+                        Engineering Design
+                    </h3>
+<p data-i18n="idx.034">
+                        Merancang solusi melalui tahapan
+                        Engineering Design Process.
+                    </p>
+</div>
+<div class="feature-card">
+<div class="icon">
+                        🧠
+                    </div>
+<h3 data-i18n="idx.035">
+                        Berpikir Kritis
+                    </h3>
+<p data-i18n="idx.036">
+                        Menganalisis data dan menentukan solusi
+                        terbaik berdasarkan kondisi wilayah.
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<!-- =====================================================
+         LEARNING OBJECTIVES
+         ===================================================== -->
+<section class="learning" id="learning">
+<div class="learning-container">
+<span class="section-label" data-i18n="idx.037">
+                LEARNING OBJECTIVES
+            </span>
+<div class="learning-title">
+<h2 data-i18n="idx.038">
+                    Tujuan Pembelajaran
+                </h2>
+<p data-i18n="idx.039">
+
+                    Setelah mengikuti pembelajaran melalui
+                    Virtual Laboratory ENGENIX, peserta didik
+                    diharapkan mampu memahami konsep energi
+                    terbarukan, menganalisis potensi energi
+                    berdasarkan data wilayah, merancang solusi
+                    menggunakan
+                    <strong>Engineering Design Process</strong>,
+                    serta mengevaluasi hasil desain berdasarkan
+                    konsep fisika.
+
+                </p>
+</div>
+<div class="learning-cards">
+<div class="learning-card">
+<div class="learning-icon">
+                        📘
+                    </div>
+<h3 data-i18n="idx.040">
+                        Memahami Konsep
+                    </h3>
+<p data-i18n="idx.041">
+                        Memahami prinsip dasar berbagai sumber
+                        energi terbarukan beserta konsep fisikanya.
+                    </p>
+</div>
+<div class="learning-card">
+<div class="learning-icon">
+                        📊
+                    </div>
+<h3 data-i18n="idx.042">
+                        Menganalisis Data
+                    </h3>
+<p data-i18n="idx.043">
+                        Mengidentifikasi potensi energi berdasarkan
+                        kondisi wilayah dan data lingkungan.
+                    </p>
+</div>
+<div class="learning-card">
+<div class="learning-icon">
+                        🛠️
+                    </div>
+<h3 data-i18n="idx.044">
+                        Merancang Solusi
+                    </h3>
+<p data-i18n="idx.045">
+                        Merancang solusi energi menggunakan tahapan
+                        Engineering Design Process (EDP).
+                    </p>
+</div>
+<div class="learning-card">
+<div class="learning-icon">
+                        💡
+                    </div>
+<h3 data-i18n="idx.046">
+                        Mengevaluasi Hasil
+                    </h3>
+<p data-i18n="idx.047">
+                        Mengevaluasi hasil rancangan berdasarkan
+                        efisiensi energi dan konsep fisika.
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<!-- =====================================================
+         PRETEST CTA
+         ===================================================== -->
+<section id="pretest-cta" style="
+            background:#eef7ff;
+            border-top:1px solid #dcecff;
+            border-bottom:1px solid #dcecff;
+            padding:36px 20px;
+        ">
+<div style="
+                max-width:900px;
+                margin:0 auto;
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                gap:24px;
+                flex-wrap:wrap;
+                background:#ffffff;
+                border:1px solid #dcecff;
+                border-radius:20px;
+                padding:26px 32px;
+                box-shadow:0 12px 30px rgba(36,93,171,0.08);
+            ">
+<div style="
+                    display:flex;
+                    align-items:center;
+                    gap:18px;
+                    flex:1;
+                    min-width:260px;
+                ">
+<div style="
+                        width:56px;
+                        height:56px;
+                        flex-shrink:0;
+                        border-radius:16px;
+                        background:linear-gradient(135deg,#245DAB,#4c8ce0);
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        font-size:1.6rem;
+                        box-shadow:0 10px 22px rgba(36,93,171,0.25);
+                    ">
+
+                    📝
+
+                </div>
+<div>
+<h3 data-i18n="idx.048" style="
+                            margin:0 0 4px;
+                            font-size:1.15rem;
+                            color:#0f172a;
+                        ">
+
+                        Sebelum belajar,
+                        kerjakan Pretest dulu yuk!
+
+                    </h3>
+<p data-i18n="idx.049" style="
+                            margin:0;
+                            color:#64748b;
+                            font-size:0.92rem;
+                            line-height:1.5;
+                        ">
+
+                        Ukur pemahaman awalmu tentang energi
+                        terbarukan sebelum masuk ke materi
+                        PLTS, PLTMH, dan PLTB.
+
+                    </p>
+</div>
+</div>
+<a data-i18n="idx.050" href="pretest.html" id="pretestLink" style="
+                    flex-shrink:0;
+                    display:inline-flex;
+                    align-items:center;
+                    gap:8px;
+                    background:#245DAB;
+                    color:#fff;
+                    text-decoration:none;
+                    padding:14px 28px;
+                    border-radius:12px;
+                    font-weight:700;
+                    font-size:0.95rem;
+                    box-shadow:0 10px 20px rgba(36,93,171,0.25);
+                ">
+
+                Mulai Pretest →
+
+            </a>
+</div>
+</section>
+<!-- =====================================================
+         PHYSICS
+         ===================================================== -->
+<section class="physics" id="physicsMenu">
+<div class="physics-container">
+<span class="section-label" data-i18n="idx.051">
+                PRINCIPLE OF PHYSICS
+            </span>
+<div class="physics-title">
+<h2 data-i18n="idx.052">
+                    Konsep Dasar Fisika Energi Terbarukan
+                </h2>
+<p data-i18n="idx.053">
+
+                    Sebelum menentukan solusi energi yang paling
+                    sesuai, peserta didik perlu memahami
+                    prinsip-prinsip fisika yang mendasari setiap
+                    teknologi energi terbarukan. Pemahaman ini
+                    akan membantu dalam proses analisis,
+                    perancangan, dan evaluasi solusi pada
+                    Virtual Laboratory.
+
+                </p>
+</div>
+<div class="physics-cards">
+<!-- PLTS -->
+<div class="physics-card">
+<div class="physics-icon">
+                        ☀️
+                    </div>
+<h3 data-i18n="idx.054">
+                        PLTS
+                    </h3>
+<h4 data-i18n="idx.055">
+                        Pembangkit Listrik Tenaga Surya
+                    </h4>
+<p data-i18n="idx.056">
+                        Mengubah energi cahaya matahari menjadi
+                        energi listrik menggunakan panel surya.
+                    </p>
+<a class="physics-btn" data-i18n="idx.057" href="plts.html">
+
+                        Pelajari Konsep →
+
+                    </a>
+</div>
+<!-- PLTMH -->
+<div class="physics-card">
+<div class="physics-icon">
+                        💧
+                    </div>
+<h3 data-i18n="idx.058">
+                        PLTMH
+                    </h3>
+<h4 data-i18n="idx.059">
+                        Pembangkit Listrik Tenaga Mikrohidro
+                    </h4>
+<p data-i18n="idx.060">
+                        Memanfaatkan energi potensial dan energi
+                        kinetik aliran air untuk menghasilkan
+                        listrik.
+                    </p>
+<a class="physics-btn" data-i18n="idx.061" href="pltmh.html">
+
+                        Pelajari Konsep →
+
+                    </a>
+</div>
+<!-- PLTB -->
+<div class="physics-card">
+<div class="physics-icon">
+                        💨
+                    </div>
+<h3 data-i18n="idx.062">
+                        PLTB
+                    </h3>
+<h4 data-i18n="idx.063">
+                        Pembangkit Listrik Tenaga Bayu
+                    </h4>
+<p data-i18n="idx.064">
+                        Mengubah energi kinetik angin menjadi
+                        energi listrik menggunakan turbin angin.
+                    </p>
+<a class="physics-btn" data-i18n="idx.065" href="pltb.html">
+
+                        Pelajari Konsep →
+
+                    </a>
+</div>
+</div>
+</div>
+</section>
+<!-- =====================================================
+         VIRTUAL LABORATORY
+         ===================================================== -->
+<section class="virtual-lab" id="simulation-section">
+<div class="virtual-container">
+<span class="section-label" data-i18n="idx.066">
+                VIRTUAL LABORATORY
+            </span>
+<div class="virtual-title">
+<h2 data-i18n="idx.067">
+                    Siap Menguji Solusi Terbaik?
+                </h2>
+<p data-i18n="idx.068">
+
+                    Setelah mempelajari konsep dasar energi
+                    terbarukan, sekarang saatnya menerapkan
+                    pengetahuan tersebut untuk menyelesaikan
+                    suatu studi kasus. Analisis kondisi wilayah,
+                    tentukan jenis energi terbarukan yang paling
+                    sesuai, kemudian rancang solusi melalui
+                    Engineering Design Process.
+
+                </p>
+</div>
+<div class="virtual-flow">
+<div class="flow-item">
+<div class="flow-icon">
+                        📝
+                    </div>
+<h3 data-i18n="idx.069">
+                        Studi Kasus
+                    </h3>
+</div>
+<div class="flow-item">
+<div class="flow-icon">
+                        📍
+                    </div>
+<h3 data-i18n="idx.070">
+                        Data Wilayah
+                    </h3>
+</div>
+<div class="flow-item">
+<div class="flow-icon">
+                        📊
+                    </div>
+<h3 data-i18n="idx.071">
+                        Analisis Data
+                    </h3>
+</div>
+<div class="flow-item">
+<div class="flow-icon">
+                        ⚡
+                    </div>
+<h3 data-i18n="idx.072">
+                        Pemilihan Energi
+                    </h3>
+</div>
+</div>
+<div class="virtual-pair-note">
+👥 <strong data-i18n="idx.082">Dikerjakan berpasangan (2 orang 1 kelompok):</strong>
+<span data-i18n="idx.083">satu anggota membuka Virtual Laboratory, satu anggota lainnya membuka LKPD untuk mencatat hasil eksperimen kelompok.</span>
+</div>
+<div class="virtual-cta-row">
+<a class="virtual-btn" data-i18n="idx.073" href="virtuallab.html">
+
+                Mulai Virtual Laboratory →
+
+            </a>
+<a class="virtual-btn virtual-btn-secondary" data-i18n="idx.084" href="lkpd.html">
+
+                📋 Buka LKPD →
+
+            </a>
+</div>
+</div>
+</section>
+<!-- =====================================================
+         STUDENT PROFILE
+         ===================================================== -->
+<div aria-live="polite" class="student-profile-pill" id="studentProfilePill">
+<span class="profile-dot"></span>
+<span data-i18n="idx.074" id="studentProfileText">
+            Belum masuk
+        </span>
+<button data-i18n="idx.075" onclick="openLoginModal()" type="button">
+
+            Ubah
+
+        </button>
+</div>
+<!-- =====================================================
+         FOOTER
+         ===================================================== -->
+<footer class="footer">
+<div class="footer-content">
+<h2 data-i18n="idx.076">
+                ENGENIX
+            </h2>
+<p class="footer-title" data-i18n="idx.077">
+                Interactive Virtual Laboratory
+                for Renewable Energy
+            </p>
+<p class="footer-credit" data-i18n="idx.078">
+
+                Developed by
+                <strong>
+                    Aisyah Kamalia Hilwah
+                </strong>
+</p>
+<p class="footer-university" data-i18n="idx.079">
+                Universitas Negeri Surabaya
+            </p>
+</div>
+<div class="footer-bottom">
+<span data-i18n="idx.080">
+                © 2026 ENGENIX
+            </span>
+<span data-i18n="idx.081">
+                Educational &amp; Research Prototype
+            </span>
+</div>
+</footer>
+<!-- =====================================================
+         LOGIN / PROFILE JAVASCRIPT
+         ===================================================== -->
+<script>
+
+        const ENGENIX_PROFILE_KEY =
+            "engenix_student_profile";
+
+
+        /* ===============================
+           AMBIL DATA SISWA
+           =============================== */
+
+        function getStudentProfile() {
+
+            try {
+
+                return JSON.parse(
+                    localStorage.getItem(
+                        ENGENIX_PROFILE_KEY
+                    ) || "null"
+                );
+
+            } catch (error) {
+
+                return null;
+
+            }
+
+        }
+
+
+        /* ===============================
+           BUKA MODAL
+           =============================== */
+
+        function openLoginModal() {
+
+            const modal =
+                document.getElementById(
+                    "loginModal"
+                );
+
+            const profile =
+                getStudentProfile();
+
+
+            if (profile) {
+
+                document.getElementById(
+                    "loginName"
+                ).value =
+                    profile.name || "";
+
+
+                document.getElementById(
+                    "loginEmail"
+                ).value =
+                    profile.email || "";
+
+            }
+
+
+            document.getElementById(
+                "loginError"
+            ).textContent = "";
+
+
+            modal.classList.add("show");
+
+            modal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+
+            setTimeout(() => {
+
+                document
+                    .getElementById("loginName")
+                    .focus();
+
+            }, 50);
+
+        }
+
+
+        /* ===============================
+           TUTUP MODAL
+           =============================== */
+
+        function closeLoginModal() {
+
+            const modal =
+                document.getElementById(
+                    "loginModal"
+                );
+
+
+            modal.classList.remove(
+                "show"
+            );
+
+
+            modal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+        }
+
+
+        /* ===============================
+           SIMPAN DATA SISWA
+           =============================== */
+
+        function saveStudentProfile() {
+
+            const name =
+                document
+                    .getElementById("loginName")
+                    .value
+                    .trim();
+
+
+            const email =
+                document
+                    .getElementById("loginEmail")
+                    .value
+                    .trim();
+
+
+            const error =
+                document.getElementById(
+                    "loginError"
+                );
+
+
+            /* Validasi */
+
+            if (!name || !email) {
+
+                error.textContent =
+                    "Nama dan email wajib diisi.";
+
+                return;
+
+            }
+
+
+            const emailPattern =
+                /^\S+@\S+\.\S+$/;
+
+
+            if (!emailPattern.test(email)) {
+
+                error.textContent =
+                    "Masukkan alamat email yang valid.";
+
+                return;
+
+            }
+
+
+            /* Data profile */
+
+            const profile = {
+
+                name: name,
+
+                email: email,
+
+                updatedAt:
+                    new Date().toISOString()
+
+            };
+
+
+            /* Simpan */
+
+            localStorage.setItem(
+
+                ENGENIX_PROFILE_KEY,
+
+                JSON.stringify(profile)
+
+            );
+
+
+            /*
+             * Disimpan juga dengan key terpisah
+             * agar halaman pretest dapat
+             * mengambilnya.
+             */
+
+            localStorage.setItem(
+                "engenix_student_name",
+                name
+            );
+
+
+            localStorage.setItem(
+                "engenix_student_email",
+                email
+            );
+
+
+            /* Update tampilan */
+
+            updateStudentProfileUI();
+
+
+            closeLoginModal();
+
+        }
+
+
+        /* ===============================
+           UPDATE PROFILE PILL
+           =============================== */
+
+        function updateStudentProfileUI() {
+
+            const profile =
+                getStudentProfile();
+
+
+            const text =
+                document.getElementById(
+                    "studentProfileText"
+                );
+
+
+            if (!text) return;
+
+
+            if (profile) {
+
+                text.textContent =
+                    `${profile.name} • ${profile.email}`;
+
+            } else {
+
+                text.textContent =
+                    "Belum masuk";
+
+            }
+
+        }
+
+
+        /* ===============================
+           SAAT WEBSITE DIBUKA
+           =============================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                updateStudentProfileUI();
+
+
+                const profile =
+                    getStudentProfile();
+
+
+                if (profile) {
+
+                    const link =
+                        document.getElementById(
+                            "pretestLink"
+                        );
+
+
+                    if (link) {
+
+                        link.title =
+                            `Mulai pretest sebagai ${profile.name}`;
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* ===============================
+           ESC UNTUK TUTUP MODAL
+           =============================== */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeLoginModal();
+
+                }
+
+            }
+        );
+
+    </script>
+<!-- ================= SCRIPT UTAMA ================= -->
+<script src="js/script.js"></script>
+<script src="js/i18n-data.js"></script>
+<script src="js/i18n.js"></script>
+</body>
+</html>

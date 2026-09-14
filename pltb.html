@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ENGENIX | Materi PLTB</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Poppins:wght@300;400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<section class="material-page" style="display:block;">
+<div class="material-container">
+<!-- HERO MATERI PLTB -->
+<div class="material-hero-centered">
+<span class="section-label" data-i18n="pltb.001">MATERI PEMBELAJARAN</span>
+<h1 data-i18n="pltb.002">💨 Pembangkit Listrik Tenaga Bayu (PLTB)</h1>
+<p class="material-intro" data-i18n="pltb.003">
+                    Pembangkit Listrik Tenaga Bayu (PLTB) atau turbin angin adalah sistem yang mengubah energi kinetik hembusan angin menjadi energi mekanik putaran rotor, lalu dikonversi menjadi energi listrik. Mari pelajari aerodinamika sudu, komponen nacelle, serta perhitungan potensinya!
+                </p>
+<!-- Gambar Ilustrasi Polos -->
+<div class="hero-image-wrapper">
+<img alt="Ilustrasi PLTB ENGENIX" class="plts-hero-img-large" src="images/pltb-illustration.png"/>
+</div>
+<div class="learning-outcome">
+<h4 data-i18n="pltb.004">🎯 Setelah mempelajari materi ini, kamu diharapkan mampu:</h4>
+<ul>
+<li data-i18n="pltb.005">Menjelaskan prinsip gaya angkat (lift force) aerodinamika pada bilah turbin angin</li>
+<li data-i18n="pltb.006">Mengidentifikasi komponen utama PLTB (rotor, gearbox, generator, anemometer)</li>
+<li data-i18n="pltb.007">Memahami pengaruh kecepatan angin dan diameter rotor terhadap daya listrik</li>
+<li data-i18n="pltb.008">Memahami batas efisiensi Betz Limit dalam ekstraksi energi angin</li>
+</ul>
+</div>
+</div>
+<!-- 3 CARD INFO -->
+<div class="material-info">
+<div class="info-card">
+<span>⏱</span>
+<h4 data-i18n="pltb.009">Durasi</h4>
+<p data-i18n="pltb.010">15-20 Menit</p>
+</div>
+<div class="info-card">
+<span>🎯</span>
+<h4 data-i18n="pltb.011">Fokus</h4>
+<p data-i18n="pltb.012">Wind Engineering</p>
+</div>
+<div class="info-card">
+<span>📚</span>
+<h4 data-i18n="pltb.013">Materi</h4>
+<p data-i18n="pltb.014">10 Submateri</p>
+</div>
+</div>
+<!-- SUBMATERI 1 -->
+<h3 class="material-title" data-i18n="pltb.015">
+<span class="section-number">01</span>
+                Prinsip Fisika Aerodinamika
+            </h3>
+<div class="principle-grid">
+<div class="principle-item">
+<span>💨</span>
+<h4 data-i18n="pltb.016">Energi Kinetik Angin</h4>
+<p data-i18n="pltb.017">Massa udara yang bergerak memiliki energi kinetik berbanding lurus dengan kuadrat kecepatannya.</p>
+</div>
+<div class="principle-item">
+<span>✈️</span>
+<h4 data-i18n="pltb.018">Gaya Angkat (Lift Force)</h4>
+<p data-i18n="pltb.019">Bentuk penampang bilah (airfoil) menciptakan perbedaan tekanan udara yang menghasilkan gaya angkat untuk memutar rotor.</p>
+</div>
+<div class="principle-item">
+<span>⚙️</span>
+<h4 data-i18n="pltb.020">Peningkatan Putaran</h4>
+<p data-i18n="pltb.021">Sistem transmisi (gearbox) menaikkan kecepatan putaran poros pelan dari rotor menjadi putaran cepat untuk generator.</p>
+</div>
+<div class="principle-item">
+<span>🧲</span>
+<h4 data-i18n="pltb.022">Konversi Elektromagnetik</h4>
+<p data-i18n="pltb.023">Generator mengubah putaran cepat poros menjadi energi listrik arus bolak-balik (AC).</p>
+</div>
+</div>
+<!-- SUBMATERI 2 -->
+<h3 class="material-title" data-i18n="pltb.024">
+<span class="section-number">02</span>
+                Cara Kerja PLTB
+            </h3>
+<p class="flow-description" data-i18n="pltb.025">
+                Perhatikan alur konversi energi angin hingga menjadi energi listrik siap pakai:
+            </p>
+<div class="flow-container">
+<div class="flow-item">
+<div class="flow-box">💨 Hembusan Angin</div>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-item">
+<div class="flow-box">🌀 Bilah &amp; Rotor</div>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-item">
+<div class="flow-box">⚙️ Gearbox / Poros</div>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-item">
+<div class="flow-box">⚡ Generator</div>
+</div>
+<div class="flow-arrow">→</div>
+<div class="flow-item">
+<div class="flow-box">🏠 Jaringan Beban</div>
+</div>
+</div>
+<div class="principle-grid">
+<div class="principle-item">
+<span>💨</span>
+<h4 data-i18n="pltb.026">1. Terpaan Angin</h4>
+<p data-i18n="pltb.027">Angin mengenai bilah turbin dengan kecepatan tertentu (kecepatan awal minimal dinamakan <em>cut-in speed</em>).</p>
+</div>
+<div class="principle-item">
+<span>🌀</span>
+<h4 data-i18n="pltb.028">2. Putaran Rotor &amp; Yawing</h4>
+<p data-i18n="pltb.029">Bilah berputar akibar gaya angkat. Sistem <em>Yaw Mechanism</em> (motor penggerak poros vertikal) mengarahkan kepala turbin selalu menghadap datangnya angin.</p>
+</div>
+<div class="principle-item">
+<span>⚙️</span>
+<h4 data-i18n="pltb.030">3. Transmisi Gearbox</h4>
+<p data-i18n="pltb.031">Mengubah putaran lambat rotor (10-20 RPM) menjadi putaran tinggi (1000-1500 RPM) yang dibutuhkan generator.</p>
+</div>
+<div class="principle-item">
+<span>⚡</span>
+<h4 data-i18n="pltb.032">4. Generasi &amp; Inverter</h4>
+<p data-i18n="pltb.033">Listrik yang dihasilkan disesuaikan frekuensi dan tegangannya sebelum disalurkan ke sistem jaringan listrik.</p>
+</div>
+</div>
+<div class="material-box" style="margin-top: 25px;">
+<h3 data-i18n="pltb.034">🤔 Coba Pikirkan!</h3>
+<p data-i18n="pltb.035">Mengapa turbin angin komersial modern hampir selalu dibangun sangat tinggi dengan bilah raksasa berukuran puluhan meter?</p>
+</div>
+<!-- SUBMATERI 3 -->
+<h3 class="material-title" data-i18n="pltb.036">
+<span class="section-number">03</span>
+                Komponen Utama PLTB
+            </h3>
+<div class="principle-grid">
+<div class="principle-item">
+<span>🌀</span>
+<h4 data-i18n="pltb.037">Rotor &amp; Bilah (Blades)</h4>
+<p data-i18n="pltb.038">Komponen penangkap angin. Umumnya terdiri dari 3 bilah berdesain aerodinamis berbahan fiberglass/karbon.</p>
+</div>
+<div class="principle-item">
+<span>🏠</span>
+<h4 data-i18n="pltb.039">Nacelle</h4>
+<p data-i18n="pltb.040">Rumah/kotak pelindung utama di puncak menara yang berisi poros, gearbox, generator, dan pengereman.</p>
+</div>
+<div class="principle-item">
+<span>📶</span>
+<h4 data-i18n="pltb.041">Anemometer &amp; Vane</h4>
+<p data-i18n="pltb.042">Sensor pengukur kecepatan dan arah angin yang terhubung otomatis ke sistem komputer pengontrol turbin.</p>
+</div>
+<div class="principle-item">
+<span>🗼</span>
+<h4 data-i18n="pltb.043">Menara (Tower)</h4>
+<p data-i18n="pltb.044">Struktur penyangga dari baja tebal untuk menopang nacelle pada ketinggian yang kaya akan kecepatan angin deras.</p>
+</div>
+</div>
+<!-- SUBMATERI 4 -->
+<h3 class="material-title" data-i18n="pltb.045">
+<span class="section-number">04</span>
+                Faktor yang Mempengaruhi Kinerja PLTB
+            </h3>
+<div class="material-box">
+<ul>
+<li data-i18n="pltb.046">💨 <strong>Kecepatan Angin (v):</strong> Faktor paling krusial karena daya berbanding lurus dengan pangkat tiga kecepatan (v³).</li>
+<li data-i18n="pltb.047">📐 <strong>Luas Sapuan Rotor (A):</strong> Semakin panjang bilah, semakin luas area penangkapan energi angin.</li>
+<li data-i18n="pltb.048">🌡️ <strong>Kerapatan Udara (ρ):</strong> Udara dingin/padat membawa energi lebih besar dibanding udara panas/tipis.</li>
+<li data-i18n="pltb.049">🗼 <strong>Ketinggian Menara:</strong> Angin di tempat tinggi lebih stabil dan tidak terhalang pepohonan/bangunan.</li>
+<li data-i18n="pltb.050">✋ <strong>Batas Efisiensi Betz (Betz Limit):</strong> Batas teoritis maksimal konversi energi angin adalah 59,3%.</li>
+</ul>
+</div>
+<!-- SUBMATERI 5 -->
+<h3 class="material-title" data-i18n="pltb.051">
+<span class="section-number">05</span>
+                🛠 Bagaimana Engineer Merancang PLTB?
+            </h3>
+<p class="material-intro" data-i18n="pltb.052">
+                Seorang engineer merancang PLTB dengan menganalisis peta angin suatu wilayah dan menyesuaikan spesifikasi teknis turbin.
+            </p>
+<div class="principle-grid">
+<!-- KOTAK 1: SURVEI ANGIN -->
+<div class="principle-item">
+<span>📊</span>
+<h4 data-i18n="pltb.053">Analisis Profil Angin</h4>
+<p data-i18n="pltb.054">Engineer memasang menara anemometer selama minimal 1 tahun untuk mengukur:</p>
+<ul class="mini-list" style="margin-top: 8px; padding-left: 18px; font-size: 0.88rem; color: #555; line-height: 1.5;">
+<li data-i18n="pltb.055"><strong>Rata-rata Kecepatan:</strong> Kecepatan harian dan musiman.</li>
+<li data-i18n="pltb.056"><strong>Arah Dominan:</strong> Menentukan orientasi pemasangan turbin.</li>
+<li data-i18n="pltb.057"><strong>Kecepatan Ekstrem:</strong> Memastikan keamanan struktur saat badai.</li>
+</ul>
+</div>
+<!-- KOTAK 2: KLASIFIKASI TURBIN -->
+<div class="principle-item">
+<span>🌀</span>
+<h4 data-i18n="pltb.058">Sumbu Rotasi Turbin</h4>
+<p data-i18n="pltb.059">Dua jenis utama turbin angin berdasarkan porosnya:</p>
+<ul class="mini-list" style="margin-top: 10px; padding-left: 18px;">
+<li data-i18n="pltb.060"><strong>HAWT (Horizontal Axis):</strong> Poros horizontal, efisiensi sangat tinggi (paling populer).</li>
+<li data-i18n="pltb.061"><strong>VAWT (Vertical Axis):</strong> Poros vertikal, cocok untuk angin dari segala arah di perkotaan.</li>
+</ul>
+</div>
+<!-- KOTAK 3: SPESIFIKASI OPERASIONAL -->
+<div class="principle-item">
+<span>🎛️</span>
+<h4 data-i18n="pltb.062">Batas Kecepatan Kerja</h4>
+<p data-i18n="pltb.063">Tiga titik batas kecepatan angin pada spesifikasi turbin:</p>
+<ul class="mini-list" style="margin-top: 8px; padding-left: 18px; font-size: 0.88rem; color: #555; line-height: 1.5;">
+<li data-i18n="pltb.064"><strong>Cut-in Speed (~3 m/s):</strong> Kecepatan angin minimal agar turbin mulai berputar.</li>
+<li data-i18n="pltb.065"><strong>Rated Speed (~12 m/s):</strong> Kecepatan saat daya listrik mencapai maksimum.</li>
+<li data-i18n="pltb.066"><strong>Cut-out Speed (~25 m/s):</strong> Turbin direm otomatis demi keamanan saat badai.</li>
+</ul>
+</div>
+<!-- KOTAK 4: RUMUS POTENSI DAYA -->
+<div class="principle-item">
+<span>💡</span>
+<h4 data-i18n="pltb.067">Rumus Daya Angin</h4>
+<p data-i18n="pltb.068">Daya teoritis angin yang ditangkap rotor dirumuskan dengan:</p>
+<div style="margin: 10px 0; font-weight:700; color:#245DAB; background:#eef7ff; padding:12px; border-radius:8px; text-align:center; font-size: 1.1rem; border: 1px solid #cce3ff;">
+                        P = ½ × ρ × A × v³ × C<sub>p</sub>
+</div>
+<!-- Keterangan Simbol & Satuan -->
+<div style="font-size: 0.88rem; color : #4a5568; line-height: 1.6; background: #fafafa; padding: 10px 14px; border-radius: 8px; border-left:3px solid #245DAB;">
+<strong data-i18n="pltb.069">Keterangan &amp; Satuan:</strong>
+<ul style="margin: 6px 0 0 0; padding-left: 18px; list-style-type: disc;">
+<li data-i18n="pltb.070"><strong>P</strong> = Daya listrik yang dihasilkan (Watt)</li>
+<li data-i18n="pltb.071"><strong>ρ</strong> = Kerapatan udara (≈1,225 kg/m³)</li>
+<li data-i18n="pltb.072"><strong>A</strong> = Luas sapuan rotor (m²) → <em>A = π × r²</em></li>
+<li data-i18n="pltb.073"><strong>v</strong> = Kecepatan angin (m/s)</li>
+<li data-i18n="pltb.074"><strong>C<sub>p</sub></strong> = Koefisien daya aerobatik (maksimal 0,59)</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- SUBMATERI 6 -->
+<h3 class="material-title" data-i18n="pltb.075">
+<span class="section-number">06</span>
+                🔄 Tahapan Engineering Design
+            </h3>
+<div class="flow-container">
+<div class="flow-box">📊 Ukur Kecepatan Angin</div>
+<div class="flow-arrow">→</div>
+<div class="flow-box">📐 Hitung Luas Rotor &amp; Tinggi</div>
+<div class="flow-arrow">→</div>
+<div class="flow-box">🌀 Pilih Jenis Turbin</div>
+<div class="flow-arrow">→</div>
+<div class="flow-box">✅ Simulasi Output Daya</div>
+</div>
+<div class="material-box">
+<h3 data-i18n="pltb.076">💡 Tips Engineer</h3>
+<p data-i18n="pltb.077">Ingat bahwa kecepatan angin (v) dipangkatkan tiga (v³)! Kenaikan kecepatan angin 2 kali lipat akan meningkatkan potensi daya listrik hingga <strong>8 kali lipat</strong> (2³ = 8). Maka pemilihan lokasi berangin deras adalah kunci utama keberhasilan PLTB!</p>
+</div>
+<div class="material-box" style="margin-top: 20px; background: #eef7ff; border-left: 5px solid #245DAB;">
+<h3 data-i18n="pltb.078">🚀 Persiapan Virtual Laboratory</h3>
+<p data-i18n="pltb.079">Setelah ini kamu akan masuk ke laboratorium virtual untuk merancang ladang angin (wind farm). Terapkan prinsip penyesuaian panjang bilah dan tinggi menara sesuai kecepatan angin lokasi!</p>
+</div>
+<!-- SUBMATERI 7 -->
+<h3 class="material-title" data-i18n="pltb.080">
+<span class="section-number">07</span
+                Keunggulan &amp; Tantangan PLTB
+            </h3>
+<div class="material-grid">
+<div class="material-box">
+<h3 data-i18n="pltb.081">✅ Kelebihan</h3>
+<ul>
+<li data-i18n="pltb.082">Sumber energi terbarukan murni tanpa emisi karbon.</li>
+<li data-i18n="pltb.083">Penggunaan lahan bawah menara masih bisa untuk pertanian/peternakan.</li>
+<li data-i18n="pltb.084">Biaya produksi energi sangat kompetitif di daerah pesisir/bukit.</li>
+</ul>
+</div>
+<div class="material-box">
+<h3 data-i18n="pltb.085">❌ Kekurangan</h3>
+<ul>
+<li data-i18n="pltb.086">Intermiten (kecepatan angin tidak selalu konstan setiap saat).</li>
+<li data-i18n="pltb.087">Potensi dampak visual dan kebisingan suara putaran bilah.</li>
+<li data-i18n="pltb.088">Investasi awal menara dan pondasi terbilang tinggi.</li>
+</ul>
+</div>
+</div>
+<!-- SUBMATERI 8 -->
+<h3 class="material-title" data-i18n="pltb.089">
+<span class="section-number">08</span>
+                💡 Tahukah Kamu?
+            </h3>
+<div class="material-box">
+<ul>
+<li data-i18n="pltb.090">Indonesia memiliki Kebun Angin terbesar di Sidrap dan Jeneponto, Sulawesi Selatan, dengan kapasitas total ratusan Megawatt!</li>
+<li data-i18n="pltb.091">Satu putaran bilah turbin angin skala besar modern dapat menyuplai kebutuhan listrik rumah tangga selama seharian.</li>
+</ul>
+</div>
+<!-- SUBMATERI 9 -->
+<h3 class="material-title" data-i18n="pltb.092">
+<span class="section-number">09</span>
+                📝 Ringkasan Materi
+            </h3>
+<div class="material-box">
+<ul class="mini-list" style="padding-left: 18px;">
+<li data-i18n="pltb.093">PLTB mengonversi energi kinetik angin menjadi energi mekanik rotor lalu menjadi energi listrik generator.</li>
+<li data-i18n="pltb.094">Daya angin dipengaruhi sangat dominan oleh <strong>kecepatan angin (v³)</strong> dan <strong>luas sapuan rotor (A)</strong>.</li>
+<li data-i18n="pltb.095">Menara dibuat tinggi untuk mendapatkan hembusan angin yang lebih deras dan stabil tanpa hambatan.</li>
+</ul>
+</div>
+<!-- SUBMATERI 10 -->
+<h3 class="material-title" data-i18n="pltb.096">
+<span class="section-number">10</span>
+                ✅ Apa yang Sudah Saya Pelajari?
+            </h3>
+<div class="material-box">
+<ul class="mini-list" style="list-style: none; padding-left: 0;">
+<li data-i18n="pltb.097">☑ Saya memahami prinsip aerodinamika gaya angkat pada bilah turbin.</li>
+<li data-i18n="pltb.098">☑ Saya memahami fungsi nacelle, gearbox, generator, dan sensor angin.</li>
+<li data-i18n="pltb.099">☑ Saya tahu pengaruh hubungan kuadratis luas rotor dan kubik kecepatan angin.</li>
+<li data-i18n="pltb.100">☑ Saya siap melakukan simulasi desain PLTB di Virtual Lab.</li>
+</ul>
+</div>
+<!-- SUBMATERI 11 -->
+<h3 class="material-title" data-i18n="pltb.101">
+<span class="section-number">11</span>
+                🧠 Cek Pemahaman
+            </h3>
+<div class="material-box quiz-container">
+<p data-i18n="pltb.102" style="margin-bottom: 20px; font-weight:500;">Jawablah pertanyaan berikut untuk menguji pemahamanmu:</p>
+<form id="quizFormPLTB" onsubmit="event.preventDefault(); alert('Jawaban PLTB berhasil disimpan!')">
+<div class="quiz-item">
+<label data-i18n="pltb.103">1. Mengapa kecepatan angin sangat dominan dampaknya terhadap hasil daya listrik dibanding ukuran rotor?</label>
+<textarea class="quiz-input" placeholder="Tulis jawabanmu di sini..." rows="3"></textarea>
+</div>
+<div class="quiz-item">
+<label data-i18n="pltb.104">2. Apa fungsi utama dari gearbox di dalam nacelle turbin angin?</label>
+<textarea class="quiz-input" placeholder="Tulis jawabanmu di sini..." rows="3"></textarea>
+</div>
+<div class="quiz-item">
+<label data-i18n="pltb.105">3. Mengapa turbin angin harus direm (cut-out) saat terjadi badai atau angin terlalu kencang?</label>
+<textarea class="quiz-input" placeholder="Tulis Jawabanmu di sini..." rows="3"></textarea>
+</div>
+<button class="submit-quiz-btn" data-i18n="pltb.106" type="submit">Kirim Jawaban</button>
+</form>
+</div>
+<!-- SUBMATERI 12 -->
+<h3 class="material-title" data-i18n="pltb.107">
+<span class="section-number">12</span>
+                🎥 Video Cara Kerja PLTB
+            </h3>
+<div class="video-container">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="500" src="https://www.youtube.com/embed/ESK3xukhB4w" title="Cara Kerja PLTB Turbin Angin" width="100%"></iframe>
+</div>
+<div class="material-navigation" style="display: flex; justify-content: space-between; margin-top: 40px;">
+<a class="physics-btn" data-i18n="pltb.108" href="pltmh.html">← Kembali ke PLTMH</a>
+<a class="physics-btn" data-i18n="pltb.109" href="index.html#simulation-section" style="background: #245DAB;">Lanjut ke Virtual Lab 🧪 →</a>
+</div>
+</div>
+</section>
+<script src="js/i18n-data.js"></script>
+<script src="js/i18n.js"></script>
+</body>
+</html>

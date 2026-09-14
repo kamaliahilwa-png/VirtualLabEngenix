@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENGENIX | LKPD Digital - Desa Sukamakmur</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link href="/css/style.css" rel="stylesheet"/>
+
+<style>
+    :root{
+        --lk-primary:#245DAB;
+        --lk-primary-dark:#174A7C;
+        --lk-bg:#eaf6ff;
+        --lk-border:#dcecff;
+        --lk-text:#0f172a;
+        --lk-muted:#64748b;
+        --lk-danger:#dc2626;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+        margin:0;
+        font-family:'Poppins', sans-serif;
+        background:var(--lk-bg);
+        color:var(--lk-text);
+    }
+
+    /* ================= COVER ================= */
+    .lkpd-cover{
+        position:relative;
+        min-height:100vh;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        padding:60px 20px;
+        background:#0e2a4a url('images/sampul LKPD ENGENIX.jpg') center center / cover no-repeat;
+        color:#fff;
+    }
+    .lkpd-cover::before{
+        content:"";
+        position:absolute;
+        inset:0;
+        background:linear-gradient(180deg, rgba(10,30,55,.55) 0%, rgba(10,30,55,.72) 55%, rgba(10,30,55,.88) 100%);
+    }
+    .lkpd-cover-content{
+        position:relative;
+        z-index:2;
+        max-width:760px;
+    }
+    .lkpd-cover-label{
+        display:inline-block;
+        font:700 12px 'Plus Jakarta Sans', sans-serif;
+        letter-spacing:2.4px;
+        text-transform:uppercase;
+        color:#bcd7ff;
+        background:rgba(255,255,255,.1);
+        border:1px solid rgba(255,255,255,.25);
+        border-radius:999px;
+        padding:8px 16px;
+        margin-bottom:20px;
+        backdrop-filter:blur(6px);
+    }
+    .lkpd-cover h1{
+        font-family:'Playfair Display', serif;
+        font-size:clamp(30px, 5vw, 48px);
+        line-height:1.25;
+        margin:0 0 14px;
+    }
+    .lkpd-cover p.sub{
+        font-size:15px;
+        line-height:1.8;
+        color:#dbe9ff;
+        margin:0 0 6px;
+    }
+    .lkpd-cover-meta{
+        margin-top:26px;
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:10px;
+    }
+    .lkpd-cover-meta span{
+        background:rgba(255,255,255,.12);
+        border:1px solid rgba(255,255,255,.28);
+        border-radius:999px;
+        padding:8px 16px;
+        font-size:13px;
+        font-weight:600;
+        backdrop-filter:blur(6px);
+    }
+    .lkpd-cover-btn{
+        margin-top:36px;
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        background:var(--lk-primary);
+        color:#fff;
+        border:none;
+        padding:16px 36px;
+        border-radius:999px;
+        font:700 15px 'Plus Jakarta Sans', sans-serif;
+        cursor:pointer;
+        box-shadow:0 14px 30px rgba(36,93,171,.35);
+        transition:.25s;
+    }
+    .lkpd-cover-btn:hover{
+        background:var(--lk-primary-dark);
+        transform:translateY(-3px);
+    }
+    .lkpd-pair-note{
+        margin-top:22px;
+        font-size:13px;
+        color:#a9c9f2;
+        max-width:520px;
+        line-height:1.7;
+    }
+
+    /* ================= HEADER ================= */
+    .lkpd-header{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        flex-wrap:wrap;
+        gap:10px;
+        padding:16px 6%;
+        background:#fff;
+        box-shadow:0 2px 12px rgba(0,0,0,.05);
+        position:sticky;
+        top:0;
+        z-index:50;
+    }
+    .lkpd-header .brand{
+        font-family:'Playfair Display', serif;
+        font-weight:700;
+        font-size:20px;
+        color:var(--lk-primary);
+    }
+    .lkpd-header .brand span{
+        display:block;
+        font-family:'Poppins', sans-serif;
+        font-weight:500;
+        font-size:12px;
+        color:var(--lk-muted);
+    }
+    .lkpd-header-links{
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+    }
+    .lkpd-header-links a{
+        text-decoration:none;
+        font:600 13px 'Plus Jakarta Sans', sans-serif;
+        color:var(--lk-primary);
+        border:1.5px solid var(--lk-border);
+        border-radius:999px;
+        padding:9px 16px;
+        transition:.2s;
+    }
+    .lkpd-header-links a:hover{
+        background:#eef7ff;
+    }
+
+    /* ================= CONTAINER & CARDS ================= */
+    .lkpd-container{
+        max-width:900px;
+        margin:0 auto;
+        padding:36px 20px 90px;
+    }
+    .lkpd-card{
+        background:#fff;
+        border:1px solid var(--lk-border);
+        border-radius:20px;
+        padding:28px 30px;
+        margin-bottom:26px;
+        box-shadow:0 12px 30px rgba(36,93,171,.06);
+    }
+    .lkpd-section-title{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        font-family:'Playfair Display', serif;
+        font-size:22px;
+        color:var(--lk-primary);
+        margin:0 0 20px;
+        padding-left:14px;
+        border-left:5px solid var(--lk-primary);
+    }
+    .lkpd-fase-title{
+        font:700 15px 'Plus Jakarta Sans', sans-serif;
+        color:#fff;
+        background:var(--lk-primary);
+        display:inline-block;
+        padding:8px 18px;
+        border-radius:999px;
+        margin:26px 0 16px;
+    }
+    .lkpd-fase-title:first-of-type{ margin-top:0; }
+    .lkpd-desc{
+        font-size:14.5px;
+        line-height:1.85;
+        color:#475569;
+        margin:0 0 16px;
+    }
+    .lkpd-field{
+        margin-bottom:20px;
+    }
+    .lkpd-field label{
+        display:block;
+        font-weight:600;
+        font-size:14px;
+        color:var(--lk-text);
+        margin-bottom:8px;
+        line-height:1.6;
+    }
+    .lkpd-field .lkpd-hint{
+        display:block;
+        font-weight:400;
+        font-size:12.5px;
+        color:var(--lk-muted);
+        margin-top:4px;
+    }
+    .lkpd-input, .lkpd-textarea, .lkpd-select{
+        width:100%;
+        padding:13px 15px;
+        border:1.5px solid var(--lk-border);
+        border-radius:12px;
+        font-family:inherit;
+        font-size:14px;
+        color:var(--lk-text);
+        outline:none;
+        transition:.2s;
+        background:#f8fbff;
+    }
+    .lkpd-input:focus, .lkpd-textarea:focus, .lkpd-select:focus{
+        border-color:var(--lk-primary);
+        background:#fff;
+        box-shadow:0 0 0 3px rgba(36,93,171,.10);
+    }
+    .lkpd-textarea{ resize:vertical; line-height:1.7; }
+    .lkpd-input:invalid:not(:placeholder-shown),
+    .lkpd-textarea:invalid:not(:placeholder-shown){
+        border-color:#fca5a5;
+    }
+
+    .lkpd-row2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .lkpd-row3{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    @media(max-width:640px){
+        .lkpd-row2, .lkpd-row3{ grid-template-columns:1fr; }
+    }
+
+    .lkpd-info-box{
+        background:#f8fbff;
+        border:1px solid var(--lk-border);
+        border-left:5px solid var(--lk-primary);
+        border-radius:14px;
+        padding:18px 22px;
+        margin-bottom:18px;
+    }
+    .lkpd-info-box ul{ margin:8px 0 0; padding-left:20px; line-height:1.9; color:#334155; }
+    .lkpd-info-box li{ margin-bottom:4px; }
+
+    .lkpd-criteria-grid{
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+        margin:18px 0;
+    }
+    @media(max-width:640px){ .lkpd-criteria-grid{ grid-template-columns:1fr; } }
+    .lkpd-criteria-item{
+        background:#eef7ff;
+        border:1px solid var(--lk-border);
+        border-radius:12px;
+        padding:14px 16px;
+    }
+    .lkpd-criteria-item span.label{
+        display:block;
+        font-size:12px;
+        color:var(--lk-muted);
+        text-transform:uppercase;
+        letter-spacing:.5px;
+        margin-bottom:4px;
+    }
+    .lkpd-criteria-item strong{
+        color:var(--lk-primary);
+        font-size:15px;
+    }
+
+    .lkpd-task-box{
+        margin-top:18px;
+        background:#fff7ed;
+        border:1.5px dashed #f59e0b;
+        border-radius:14px;
+        padding:16px 20px;
+        font-size:14px;
+        color:#78350f;
+        line-height:1.8;
+    }
+
+    .lkpd-radio-group{
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+    }
+    .lkpd-radio-group label{
+        display:flex;
+        align-items:flex-start;
+        gap:10px;
+        font-weight:500;
+        font-size:14px;
+        background:#f8fbff;
+        border:1.5px solid var(--lk-border);
+        border-radius:12px;
+        padding:12px 16px;
+        cursor:pointer;
+        transition:.15s;
+    }
+    .lkpd-radio-group label:hover{ border-color:#a9c9f2; }
+    .lkpd-radio-group input{ margin-top:3px; accent-color:var(--lk-primary); }
+
+    /* ================= TABEL UJI COBA ================= */
+    .lkpd-table-wrap{
+        overflow-x:auto;
+        border-radius:14px;
+        border:1px solid var(--lk-border);
+    }
+    table.lkpd-table{
+        width:100%;
+        border-collapse:collapse;
+        min-width:760px;
+        font-size:13px;
+    }
+    table.lkpd-table th{
+        background:var(--lk-primary);
+        color:#fff;
+        padding:12px 10px;
+        text-align:left;
+        font-weight:600;
+        white-space:nowrap;
+    }
+    table.lkpd-table td{
+        padding:8px;
+        border-bottom:1px solid var(--lk-border);
+        vertical-align:top;
+    }
+    table.lkpd-table tr:nth-child(even){ background:#f8fbff; }
+    table.lkpd-table input, table.lkpd-table select{
+        width:100%;
+        padding:8px 9px;
+        border:1.5px solid var(--lk-border);
+        border-radius:8px;
+        font-size:13px;
+        font-family:inherit;
+        background:#fff;
+    }
+    .lkpd-add-row-btn{
+        margin-top:14px;
+        background:transparent;
+        border:1.5px dashed var(--lk-primary);
+        color:var(--lk-primary);
+        font-weight:700;
+        font-size:13px;
+        padding:10px 18px;
+        border-radius:10px;
+        cursor:pointer;
+    }
+    .lkpd-add-row-btn:hover{ background:#eef7ff; }
+
+    /* ================= FOOTER ACTIONS ================= */
+    .lkpd-footer-actions{
+        text-align:center;
+        margin-top:10px;
+    }
+    .lkpd-finish-btn{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        background:#16a34a;
+        color:#fff;
+        border:none;
+        padding:17px 42px;
+        border-radius:999px;
+        font:700 16px 'Plus Jakarta Sans', sans-serif;
+        cursor:pointer;
+        box-shadow:0 14px 28px rgba(22,163,74,.28);
+        transition:.2s;
+    }
+    .lkpd-finish-btn:hover{ background:#15803d; transform:translateY(-3px); }
+    .lkpd-save-status{
+        margin-top:14px;
+        font-size:12.5px;
+        color:var(--lk-muted);
+    }
+
+    @media print{
+        .lkpd-cover, .lkpd-header, .lkpd-add-row-btn, .lkpd-footer-actions{ display:none !important; }
+        .lkpd-container{ padding:0; max-width:100%; }
+        .lkpd-card{ box-shadow:none; border:1px solid #ccc; break-inside:avoid; }
+        body{ background:#fff; }
+    }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<section class="lkpd-cover" id="lkpdCover">
+<div class="lkpd-cover-content">
+<span class="lkpd-cover-label">Lembar Kerja Peserta Didik · Digital</span>
+<h1>LKPD Digital ENGENIX<br>Proyek Desa Mandiri Energi</h1>
+<p class="sub"><strong>Materi:</strong> Energi Terbarukan (PLTB, PLTMH, PLTS)</p>
+<p class="sub"><strong>Pendekatan:</strong> Engineering Design Process (EDP) &amp; STEM</p>
+<p class="sub"><strong>Media Pembelajaran:</strong> Virtual Laboratory ENGENIX</p>
+
+<div class="lkpd-cover-meta">
+<span>📘 Mata Pelajaran: Fisika</span>
+<span>🎓 Kelas: X SMA</span>
+<span>👥 Dikerjakan Berpasangan</span>
+</div>
+
+<button class="lkpd-cover-btn" type="button" onclick="document.getElementById('lkpdForm').scrollIntoView({behavior:'smooth'})">
+🚀 Mulai Mengisi LKPD
+</button>
+
+<p class="lkpd-pair-note">
+💡 Kegiatan ini dikerjakan <strong>berpasangan (2 orang 1 kelompok)</strong>. Satu anggota mengisi LKPD ini, sementara satu anggota lainnya membuka dan menjalankan <strong>Virtual Laboratory ENGENIX</strong> untuk mencoba simulasi PLTB, PLTMH, dan PLTS.
+</p>
+</div>
+</section>
+
+<!-- ===================== HEADER ===================== -->
+<header class="lkpd-header">
+<div class="brand">
+ENGENIX
+<span>LKPD Digital — Proyek Desa Sukamakmur</span>
+</div>
+<div class="lkpd-header-links">
+<a href="index.html">← Kembali ke Beranda</a>
+<a href="virtuallab.html">🧪 Buka Virtual Lab</a>
+</div>
+</header>
+
+<div class="lkpd-container">
+<form id="lkpdForm" onsubmit="return false;">
+
+<!-- ===================== A. IDENTITAS KELOMPOK ===================== -->
+<div class="lkpd-card">
+<h2 class="lkpd-section-title">A. Identitas Kelompok</h2>
+<div class="lkpd-criteria-grid">
+<div class="lkpd-criteria-item">
+<span class="label">Mata Pelajaran</span>
+<strong>Fisika</strong>
+</div>
+<div class="lkpd-criteria-item">
+<span class="label">Kelas</span>
+<strong>X SMA</strong>
+</div>
+</div>
+
+<div class="lkpd-row2">
+<div class="lkpd-field">
+<label for="anggota1">Nama Anggota 1</label>
+<input class="lkpd-input" id="anggota1" placeholder="Tuliskan nama lengkap..." required type="text"/>
+</div>
+<div class="lkpd-field">
+<label for="anggota2">Nama Anggota 2</label>
+<input class="lkpd-input" id="anggota2" placeholder="Tuliskan nama lengkap..." required type="text"/>
+</div>
+</div>
+</div>
+
+<!-- ===================== B. TUJUAN PEMBELAJARAN ===================== -->
+<div class="lkpd-card">
+<h2 class="lkpd-section-title">B. Tujuan Pembelajaran</h2>
+<div class="lkpd-info-box">
+<ul>
+<li>Peserta didik mampu menganalisis hubungan antar variabel fisis pada sistem pembangkit listrik (PLTB, PLTMH, dan PLTS).</li>
+<li>Peserta didik mampu menyusun rancangan sistem energi terbarukan berdasarkan studi kasus kondisi geografis suatu wilayah.</li>
+<li>Peserta didik mampu menguji, mengevaluasi, dan mengoptimasi rancangan menggunakan Virtual Laboratory ENGENIX.</li>
+</ul>
+</div>
+</div>
+
+<!-- ===================== C. PROFIL PELAJAR PANCASILA ===================== -->
+<div class="lkpd-card">
+<h2 class="lkpd-section-title">C. Profil Pelajar Pancasila</h2>
+<p class="lkpd-desc">Melalui kegiatan proyek virtual ini, peserta didik diharapkan dapat mengembangkan dimensi:</p>
+<div class="lkpd-info-box">
+<ul>
+<li><strong>Bergotong Royong</strong> — Berkolaborasi dan berdiskusi dalam tim untuk menyelesaikan tantangan desain sistem energi.</li>
+<li><strong>Bernalar Kritis</strong> — Menganalisis data hasil simulasi dan mengevaluasi efisiensi pembangkit listrik.</li>
+<li><strong>Kreatif</strong> — Menyusun rancangan konfigurasi energi terbarukan yang paling optimal sesuai batas anggaran.</li>
+</ul>
+</div>
+</div>
+
+<!-- ===================== D. PERTANYAAN PEMANTIK ===================== -->
+<div class="lkpd-card">
+<h2 class="lkpd-section-title">D. Pertanyaan Pemantik</h2>
+<p class="lkpd-desc">Diskusikan bersama kelompokmu sebelum memulai proyek!</p>
+
+<div class="lkpd-field">
+<label for="pemantik1">1. Pernahkah kalian membayangkan dari mana asal listrik yang kalian gunakan setiap hari jika sumber batu bara di bumi benar-benar habis?</label>
+<textarea class="lkpd-textarea" id="pemantik1" placeholder="Tulis jawabanmu di sini..." required rows="4"></textarea>
+</div>
+
+<div class="lkpd-field">
+<label for="pemantik2">2. Mengapa tidak semua daerah di Indonesia cocok untuk dibangun Pembangkit Listrik Tenaga Air atau Tenaga Angin?</label>
+<textarea class="lkpd-textarea" id="pemantik2" placeholder="Tulis jawabanmu di sini..." required rows="4"></textarea>
+</div>
+</div>
+
+<!-- ===================== E. DESKRIPSI TANTANGAN DESAIN ===================== -->
+<div class="lkpd-card">
+<h2 class="lkpd-section-title">E. Deskripsi Tantangan Desain (Design Challenge)</h2>
+<p class="lkpd-desc"><strong>Studi Kasus: Proyek Desa Mandiri Energi</strong><br>
+Desa "Sukamakmur" adalah sebuah desa terpencil yang belum dialiri listrik PLN. Pemerintah daerah menunjuk kelompok kalian sebagai tim insinyur energi untuk membangun sistem pembangkit listrik terbarukan di desa tersebut.</p>
+
+<p class="lkpd-desc" style="margin-bottom:6px;"><strong>Berdasarkan data survei wilayah, diketahui kriteria sebagai berikut:</strong></p>
+<div class="lkpd-criteria-grid">
+<div class="lkpd-criteria-item">
+<span class="label">⚡ Kebutuhan Energi Minimum</span>
+<strong>50.000 Watt (50 kW)</strong>
+</div>
+<div class="lkpd-criteria-item">
+<span class="label">💰 Batas Maksimal Anggaran</span>
+<strong>Rp 150.000.000</strong>
+</div>
+<div class="lkpd-criteria-item">
+<span class="label">📏 Batas Maksimal Luas Lahan</span>
+<strong>500 m²</strong>
+</div>
+<div class="lkpd-criteria-item">
+<span class="label">🌦️ Potensi Alam</span>
+<strong style="font-size:13px;line-height:1.5;">Angin stabil, sungai dari pegunungan, matahari terik sepanjang tahun</strong>
+</div>
+</div>
+
+<div class="lkpd-task-box">
+🎯 <strong>Tugas Kalian:</strong> Pilihlah satu atau kombinasi pembangkit listrik (PLTB, PLTMH, atau PLTS) di simulasi ENGENIX yang paling optimal, efisien, dan tidak melebihi anggaran untuk memenuhi kebutuhan listrik Desa Sukamakmur!
+</div>
+</div>
+
+<!-- ===================== F. TAHAPAN PENYELESAIAN (EDP) ===================== -->
+<div class="lkpd-card">
+<h2 class="lkpd-section-title">F. Tahapan Penyelesaian (Engineering Design Process)</h2>
+
+<div class="lkpd-fase-title">Fase 1 — Identifikasi Masalah</div>
+<p class="lkpd-desc">Berdasarkan studi kasus di atas, tuliskan apa saja yang menjadi tujuan utama dan batasan dari rancangan kalian!</p>
+<div class="lkpd-row3">
+<div class="lkpd-field">
+<label for="f1target">Target Daya Listrik Minimal (Watt)</label>
+<input class="lkpd-input" id="f1target" min="0" placeholder="cth: 50000" required type="number"/>
+</div>
+<div class="lkpd-field">
+<label for="f1biaya">Batasan Biaya Maksimal (Rp)</label>
+<input class="lkpd-input" id="f1biaya" min="0" placeholder="cth: 150000000" required type="number"/>
+</div>
+<div class="lkpd-field">
+<label for="f1lahan">Batasan Area/Lahan (m²)</label>
+<input class="lkpd-input" id="f1lahan" min="0" placeholder="cth: 500" required type="number"/>
+</div>
+</div>
+
+<div class="lkpd-fase-title">Fase 2 — Riset &amp; Pengumpulan Informasi</div>
+<p class="lkpd-desc">Diskusikan dengan teman kelompokmu dan jawablah pertanyaan berikut sebelum menjalankan simulasi:</p>
+<div class="lkpd-field">
+<label for="f2q1">1. Jenis pembangkit apa (PLTB, PLTMH, atau PLTS) yang menurut kelompok kalian paling cocok dipilih? Berikan alasan fisisnya!</label>
+<textarea class="lkpd-textarea" id="f2q1" placeholder="Tulis jawabanmu di sini..." required rows="4"></textarea>
+</div>
+<div class="lkpd-field">
+<label for="f2q2">2. Variabel fisika apa saja yang nantinya harus kalian atur (manipulasi) di ENGENIX untuk mendapatkan daya maksimal pada pembangkit pilihan kalian?</label>
+<textarea class="lkpd-textarea" id="f2q2" placeholder="Tulis jawabanmu di sini..." required rows="4"></textarea>
+</div>
+
+<div class="lkpd-fase-title">Fase 3 — Pembuatan Desain Awal</div>
+<p class="lkpd-desc">Tentukan parameter awal (rancangan ke-1) yang kalian masukkan dalam Virtual Lab ENGENIX. Isi parameter sesuai jenis pembangkit yang kalian pilih — <strong>isi angka 0 pada pembangkit yang tidak dipilih</strong> (tetap wajib diisi, minimal dengan 0).</p>
+
+<p style="font-weight:700;color:var(--lk-primary);margin:14px 0 8px;">🌬️ PLTB (Angin)</p>
+<div class="lkpd-row2">
+<div class="lkpd-field">
+<label for="f3plt_v">Kecepatan Angin (m/s)</label>
+<input class="lkpd-input" id="f3plt_v" min="0" placeholder="0" required step="any" type="number"/>
+</div>
+<div class="lkpd-field">
+<label for="f3plt_r">Jari-jari Rotor (m)</label>
+<input class="lkpd-input" id="f3plt_r" min="0" placeholder="0" required step="any" type="number"/>
+</div>
+</div>
+
+<p style="font-weight:700;color:var(--lk-primary);margin:14px 0 8px;">💧 PLTMH (Air)</p>
+<div class="lkpd-row2">
+<div class="lkpd-field">
+<label for="f3mh_q">Debit Air (m³/s)</label>
+<input class="lkpd-input" id="f3mh_q" min="0" placeholder="0" required step="any" type="number"/>
+</div>
+<div class="lkpd-field">
+<label for="f3mh_h">Ketinggian / Head (m)</label>
+<input class="lkpd-input" id="f3mh_h" min="0" placeholder="0" required step="any" type="number"/>
+</div>
+</div>
+
+<p style="font-weight:700;color:var(--lk-primary);margin:14px 0 8px;">☀️ PLTS (Surya)</p>
+<div class="lkpd-row2">
+<div class="lkpd-field">
+<label for="f3s_a">Luas Panel (m²)</label>
+<input class="lkpd-input" id="f3s_a" min="0" placeholder="0" required step="any" type="number"/>
+</div>
+<div class="lkpd-field">
+<label for="f3s_g">Intensitas Cahaya (W/m²)</label>
+<input class="lkpd-input" id="f3s_g" min="0" placeholder="0" required step="any" type="number"/>
+</div>
+</div>
+
+<div class="lkpd-fase-title">Fase 4 — Uji Coba Simulasi</div>
+<p class="lkpd-desc">Jalankan simulasi ENGENIX. Masukkan nilai parameter rancangan awal tadi, lalu catat hasilnya pada tabel di bawah ini. Lakukan beberapa kali uji coba hingga menemukan komposisi terbaik!</p>
+
+<div class="lkpd-table-wrap">
+<table class="lkpd-table">
+<thead>
+<tr>
+<th>Percobaan</th>
+<th>Jenis Pembangkit</th>
+<th>Parameter yang Diubah</th>
+<th>Daya Dihasilkan (Watt)</th>
+<th>Total Biaya (Rp)</th>
+<th>Efisiensi (%)</th>
+<th>Memenuhi Target</th>
+</tr>
+</thead>
+<tbody id="ujiCobaBody"></tbody>
+</table>
+</div>
+<button class="lkpd-add-row-btn" id="addUjiCobaBtn" type="button">+ Tambah Uji Coba</button>
+
+<div class="lkpd-fase-title">Fase 5 — Evaluasi dan Optimasi</div>
+<p class="lkpd-desc">Berdasarkan tabel pengujian di atas, jawablah pertanyaan berikut:</p>
+<div class="lkpd-field">
+<label for="f5q1">1. Pada uji coba ke berapa rancangan kalian berhasil memenuhi semua kriteria (daya mencukupi, biaya aman, efisiensi tinggi)?</label>
+<textarea class="lkpd-textarea" id="f5q1" placeholder="Tulis jawabanmu di sini..." required rows="3"></textarea>
+</div>
+<div class="lkpd-field">
+<label for="f5q2">2. Kendala apa yang kalian temui pada "Uji Coba ke-1"? Apa yang kalian ubah pada parameter fisika di uji coba selanjutnya untuk memperbaiki hal tersebut?</label>
+<textarea class="lkpd-textarea" id="f5q2" placeholder="Tulis jawabanmu di sini..." required rows="4"></textarea>
+</div>
+<div class="lkpd-field">
+<label for="f5q3">3. Berdasarkan simulasi, bagaimana hubungan antar variabel yang kalian ubah (misal: penambahan debit air/kecepatan angin) terhadap total daya listrik yang dihasilkan?</label>
+<textarea class="lkpd-textarea" id="f5q3" placeholder="Tulis jawabanmu di sini..." required rows="4"></textarea>
+</div>
+
+<div class="lkpd-fase-title">Fase 6 — Kesimpulan</div>
+<div class="lkpd-field">
+<label for="f6kesimpulan">Sebagai tim insinyur, tuliskan laporan akhir keputusan desain kalian untuk memenuhi kebutuhan listrik Desa Sukamakmur! (Sebutkan jenis pembangkit, spesifikasi parameter, daya akhir, efisiensi, dan total biaya).</label>
+<textarea class="lkpd-textarea" id="f6kesimpulan" placeholder="Tulis laporan akhir kalian di sini..." required rows="6"></textarea>
+</div>
+</div>
+
+<!-- ===================== G. REFLEKSI PEMBELAJARAN ===================== -->
+<div class="lkpd-card">
+<h2 class="lkpd-section-title">G. Refleksi Pembelajaran</h2>
+
+<div class="lkpd-field">
+<label>1. Bagaimana tingkat pemahaman dan pengalaman belajar kalian setelah menggunakan Virtual Lab ENGENIX?</label>
+<div class="lkpd-radio-group">
+<label><input name="refleksi1" required type="radio" value="Sangat paham dan pembelajaran menyenangkan"/> Sangat paham dan pembelajaran menyenangkan</label>
+<label><input name="refleksi1" required type="radio" value="Cukup paham"/> Cukup paham</label>
+<label><input name="refleksi1" required type="radio" value="Masih kurang paham / butuh penjelasan tambahan"/> Masih kurang paham / butuh penjelasan tambahan</label>
+</div>
+</div>
+
+<div class="lkpd-field">
+<label for="refleksi2">2. Bagian mana dari proyek desain ini yang menurut kalian paling menantang atau sulit?</label>
+<textarea class="lkpd-textarea" id="refleksi2" placeholder="Tulis jawabanmu di sini..." required rows="3"></textarea>
+</div>
+
+<div class="lkpd-field">
+<label for="refleksi3">3. Apa satu hal baru yang kalian pelajari dari kegiatan hari ini?</label>
+<textarea class="lkpd-textarea" id="refleksi3" placeholder="Tulis jawabanmu di sini..." required rows="3"></textarea>
+</div>
+</div>
+
+<div class="lkpd-footer-actions">
+<button class="lkpd-finish-btn" onclick="handleFinishLkpd()" type="button">✅ Selesai &amp; Cetak LKPD</button>
+<p class="lkpd-save-status" id="lkpdSaveStatus">Jawabanmu otomatis tersimpan di perangkat ini selama pengerjaan.</p>
+</div>
+
+</form>
+</div>
+
+<script>
+/* ==========================================
+   TABEL UJI COBA — BARIS DINAMIS
+   ========================================== */
+let ujiCobaCount = 0;
+
+function buildUjiCobaRow(){
+    ujiCobaCount++;
+    const idx = ujiCobaCount;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+        <td style="font-weight:700;color:#245DAB;white-space:nowrap;">Uji Coba ${idx}</td>
+        <td>
+            <select class="lkpd-uc-jenis" required>
+                <option value="">Pilih...</option>
+                <option value="PLTB">PLTB</option>
+                <option value="PLTMH">PLTMH</option>
+                <option value="PLTS">PLTS</option>
+            </select>
+        </td>
+        <td><input class="lkpd-uc-parameter" placeholder="cth: kecepatan angin" required type="text"/></td>
+        <td><input class="lkpd-uc-daya" min="0" placeholder="Watt" required step="any" type="number"/></td>
+        <td><input class="lkpd-uc-biaya" min="0" placeholder="Rp" required step="any" type="number"/></td>
+        <td><input class="lkpd-uc-efisiensi" max="100" min="0" placeholder="%" required step="any" type="number"/></td>
+        <td>
+            <select class="lkpd-uc-target" required>
+                <option value="">Pilih...</option>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </select>
+        </td>`;
+    document.getElementById("ujiCobaBody").appendChild(tr);
+}
+
+document.getElementById("addUjiCobaBtn").addEventListener("click", buildUjiCobaRow);
+
+// Render 2 baris awal (Uji Coba 1 & 2) sesuai LKPD cetak
+buildUjiCobaRow();
+buildUjiCobaRow();
+
+/* ==========================================
+   AUTOSAVE KE LOCALSTORAGE
+   ========================================== */
+const LKPD_STORAGE_KEY = "engenix_lkpd_data";
+
+function collectLkpdData(){
+    const form = document.getElementById("lkpdForm");
+    const data = { fields: {}, ujiCoba: [] };
+
+    form.querySelectorAll("input[id], textarea[id]").forEach(el => {
+        data.fields[el.id] = el.value;
+    });
+    form.querySelectorAll("input[type=radio]:checked").forEach(el => {
+        data.fields[el.name] = el.value;
+    });
+
+    document.querySelectorAll("#ujiCobaBody tr").forEach(row => {
+        data.ujiCoba.push({
+            jenis: row.querySelector(".lkpd-uc-jenis").value,
+            parameter: row.querySelector(".lkpd-uc-parameter").value,
+            daya: row.querySelector(".lkpd-uc-daya").value,
+            biaya: row.querySelector(".lkpd-uc-biaya").value,
+            efisiensi: row.querySelector(".lkpd-uc-efisiensi").value,
+            target: row.querySelector(".lkpd-uc-target").value
+        });
+    });
+
+    return data;
+}
+
+function saveLkpdToLocalStorage(){
+    try{
+        localStorage.setItem(LKPD_STORAGE_KEY, JSON.stringify(collectLkpdData()));
+        const status = document.getElementById("lkpdSaveStatus");
+        if(status) status.textContent = "💾 Tersimpan otomatis · " + new Date().toLocaleTimeString("id-ID");
+    }catch(err){
+        console.warn("Gagal menyimpan LKPD ke localStorage:", err);
+    }
+}
+
+function restoreLkpdFromLocalStorage(){
+    let saved;
+    try{
+        const raw = localStorage.getItem(LKPD_STORAGE_KEY);
+        if(!raw) return;
+        saved = JSON.parse(raw);
+    }catch(err){
+        return;
+    }
+
+    if(saved.ujiCoba && saved.ujiCoba.length > 2){
+        for(let i = 2; i < saved.ujiCoba.length; i++) buildUjiCobaRow();
+    }
+
+    if(saved.fields){
+        Object.keys(saved.fields).forEach(key => {
+            const byId = document.getElementById(key);
+            if(byId){
+                byId.value = saved.fields[key];
+                return;
+            }
+            const radio = document.querySelector(`input[name="${key}"][value="${CSS.escape(saved.fields[key])}"]`);
+            if(radio) radio.checked = true;
+        });
+    }
+
+    if(saved.ujiCoba){
+        const rows = document.querySelectorAll("#ujiCobaBody tr");
+        saved.ujiCoba.forEach((rowData, i) => {
+            const row = rows[i];
+            if(!row) return;
+            row.querySelector(".lkpd-uc-jenis").value = rowData.jenis || "";
+            row.querySelector(".lkpd-uc-parameter").value = rowData.parameter || "";
+            row.querySelector(".lkpd-uc-daya").value = rowData.daya || "";
+            row.querySelector(".lkpd-uc-biaya").value = rowData.biaya || "";
+            row.querySelector(".lkpd-uc-efisiensi").value = rowData.efisiensi || "";
+            row.querySelector(".lkpd-uc-target").value = rowData.target || "";
+        });
+    }
+}
+
+restoreLkpdFromLocalStorage();
+
+const lkpdForm = document.getElementById("lkpdForm");
+lkpdForm.addEventListener("input", saveLkpdToLocalStorage);
+lkpdForm.addEventListener("change", saveLkpdToLocalStorage);
+
+/* ==========================================
+   ID KELOMPOK (persist per perangkat/kelompok)
+   ========================================== */
+const LKPD_GROUP_ID_KEY = "engenix_lkpd_kelompok_id";
+
+function getOrCreateKelompokId(){
+    let id = localStorage.getItem(LKPD_GROUP_ID_KEY);
+    if(!id){
+        id = "LKPD-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+        localStorage.setItem(LKPD_GROUP_ID_KEY, id);
+    }
+    return id;
+}
+
+/* ==========================================
+   KIRIM KE GOOGLE SHEETS
+   ========================================== */
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-AUDkZF0vZNkZZHESTSLmo-8wRsFxhKyoS3hiFTms6_96KL6WIG1-KT0SmZhDZHoxVg/exec";
+
+function buildLkpdPayload(kelompokId){
+    const raw = collectLkpdData(); // { fields: {...by id...}, ujiCoba: [...] }
+    const f = raw.fields;
+
+    return {
+        action: "lkpd",
+        kelompokId: kelompokId,
+        anggota1: f.anggota1 || "",
+        anggota2: f.anggota2 || "",
+        pemantik1: f.pemantik1 || "",
+        pemantik2: f.pemantik2 || "",
+        f1Target: f.f1target || "",
+        f1Biaya: f.f1biaya || "",
+        f1Lahan: f.f1lahan || "",
+        f2q1: f.f2q1 || "",
+        f2q2: f.f2q2 || "",
+        f3PltbV: f.f3plt_v || "",
+        f3PltbR: f.f3plt_r || "",
+        f3MhQ: f.f3mh_q || "",
+        f3MhH: f.f3mh_h || "",
+        f3sA: f.f3s_a || "",
+        f3sG: f.f3s_g || "",
+        ujiCoba: raw.ujiCoba,
+        f5q1: f.f5q1 || "",
+        f5q2: f.f5q2 || "",
+        f5q3: f.f5q3 || "",
+        f6kesimpulan: f.f6kesimpulan || "",
+        refleksi1: f.refleksi1 || "",
+        refleksi2: f.refleksi2 || "",
+        refleksi3: f.refleksi3 || ""
+    };
+}
+
+function sendLkpdToGoogleSheet(){
+    const statusEl = document.getElementById("lkpdSaveStatus");
+
+    if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.indexOf("PASTE_URL") !== -1){
+        if(statusEl) statusEl.textContent = "⚠ URL Google Apps Script belum dikonfigurasi.";
+        return;
+    }
+
+    const kelompokId = getOrCreateKelompokId();
+    const payload = buildLkpdPayload(kelompokId);
+
+    if(statusEl) statusEl.textContent = "⏳ Mengirim LKPD kelompok ke Google Sheets...";
+
+    fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+    })
+    .then(()=>{
+        if(statusEl) statusEl.textContent = "✅ LKPD kelompok tersimpan ke Google Sheets.";
+    })
+    .catch((err)=>{
+        console.error("Gagal mengirim LKPD ke Google Sheets:", err);
+        if(statusEl) statusEl.textContent = "⚠ Gagal mengirim ke Google Sheets, tapi data tetap tersimpan di perangkat ini.";
+    });
+}
+
+/* ==========================================
+   VALIDASI & CETAK
+   ========================================== */
+function handleFinishLkpd(){
+    const form = document.getElementById("lkpdForm");
+    saveLkpdToLocalStorage();
+
+    if(!form.checkValidity()){
+        form.reportValidity();
+        return;
+    }
+
+    // Kirim ke Google Sheets di background, tidak menunggu sebelum mencetak.
+    sendLkpdToGoogleSheet();
+
+    window.print();
+}
+</script>
+
+</body>
+</html>

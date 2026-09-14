@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENGENIX | Pretest</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link href="/css/style.css" rel="stylesheet"/>
+
+    <style>
+        :root {
+            --pt-primary: #245DAB;
+            --pt-primary-dark: #1a4680;
+            --pt-bg: #f4f8ff;
+            --pt-border: #dcecff;
+            --pt-danger: #dc2626;
+        }
+
+        * { box-sizing: border-box; }
+
+        body.pretest-body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(180deg, #eef7ff 0%, #f4f8ff 40%, #ffffff 100%);
+            min-height: 100vh;
+            color: #0f172a;
+        }
+
+        .pretest-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 32px;
+        }
+
+        .pretest-header .brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--pt-primary);
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+        }
+
+        .pretest-header a.exit-link {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #dcecff;
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+        .pretest-header a.exit-link:hover { background: #eef7ff; color: var(--pt-primary); }
+
+        .pretest-stage {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 20px 24px 60px;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ============ SCREENS (act like separate pages) ============ */
+        .pt-screen {
+            width: 100%;
+            display: none;
+            opacity: 0;
+            transform: translateY(18px);
+        }
+        .pt-screen.active {
+            display: block;
+            animation: ptFadeIn .45s ease forwards;
+        }
+        @keyframes ptFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============ INTRO SCREEN ============ */
+        .pt-intro {
+            background: #ffffff;
+            border: 1px solid var(--pt-border);
+            border-radius: 22px;
+            padding: 48px 40px;
+            text-align: center;
+            box-shadow: 0 20px 45px rgba(36,93,171,0.08);
+        }
+        .pt-intro .icon-badge {
+            width: 72px; height: 72px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #245DAB, #4c8ce0);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; margin: 0 auto 22px;
+            box-shadow: 0 12px 24px rgba(36,93,171,0.28);
+        }
+        .pt-intro h1 { font-size: 1.7rem; margin: 0 0 10px; color: #0f172a; }
+        .pt-intro p.desc { color: #64748b; line-height: 1.7; max-width: 520px; margin: 0 auto 26px; }
+
+        .pt-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 0 auto 30px;
+            max-width: 520px;
+        }
+        .pt-info-card {
+            background: #f4f8ff;
+            border: 1px solid var(--pt-border);
+            border-radius: 14px;
+            padding: 14px 8px;
+        }
+        .pt-info-card span.emoji { font-size: 1.3rem; display: block; margin-bottom: 4px; }
+        .pt-info-card strong { display: block; font-size: 0.95rem; color: var(--pt-primary); }
+        .pt-info-card small { color: #94a3b8; font-size: 0.72rem; }
+
+        .pt-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--pt-primary);
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+        .pt-btn:hover { background: var(--pt-primary-dark); transform: translateY(-2px); }
+        .pt-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+        .pt-btn.secondary {
+            background: transparent;
+            color: var(--pt-primary);
+            border: 1.5px solid var(--pt-primary);
+        }
+        .pt-btn.secondary:hover { background: #eef7ff; }
+
+        /* ============ QUIZ SCREEN ============ */
+        .pt-quiz-card {
+            background: #ffffff;
+            border: 1px solid var(--pt-border);
+            border-radius: 22px;
+            padding: 32px 34px 30px;
+            box-shadow: 0 20px 45px rgba(36,93,171,0.08);
+        }
+
+        .pt-quiz-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            gap: 14px;
+        }
+
+        .pt-progress-text {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--pt-primary);
+            background: #eef7ff;
+            padding: 6px 14px;
+            border-radius: 30px;
+        }
+
+        .pt-timer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--pt-primary);
+            background: #eef7ff;
+            padding: 6px 14px;
+            border-radius: 30px;
+            min-width: 88px;
+            justify-content: center;
+        }
+        .pt-timer.warn { color: var(--pt-danger); background: #fee2e2; }
+
+        .pt-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #eef1f7;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 26px;
+        }
+        .pt-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #245DAB, #4c8ce0);
+            width: 12.5%;
+            transition: width .35s ease;
+        }
+
+        .pt-timer-bar {
+            width: 100%;
+            height: 4px;
+            background: #eef1f7;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 22px;
+        }
+        .pt-timer-fill {
+            height: 100%;
+            background: #22c55e;
+            width: 100%;
+            transition: width 1s linear, background .3s ease;
+        }
+        .pt-timer-fill.warn { background: var(--pt-danger); }
+
+        .pt-question-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 8px;
+        }
+        .pt-question-text {
+            font-size: 1.22rem;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.5;
+            margin-bottom: 26px;
+        }
+
+        .pt-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .pt-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: #1e293b;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .pt-option:hover { border-color: #a9c9f2; background: #f4f8ff; }
+        .pt-option .letter {
+            width: 28px; height: 28px;
+            border-radius: 8px;
+            background: #e2e8f0;
+            color: #64748b;
+            font-weight: 800;
+            font-size: 0.82rem;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .pt-option.selected {
+            border-color: var(--pt-primary);
+            background: #eef7ff;
+        }
+        .pt-option.selected .letter {
+            background: var(--pt-primary);
+            color: #fff;
+        }
+
+        .pt-quiz-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* ============ RESULT SCREEN ============ */
+        .pt-result {
+            background: #ffffff;
+            border: 1px solid var(--pt-border);
+            border-radius: 22px;
+            padding: 48px 40px;
+            text-align: center;
+            box-shadow: 0 20px 45px rgba(36,93,171,0.08);
+        }
+        .pt-result .result-emoji { font-size: 2.6rem; margin-bottom: 10px; }
+        .pt-result h1 { font-size: 1.6rem; margin: 0 0 6px; }
+        .pt-result p.sub { color: #64748b; margin-bottom: 26px; }
+        .pt-score-circle {
+            width: 130px; height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #245DAB, #4c8ce0);
+            color: #fff;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            margin: 0 auto 26px;
+            box-shadow: 0 14px 30px rgba(36,93,171,0.28);
+        }
+        .pt-score-circle strong { font-size: 2rem; line-height: 1; }
+        .pt-score-circle span { font-size: 0.72rem; opacity: 0.85; margin-top: 4px; }
+
+        .pt-result-note {
+            background: #f4f8ff;
+            border: 1px solid var(--pt-border);
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-size: 0.88rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        @media (max-width: 640px) {
+            .pt-intro, .pt-quiz-card, .pt-result { padding: 28px 20px; }
+            .pt-info-grid { grid-template-columns: 1fr; }
+            .pt-question-text { font-size: 1.08rem; }
+        }
+    </style>
+</head>
+
+<body class="pretest-body">
+
+    <div class="pretest-header">
+        <span class="brand">ENGENIX</span>
+        <a href="index.html" class="exit-link">← Kembali ke Beranda</a>
+    </div>
+
+    <div class="pretest-stage">
+
+        <!-- ===================== INTRO SCREEN ===================== -->
+        <section class="pt-screen active" id="ptIntro">
+            <div class="pt-intro">
+                <div class="icon-badge">📝</div>
+                <h1>Pretest Energi Terbarukan</h1>
+                <p class="desc">
+                    Sebelum mempelajari materi PLTS, PLTMH, dan PLTB, kerjakan pretest berikut untuk mengukur pemahaman awalmu. Jawab setiap soal sebelum waktu habis, lalu lanjutkan ke soal berikutnya.
+                </p>
+
+                <div style="max-width:520px;margin:0 auto 22px;text-align:left;">
+                    <label for="pretestStudentName" style="display:block;font-weight:700;color:#334155;margin-bottom:8px;">
+                        Nama Peserta Didik
+                    </label>
+                    <input
+                        type="text"
+                        id="pretestStudentName"
+                        placeholder="Masukkan nama lengkap..."
+                        autocomplete="name"
+                        style="width:100%;padding:14px 16px;border:1.5px solid #dcecff;border-radius:12px;font-family:inherit;font-size:.95rem;outline:none;">
+                    <p id="pretestNameWarning" style="display:none;color:#dc2626;font-size:.82rem;font-weight:600;margin:7px 0 0;">
+                        ⚠ Nama wajib diisi sebelum memulai pretest.
+                    </p>
+                </div>
+
+                <div class="pt-info-grid">
+                    <div class="pt-info-card">
+                        <span class="emoji">📚</span>
+                        <strong id="introTotalSoal">10 Soal</strong>
+                        <small>Uraian (Esai)</small>
+                    </div>
+                    <div class="pt-info-card">
+                        <span class="emoji">⏱</span>
+                        <strong>5 Menit</strong>
+                        <small>per Soal</small>
+                    </div>
+                    <div class="pt-info-card">
+                        <span class="emoji">➡️</span>
+                        <strong>1 Soal</strong>
+                        <small>per Halaman</small>
+                    </div>
+                </div>
+
+                <button class="pt-btn" id="btnMulaiPretest" onclick="startPretest()">
+                    🚀 Mulai Pretest
+                </button>
+            </div>
+        </section>
+
+        <!-- ===================== QUIZ SCREEN ===================== -->
+        <section class="pt-screen" id="ptQuiz">
+            <div class="pt-quiz-card">
+                <div class="pt-quiz-top">
+                    <span class="pt-progress-text" id="ptProgressText">Soal 1 / 8</span>
+                    <div class="pt-timer" id="ptTimer">⏱ <span id="ptTimerValue">90</span>s</div>
+                </div>
+
+                <div class="pt-progress-bar">
+                    <div class="pt-progress-fill" id="ptProgressFill"></div>
+                </div>
+
+                <div class="pt-timer-bar">
+                    <div class="pt-timer-fill" id="ptTimerFill"></div>
+                </div>
+
+                <div class="pt-question-label" id="ptQuestionLabel">TAHAP • MATERI</div>
+                <div class="pt-question-text" id="ptQuestionText">Pertanyaan akan muncul di sini.</div>
+
+                <textarea id="ptAnswerInput" rows="7" placeholder="Tulis jawabanmu di sini..."
+                    style="width:100%;padding:16px;margin-bottom:10px;border:1.5px solid #dcecff;border-radius:12px;font-family:inherit;font-size:.95rem;line-height:1.6;resize:vertical;outline:none;"></textarea>
+                <p id="ptAnswerWarning" style="display:none;color:#dc2626;font-size:.82rem;font-weight:600;margin:0 0 18px;">
+                    ⚠ Silakan tuliskan jawabanmu terlebih dahulu sebelum melanjutkan.
+                </p>
+
+                <div class="pt-quiz-actions">
+                    <button class="pt-btn" id="btnNext" onclick="nextQuestion()" disabled>
+                        Lanjut →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================== RESULT SCREEN ===================== -->
+        <section class="pt-screen" id="ptResult">
+            <div class="pt-result">
+                <div class="result-emoji">🎉</div>
+                <h1>Pretest Selesai!</h1>
+                <p class="sub">Pretest selesai. Hasilmu telah disimpan untuk memantau perkembangan belajar.</p>
+
+                <div class="pt-score-circle">
+                    <strong id="ptScoreValue">0/10</strong>
+                    <span>SOAL TERJAWAB</span>
+                </div>
+
+                <p id="pretestSaveStatus" style="font-size:.85rem;color:#64748b;margin:0 0 16px;"></p>
+
+                <div class="pt-result-note">
+                    💡 Jawabanmu telah tersimpan dan akan dinilai oleh guru menggunakan rubrik penilaian. Hasil pretest ini membantu mengukur pemahaman awalmu sebelum mempelajari materi PLTS, PLTB, dan PLTMH — jangan khawatir jika jawabanmu masih belum lengkap, pelajari materi berikutnya untuk memperdalam pemahamanmu!
+                </div>
+
+                <a href="index.html#physicsMenu" class="pt-btn">
+                    Lanjut ke Materi →
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        /* ==========================================
+           DATA SOAL PRETEST
+           ========================================== */
+        const ptQuestions = [
+            {
+                tahap: "Identifikasi Masalah (Ask/Identify)",
+                materi: "PLTS",
+                text: "Sebuah sekolah ingin memasang PLTS. Atap sekolah seluas 120 m² menerima sinar matahari cukup kuat hampir sepanjang hari, tetapi bagian atap sebelah timur sering tertutup bayangan pohon pada pagi hari. Identifikasi dan analisislah kendala-kendala yang harus dipertimbangkan sebelum menentukan desain PLTS di sekolah tersebut!"
+            },
+            {
+                tahap: "Identifikasi Masalah (Ask/Identify)",
+                materi: "PLTB",
+                text: "Data kecepatan angin rata-rata di suatu wilayah adalah 3,2 m/s, sementara turbin angin pada umumnya baru mulai berputar efektif di cut-in speed sekitar 3 m/s dan mencapai daya maksimum sekitar 12 m/s. Identifikasi dan analisislah apakah wilayah tersebut layak untuk pembangunan PLTB!"
+            },
+            {
+                tahap: "Membayangkan Solusi (Imagine)",
+                materi: "PLTMH",
+                text: "Sebuah sungai memiliki head (beda tinggi) 15 m dan debit air sedang. Bayangkan dan usulkan beberapa alternatif jenis turbin air yang mungkin digunakan untuk kondisi ini, serta jelaskan pertimbangan pemilihan masing-masing alternatif!"
+            },
+            {
+                tahap: "Membayangkan Solusi (Imagine)",
+                materi: "Umum",
+                text: "Suatu wilayah memiliki potensi: intensitas matahari sedang, kecepatan angin sedang, dan terdapat sungai kecil dengan debit stabil. Usulkan beberapa alternatif solusi energi terbarukan yang mungkin diterapkan di wilayah tersebut, lengkap dengan kelebihan dan kekurangan masing-masing alternatif!"
+            },
+            {
+                tahap: "Merencanakan (Plan)",
+                materi: "PLTS",
+                text: "Sebuah desa menargetkan energi 24 kWh/hari dari PLTS, dengan irradiance rata-rata G = 800 W/m², efisiensi panel η = 18%, luas 1 panel = 1,6 m², dan sistem beroperasi efektif 5 jam/hari. Gunakan rumus P = A × G × η × N. Rencanakan jumlah panel (N) minimal yang dibutuhkan untuk mencapai target tersebut!"
+            },
+            {
+                tahap: "Merencanakan (Plan)",
+                materi: "PLTB",
+                text: "Sebuah tim ingin merancang PLTB dengan target daya sekitar 2 MW pada kecepatan angin rata-rata 10 m/s, menggunakan turbin dengan Cp = 0,4 dan ρ = 1,225 kg/m³. Gunakan rumus P = ½ × ρ × A × v³ × Cp. Rencanakan estimasi luas sapuan rotor (A) yang dibutuhkan (dalam m²)!"
+            },
+            {
+                tahap: "Membuat (Create)",
+                materi: "PLTMH",
+                text: "Sebuah kelompok memiliki komponen: bak penenang, pipa pesat (penstock), turbin Crossflow, generator, dan kabel penyalur. Rancangan mereka menetapkan head 15 m dan debit sedang. Susunlah langkah pembuatan (Create) purwarupa PLTMH menggunakan komponen tersebut agar sesuai dengan rancangan dan dapat berfungsi optimal!"
+            },
+            {
+                tahap: "Menguji (Test)",
+                materi: "Umum",
+                text: "Tiga purwarupa turbin air diuji coba: Purwarupa P = 1,2 V, Q = 2,4 V, R = 1,7 V. Purwarupa Q menghasilkan tegangan tertinggi, namun saat debit dinaikkan, Q mengalami getaran cukup besar dibanding P dan R. Analisislah hasil pengujian tersebut dan tentukan purwarupa mana yang lebih layak dipilih, sertakan batasan dari kesimpulanmu!"
+            },
+            {
+                tahap: "Memperbaiki (Improve)",
+                materi: "PLTB",
+                text: "Sebuah purwarupa turbin angin menghasilkan tegangan tinggi, tetapi mengalami getaran besar saat kecepatan angin dinaikkan. Evaluasilah kemungkinan penyebab getaran tersebut dan usulkan perbaikan desain yang tepat!"
+            },
+            {
+                tahap: "Memperbaiki (Improve)",
+                materi: "PLTS",
+                text: "Hasil simulasi sebuah desain PLTS menunjukkan energi yang dihasilkan 95 kWh/hari (target 120 kWh/hari) dengan efisiensi sistem 78% (target ≥85%). Evaluasilah penyebab desain belum memenuhi target dan rancanglah perbaikan desain yang terjustifikasi berdasarkan variabel dalam rumus P = A × G × η × N!"
+            }
+        ];
+
+        const TIME_PER_QUESTION = 300; // detik (5 menit per soal, karena berbentuk uraian)
+
+        let ptCurrentIndex = 0;
+        let ptAnswers = new Array(ptQuestions.length).fill("");
+        let ptTimerInterval = null;
+        let ptTimeLeft = TIME_PER_QUESTION;
+
+        document.getElementById("introTotalSoal").innerText = ptQuestions.length + " Soal";
+
+        function showScreen(id) {
+            document.querySelectorAll(".pt-screen").forEach(s => s.classList.remove("active"));
+            document.getElementById(id).classList.add("active");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function startPretest() {
+            const nameInput = document.getElementById("pretestStudentName");
+            const nameWarning = document.getElementById("pretestNameWarning");
+
+            if (!nameInput.value.trim()) {
+                nameWarning.style.display = "block";
+                nameInput.focus();
+                return;
+            }
+
+            nameWarning.style.display = "none";
+            ptCurrentIndex = 0;
+            ptAnswers = new Array(ptQuestions.length).fill("");
+            showScreen("ptQuiz");
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = ptQuestions[ptCurrentIndex];
+            const total = ptQuestions.length;
+
+            document.getElementById("ptProgressText").innerText = "Soal " + (ptCurrentIndex + 1) + " / " + total;
+            document.getElementById("ptProgressFill").style.width = (((ptCurrentIndex) / total) * 100) + "%";
+            document.getElementById("ptQuestionLabel").innerText = "TAHAP " + q.tahap.toUpperCase() + " • MATERI " + q.materi;
+            document.getElementById("ptQuestionText").innerText = q.text;
+
+            const answerInput = document.getElementById("ptAnswerInput");
+            answerInput.value = ptAnswers[ptCurrentIndex] || "";
+            document.getElementById("ptAnswerWarning").style.display = "none";
+
+            answerInput.oninput = () => {
+                ptAnswers[ptCurrentIndex] = answerInput.value;
+                document.getElementById("btnNext").disabled = answerInput.value.trim() === "";
+                document.getElementById("ptAnswerWarning").style.display = "none";
+            };
+
+            const btnNext = document.getElementById("btnNext");
+            btnNext.innerText = (ptCurrentIndex === total - 1) ? "Selesai ✓" : "Lanjut →";
+            btnNext.disabled = ptAnswers[ptCurrentIndex].trim() === "";
+
+            startQuestionTimer();
+            answerInput.focus();
+        }
+
+        function startQuestionTimer() {
+            clearInterval(ptTimerInterval);
+            ptTimeLeft = TIME_PER_QUESTION;
+            updateTimerDisplay();
+
+            ptTimerInterval = setInterval(() => {
+                ptTimeLeft -= 1;
+                updateTimerDisplay();
+
+                if (ptTimeLeft <= 0) {
+                    clearInterval(ptTimerInterval);
+                    nextQuestion(true);
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const timerEl = document.getElementById("ptTimer");
+            const timerFill = document.getElementById("ptTimerFill");
+            const valueEl = document.getElementById("ptTimerValue");
+
+            valueEl.innerText = ptTimeLeft;
+            const pct = Math.max(0, (ptTimeLeft / TIME_PER_QUESTION) * 100);
+            timerFill.style.width = pct + "%";
+
+            const isWarn = ptTimeLeft <= 45;
+            timerEl.classList.toggle("warn", isWarn);
+            timerFill.classList.toggle("warn", isWarn);
+        }
+
+        let pretestIsFinishing = false; // GUARD: cegah finishPretest() jalan lebih dari sekali
+
+        function nextQuestion(auto) {
+            clearInterval(ptTimerInterval);
+            const total = ptQuestions.length;
+
+            if (!auto && ptAnswers[ptCurrentIndex].trim() === "") {
+                document.getElementById("ptAnswerWarning").style.display = "block";
+                return;
+            }
+
+            if (ptCurrentIndex < total - 1) {
+                ptCurrentIndex += 1;
+                renderQuestion();
+            } else {
+                if (pretestIsFinishing) return; // klik kedua/ketiga diabaikan
+                pretestIsFinishing = true;
+                document.getElementById("btnNext").disabled = true;
+                document.getElementById("btnNext").innerText = "Memproses...";
+                finishPretest();
+            }
+        }
+
+        async function finishPretest() {
+            document.getElementById("ptProgressFill").style.width = "100%";
+
+            const name = document.getElementById("pretestStudentName").value.trim();
+            const sessionId = "ENG-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+            const answeredCount = ptAnswers.filter(a => a && a.trim() !== "").length;
+
+            const result = {
+                sessionId: sessionId,
+                name: name,
+                answers: ptAnswers.map(a => (a || "").trim()),
+                answeredCount: answeredCount,
+                total: ptQuestions.length,
+                stage: "pretest"
+            };
+
+            localStorage.setItem("engenix_pretest_result", JSON.stringify(result));
+            localStorage.setItem("engenix_session_id", sessionId);
+
+            document.getElementById("ptScoreValue").innerText =
+                answeredCount + "/" + ptQuestions.length;
+
+            const saveStatus = document.getElementById("pretestSaveStatus");
+            if (saveStatus) saveStatus.textContent = "⏳ Menyimpan jawaban...";
+
+            /*
+             * Jangan menunggu Google Sheets sebelum menampilkan hasil.
+             * Request dikirim di background supaya siswa tidak stuck di
+             * tombol "Menyimpan..." ketika Apps Script sedang lambat.
+             */
+            if (saveStatus) saveStatus.textContent = "⏳ Mengirim jawaban ke spreadsheet...";
+
+            savePretestToGoogleSheet(result)
+                .then(() => {
+                    if (saveStatus) saveStatus.textContent = "✅ Jawaban berhasil dikirim.";
+                })
+                .catch((err) => {
+                    console.error("Gagal menyimpan pretest:", err);
+                    if (saveStatus) saveStatus.textContent =
+                        "⚠ Jawaban tersimpan di perangkat, tetapi pengiriman ke spreadsheet gagal.";
+                });
+
+            // Tampilkan hasil SEKARANG, tanpa menunggu Google Sheets.
+            showScreen("ptResult");
+        }
+
+        async function savePretestToGoogleSheet(result) {
+    const GOOGLE_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbw-AUDkZF0vZNkZZHESTSLmo-8wRsFxhKyoS3hiFTms6_96KL6WIG1-KT0SmZhDZHoxVg/exec";
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("PASTE_URL")) {
+                return;
+            }
+
+            const payload = {
+                action: "pretest",
+                sessionId: result.sessionId,
+                nama: result.name,
+                pretestAnswers: result.answers
+            };
+
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify(payload)
+            });
+
+            return response;
+        }
+    </script>
+
+</body>
+</html>

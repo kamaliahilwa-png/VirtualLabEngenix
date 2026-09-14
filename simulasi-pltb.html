@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENGENIX - Virtual Lab PLTB Pro</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --panel-bg: #ffffff;
+            --panel-border: #cbd5e1;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --primary: #0284c7;
+            --accent-green: #16a34a;
+            --accent-yellow: #d97706;
+            --radius: 16px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); padding: 16px; }
+
+        .container { max-width: 1440px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--panel-bg); padding: 14px 24px; border-radius: var(--radius);
+            border: 1px solid var(--panel-border); box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        header h1 { font-size: 1.25rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+
+        .grid-layout { display: grid; grid-template-columns: 1fr 390px; gap: 16px; }
+        @media (max-width: 1024px) { .grid-layout { grid-template-columns: 1fr; } }
+
+        .left-panel { display: flex; flex-direction: column; gap: 16px; }
+
+        .canvas-card {
+            background: var(--panel-bg); border-radius: var(--radius); padding: 10px;
+            border: 1px solid var(--panel-border); box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .canvas-container { position: relative; width: 100%; height: 500px; border-radius: 12px; overflow: hidden; background: #e0f2fe; }
+        canvas { width: 100%; height: 100%; display: block; cursor: pointer; }
+
+        /* Audio Toast Floating Banner */
+        .audio-toast {
+            position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95); color: #0f172a; padding: 12px 20px; border-radius: 12px;
+            font-size: 0.85rem; font-weight: 600; border: 1.5px solid var(--primary);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12); backdrop-filter: blur(8px);
+            display: none; align-items: center; gap: 12px; z-index: 100; max-width: 85%;
+        }
+        .audio-toast .toast-title { font-weight: 800; color: var(--primary); }
+        .audio-toast .sound-wave { display: inline-block; animation: pulse 1s infinite; color: var(--accent-green); }
+
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .hint-badge {
+            position: absolute; top: 14px; left: 14px; background: rgba(255, 255, 255, 0.9);
+            color: #0f172a; padding: 8px 16px; border-radius: 30px; font-size: 0.78rem; font-weight: 700;
+            backdrop-filter: blur(8px); border: 1px solid var(--panel-border); pointer-events: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .bottom-dashboard {
+            background: var(--panel-bg); border-radius: var(--radius); padding: 16px;
+            border: 1px solid var(--panel-border); display: flex; flex-direction: column; gap: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .action-bar { display: flex; justify-content: center; gap: 12px; }
+        .btn {
+            background: var(--primary); color: #ffffff; border: none; padding: 10px 22px;
+            border-radius: 10px; cursor: pointer; font-weight: 800; font-size: 0.85rem; transition: 0.2s;
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-sec { background: #64748b; color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+
+        .metrics-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+        @media (max-width: 768px) { .metrics-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .metric-card {
+            background: #f8fafc; border: 1px solid var(--panel-border); border-radius: 12px; padding: 10px 6px; text-align: center;
+        }
+        .metric-card .title { font-size: 0.65rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-bottom: 2px; }
+        .metric-card .value { font-size: 1rem; font-weight: 800; color: var(--primary); }
+
+        .right-panel {
+            background: var(--panel-bg); border-radius: var(--radius); padding: 20px;
+            border: 1px solid var(--panel-border); display: flex; flex-direction: column; gap: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .section-title { font-size: 0.95rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
+        .control-item { display: flex; flex-direction: column; gap: 6px; }
+        .control-item label { font-size: 0.8rem; font-weight: 700; color: var(--text-main); display: flex; justify-content: space-between; }
+        .control-item select, .control-item input[type="range"] { accent-color: var(--primary); }
+        .control-item select { padding: 9px; border-radius: 8px; background: #f8fafc; border: 1px solid var(--panel-border); color: var(--text-main); font-weight: 600; }
+
+        .formula-section {
+            background: #f8fafc; border: 1px solid var(--panel-border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 8px;
+        }
+        .formula-display { background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 8px; padding: 8px; text-align: center; }
+        .formula-legend { display: flex; flex-direction: column; gap: 4px; font-size: 0.72rem; }
+        .legend-row { display: grid; grid-template-columns: 32px 1fr; border-bottom: 1px dashed var(--panel-border); padding-bottom: 2px; }
+        .legend-sym { font-weight: 800; color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🍃 ENGENIX — Virtual Lab PLTB Pro</h1>
+        <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-sub);">Simulasi Wind Farm Realistis</div>
+    </header>
+
+    <div class="grid-layout">
+        <div class="left-panel">
+            <div class="canvas-card">
+                <div class="canvas-container" id="canvasBox">
+                    <canvas id="pltbCanvas"></canvas>
+                    <div class="hint-badge">💡 Klik Objek (Turbin, Inverter, Tiang, Smart Villa) untuk Penjelasan Suara!</div>
+                    
+                    <div class="audio-toast" id="audioToast">
+                        <span class="sound-wave">🔊</span>
+                        <div>
+                            <span class="toast-title" id="toastTitle">Info Component</span>: 
+                            <span id="toastDesc">Deskripsi komponen listrik PLTB.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-dashboard">
+                <div class="action-bar">
+                    <button class="btn" onclick="toggleSim()" id="btnPlay">⏸ Pause</button>
+                    <button class="btn btn-sec" onclick="randomWind()">💨 Wind Gust</button>
+                    <button class="btn btn-danger" onclick="resetSim()">🔄 Reset</button>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card"><div class="title">Kecepatan Angin (v)</div><div class="value" id="dashV">10.5 m/s</div></div>
+                    <div class="metric-card"><div class="title">Jari-jari Rotor (r)</div><div class="value" id="dashR">40 m</div></div>
+                    <div class="metric-card"><div class="title">Koefisien Daya (Cp)</div><div class="value" id="dashCp">0.44</div></div>
+                    <div class="metric-card"><div class="title">Rotasi Rotor</div><div class="value" id="dashRpm">24 RPM</div></div>
+                    <div class="metric-card"><div class="title">Daya Kinetik Total</div><div class="value" id="dashPk">3.57 MW</div></div>
+                    <div class="metric-card"><div class="title">Daya Listrik (P)</div><div class="value" id="dashPe" style="color:var(--accent-green)">1.57 MW</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="section-title">🎛️ Konfigurasi Parameter PLTB</div>
+
+            <div class="control-item">
+                <label>Arsitektur Turbin Wind Farm:</label>
+                <select id="selectTurbine" onchange="updateSim()">
+                    <option value="HAWT-3" selected>Sumbu Horizontal (HAWT) - 3 Bilah Standard</option>
+                    <option value="HAWT-2">Sumbu Horizontal (HAWT) - 2 Bilah High Speed</option>
+                    <option value="VAWT-Savonius">Sumbu Vertikal (VAWT) - Savonius Drag</option>
+                    <option value="VAWT-Darrieus">Sumbu Vertikal (VAWT) - Darrieus Lift</option>
+                </select>
+            </div>
+
+            <div class="control-item">
+                <label>Kecepatan Angin (v): <span id="lblV" style="color:var(--primary)">10.5</span> m/s</label>
+                <input type="range" id="inputV" min="0" max="25" step="0.5" value="10.5" oninput="updateSim()">
+            </div>
+
+            <div class="control-item">
+                <label>Jari-jari Rotor (r): <span id="lblR" style="color:var(--accent-yellow)">40</span> m</label>
+                <input type="range" id="inputR" min="15" max="85" step="1" value="40" oninput="updateSim()">
+            </div>
+
+            <div class="formula-section">
+                <div class="section-title" style="font-size: 0.85rem; color: var(--primary);">
+                    💡 Rumus Daya Angin
+                </div>
+                <div class="formula-display">
+                    $$P = \frac{1}{2} \cdot \rho \cdot A \cdot v^3 \cdot C_p$$
+                </div>
+                <div class="formula-legend">
+                    <div class="legend-row"><span class="legend-sym">P</span><span style="color:var(--text-sub)">Daya listrik yang dihasilkan (Watt / MW)</span></div>
+                    <div class="legend-row"><span class="legend-sym">ρ</span><span style="color:var(--text-sub)">Kerapatan udara (≈1,225 kg/m³)</span></div>
+                    <div class="legend-row"><span class="legend-sym">A</span><span style="color:var(--text-sub)">Luas sapuan rotor (m²) → A = π · r²</span></div>
+                    <div class="legend-row"><span class="legend-sym">v</span><span style="color:var(--text-sub)">Kecepatan angin (m/s)</span></div>
+                    <div class="legend-row"><span class="legend-sym">C<sub>p</sub></span><span style="color:var(--text-sub)">Koefisien daya aerobatik (maksimal 0,59)</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let isRunning = true;
+let paramV = 10.5, paramR = 40, selectedTurbine = "HAWT-3";
+let pKinetic = 0, pElectric = 0, rpmRotor = 0, rotationAngle = 0;
+let cpBetz = 0.44, rhoAir = 1.225;
+let toastTimeout = null;
+
+let windParticles = [];
+for (let i = 0; i < 40; i++) {
+    windParticles.push({
+        x: Math.random() * 1200,
+        y: Math.random() * 260 + 10,
+        len: Math.random() * 35 + 15,
+        speed: Math.random() * 1.5 + 1
+    });
+}
+
+// Awan Datar Bergerak
+let clouds = [
+    {x: 80, y: 60, scale: 0.9, speed: 0.4},
+    {x: 420, y: 40, scale: 1.2, speed: 0.6},
+    {x: 850, y: 85, scale: 0.85, speed: 0.3}
+];
+
+let undergroundPulses = [0, 0.33, 0.66];
+let overheadPulses = [0, 0.25, 0.5, 0.75];
+
+const canvas = document.getElementById('pltbCanvas');
+const ctx = canvas.getContext('2d');
+
+window.onload = function() {
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    updateSim();
+    animate();
+    canvas.addEventListener('click', handleCanvasClick);
+};
+
+function resizeCanvas() {
+    const box = document.getElementById('canvasBox');
+    canvas.width = box.clientWidth;
+    canvas.height = box.clientHeight;
+}
+
+function updateSim() {
+    paramV = parseFloat(document.getElementById('inputV').value);
+    paramR = parseFloat(document.getElementById('inputR').value);
+    selectedTurbine = document.getElementById('selectTurbine').value;
+
+    if (selectedTurbine === "HAWT-3") cpBetz = 0.44;
+    else if (selectedTurbine === "HAWT-2") cpBetz = 0.38;
+    else if (selectedTurbine === "VAWT-Savonius") cpBetz = 0.22;
+    else if (selectedTurbine === "VAWT-Darrieus") cpBetz = 0.32;
+
+    let effV = (paramV < 3.0 || paramV > 25) ? 0 : paramV;
+    let area = Math.PI * Math.pow(paramR, 2);
+    
+    pKinetic = (0.5 * rhoAir * area * Math.pow(effV, 3)) / 1e6;
+    pElectric = pKinetic * cpBetz;
+
+    let tsr = (selectedTurbine === "HAWT-2") ? 8.5 : (selectedTurbine === "HAWT-3") ? 7 : 2.5;
+    rpmRotor = effV > 0 ? Math.round((effV * tsr * 60) / (2 * Math.PI * paramR)) : 0;
+
+    document.getElementById('lblV').innerText = paramV.toFixed(1);
+    document.getElementById('lblR').innerText = paramR;
+
+    document.getElementById('dashV').innerText = paramV.toFixed(1) + " m/s";
+    document.getElementById('dashR').innerText = paramR + " m";
+    document.getElementById('dashCp').innerText = cpBetz.toFixed(2);
+    document.getElementById('dashRpm').innerText = isRunning ? rpmRotor + " RPM" : "0 RPM";
+    document.getElementById('dashPk').innerText = pKinetic.toFixed(2) + " MW";
+    document.getElementById('dashPe').innerText = pElectric.toFixed(2) + " MW";
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let w = canvas.width, h = canvas.height;
+
+    if (isRunning && paramV >= 3.0 && paramV <= 25) {
+        rotationAngle += (rpmRotor / 60) * 0.15;
+    }
+
+    // 1. LANGIT CERAH MODE SIANG
+    let sky = ctx.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, '#38bdf8');
+    sky.addColorStop(0.65, '#bae6fd');
+    sky.addColorStop(1, '#e0f2fe');
+    ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h);
+
+    // Matahari
+    ctx.fillStyle = '#facc15'; ctx.shadowColor = '#fde047'; ctx.shadowBlur = 30;
+    ctx.beginPath(); ctx.arc(w - 70, 70, 32, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+
+    // Awan 3D Puffy
+    clouds.forEach(c => {
+        if(isRunning) c.x += c.speed * (paramV / 5 + 0.2);
+        if(c.x > w + 100) c.x = -100;
+        drawCloud(c.x, c.y, c.scale);
+    });
+
+    // 2. PARTIKEL ANGIN
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+    ctx.lineWidth = 1.8;
+    windParticles.forEach(p => {
+        if (isRunning) p.x += p.speed * (paramV / 3);
+        if (p.x > w + 40) p.x = -40;
+        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + p.len, p.y); ctx.stroke();
+    });
+
+    // 3. PERBUKITAN & PEPOHONAN
+    ctx.fillStyle = '#86efac';
+    ctx.beginPath(); ctx.moveTo(0, h);
+    for(let x=0; x<=w; x+=10) {
+        let y = h*0.55 + Math.sin(x*0.002) * 35 + Math.cos(x*0.005) * 15;
+        ctx.lineTo(x, y);
+    }
+    ctx.lineTo(w, h); ctx.fill();
+
+    // Pepohonan Latar Belakang
+    drawTree(w * 0.05, h * 0.58, 0.6);
+    drawTree(w * 0.35, h * 0.56, 0.55);
+
+    ctx.fillStyle = '#4ade80';
+    ctx.beginPath(); ctx.moveTo(0, h);
+    for(let x=0; x<=w; x+=8) {
+        let y = h*0.66 + Math.sin(x*0.004 + 1) * 25 + Math.cos(x*0.008) * 20;
+        ctx.lineTo(x, y);
+    }
+    ctx.lineTo(w, h); ctx.fill();
+
+    let tFar1 = {x: w * 0.12, y: h*0.58 + Math.sin((w*0.12)*0.002)*35 + Math.cos((w*0.12)*0.005)*15};
+    let tFar2 = {x: w * 0.30, y: h*0.56 + Math.sin((w*0.30)*0.002)*35 + Math.cos((w*0.30)*0.005)*15};
+    let tFront1 = {x: w * 0.22, y: h*0.74 + Math.sin((w*0.22)*0.005+1)*25 + Math.cos((w*0.22)*0.008)*20};
+    let tFront2 = {x: w * 0.42, y: h*0.72 + Math.sin((w*0.42)*0.005+1)*25 + Math.cos((w*0.42)*0.008)*20};
+
+    drawTurbine(tFar1.x, tFar1.y, 0.55, rotationAngle * 0.9, selectedTurbine);
+    drawTurbine(tFar2.x, tFar2.y, 0.60, rotationAngle * 1.05 + 0.8, selectedTurbine);
+
+    ctx.fillStyle = '#22c55e';
+    ctx.beginPath(); ctx.moveTo(0, h);
+    for(let x=0; x<=w; x+=5) {
+        let y = h*0.78 + Math.sin(x*0.006) * 15 + Math.cos(x*0.003) * 10;
+        ctx.lineTo(x, y);
+    }
+    ctx.lineTo(w, h); ctx.fill();
+
+    drawTree(w * 0.50, h * 0.77, 0.85);
+    drawTree(w * 0.95, h * 0.79, 0.9);
+
+    drawTurbine(tFront1.x, tFront1.y, 0.92, rotationAngle, selectedTurbine);
+    drawTurbine(tFront2.x, tFront2.y, 0.85, rotationAngle * 0.95 + 0.4, selectedTurbine);
+
+    let sub = {x: w * 0.56, y: h*0.78 + Math.sin((w*0.56)*0.006)*15 + Math.cos((w*0.56)*0.003)*10};
+    let p1  = {x: w * 0.68, y: h*0.74 + Math.sin((w*0.68)*0.006)*15 + Math.cos((w*0.68)*0.003)*10};
+    let p2  = {x: w * 0.79, y: h*0.76 + Math.sin((w*0.79)*0.006)*15 + Math.cos((w*0.79)*0.003)*10};
+    let vil = {x: w * 0.90, y: h*0.78 + Math.sin((w*0.90)*0.006)*15 + Math.cos((w*0.90)*0.003)*10};
+
+    // 4. KABEL BAWAH TANAH (TURBIN -> INVERTER)
+    let undergroundRoutes = [
+        [{x: tFar1.x, y: tFar1.y}, {x: sub.x - 12, y: sub.y}],
+        [{x: tFar2.x, y: tFar2.y}, {x: sub.x - 12, y: sub.y}],
+        [{x: tFront1.x, y: tFront1.y}, {x: sub.x - 12, y: sub.y}],
+        [{x: tFront2.x, y: tFront2.y}, {x: sub.x - 12, y: sub.y}]
+    ];
+
+    undergroundRoutes.forEach(route => {
+        ctx.strokeStyle = pElectric > 0.1 ? 'rgba(56, 189, 248, 0.7)' : 'rgba(100, 116, 139, 0.3)';
+        ctx.lineWidth = 2; ctx.setLineDash([5, 5]);
+        ctx.beginPath(); ctx.moveTo(route[0].x, route[0].y);
+        ctx.quadraticCurveTo((route[0].x + route[1].x)/2, Math.max(route[0].y, route[1].y) + 15, route[1].x, route[1].y);
+        ctx.stroke(); ctx.setLineDash([]);
+    });
+
+    if(isRunning && pElectric > 0.1) {
+        undergroundPulses.forEach((p, idx) => {
+            undergroundPulses[idx] += 0.012 * (pElectric / 1.5);
+            if(undergroundPulses[idx] > 1) undergroundPulses[idx] = 0;
+
+            undergroundRoutes.forEach(route => {
+                let midY = Math.max(route[0].y, route[1].y) + 15;
+                let st = undergroundPulses[idx];
+                let px = (1 - st) * (1 - st) * route[0].x + 2 * (1 - st) * st * ((route[0].x + route[1].x)/2) + st * st * route[1].x;
+                let py = (1 - st) * (1 - st) * route[0].y + 2 * (1 - st) * st * midY + st * st * route[1].y;
+
+                ctx.fillStyle = '#38bdf8'; ctx.shadowColor = '#0284c7'; ctx.shadowBlur = 6;
+                ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI*2); ctx.fill(); ctx.shadowBlur = 0;
+            });
+        });
+    }
+
+    drawProportionalInverter(sub.x, sub.y);
+    drawTallPowerPole(p1.x, p1.y);
+    drawTallPowerPole(p2.x, p2.y);
+    drawIntegratedSmartVilla(vil.x, vil.y, pElectric > 0.1);
+
+    // 5. KABEL TRANSMISI UDARA (2 TIANG TRANSMISI)
+    let overheadNodes = [
+        {x: sub.x + 12, y: sub.y - 18},
+        {x: p1.x, y: p1.y - 82},
+        {x: p2.x, y: p2.y - 82},
+        {x: vil.x - 40, y: vil.y - 48}
+    ];
+
+    ctx.strokeStyle = pElectric > 0.1 ? '#d97706' : '#64748b';
+    ctx.lineWidth = 2.2;
+    for(let i=0; i<overheadNodes.length-1; i++) {
+        ctx.beginPath(); ctx.moveTo(overheadNodes[i].x, overheadNodes[i].y);
+        ctx.quadraticCurveTo((overheadNodes[i].x + overheadNodes[i+1].x)/2, (overheadNodes[i].y + overheadNodes[i+1].y)/2 + 8, overheadNodes[i+1].x, overheadNodes[i+1].y);
+        ctx.stroke();
+    }
+
+    if(isRunning && pElectric > 0.1) {
+        overheadPulses.forEach((p, idx) => {
+            overheadPulses[idx] += 0.008 * (pElectric / 1.5);
+            if(overheadPulses[idx] > 1) overheadPulses[idx] = 0;
+            let pt = getSplinePoint(overheadNodes, overheadPulses[idx]);
+            ctx.fillStyle = '#f59e0b'; ctx.shadowColor = '#f59e0b'; ctx.shadowBlur = 8;
+            ctx.beginPath(); ctx.arc(pt.x, pt.y, 4, 0, Math.PI*2); ctx.fill(); ctx.shadowBlur = 0;
+        });
+    }
+
+    requestAnimationFrame(animate);
+}
+
+function drawCloud(x, y, scale) {
+    ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+    ctx.beginPath();
+    ctx.arc(0, 0, 18, Math.PI * 0.5, Math.PI * 1.5);
+    ctx.arc(14, -12, 22, Math.PI * 1.0, Math.PI * 1.85);
+    ctx.arc(42, -10, 18, Math.PI * 1.3, Math.PI * 0.1);
+    ctx.arc(54, 0, 16, Math.PI * 1.5, Math.PI * 0.5);
+    ctx.closePath(); ctx.fill();
+    ctx.restore();
+}
+
+function drawTree(x, y, scale) {
+    ctx.save(); ctx.translate(x, y); ctx.scale(scale, scale);
+    ctx.fillStyle = '#78350f'; ctx.fillRect(-3, -16, 6, 16);
+    ctx.fillStyle = '#15803d';
+    ctx.beginPath(); ctx.arc(0, -24, 15, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(-10, -18, 12, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(10, -18, 12, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+}
+
+function drawTurbine(x, y, scale, angle, type) {
+    ctx.save(); ctx.translate(x, y);
+    let towerH = 165 * scale;
+
+    let grad = ctx.createLinearGradient(-6*scale, 0, 6*scale, 0);
+    grad.addColorStop(0, '#475569'); grad.addColorStop(0.5, '#f8fafc'); grad.addColorStop(1, '#334155');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.moveTo(-6*scale, 0); ctx.lineTo(-3*scale, -towerH); ctx.lineTo(3*scale, -towerH); ctx.lineTo(6*scale, 0); ctx.fill();
+
+    let bladeLen = (20 + (paramR / 85) * 45) * scale;
+
+    if (type.startsWith("HAWT")) {
+        ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1;
+        ctx.fillRect(-12*scale, -towerH-7*scale, 24*scale, 14*scale); ctx.strokeRect(-12*scale, -towerH-7*scale, 24*scale, 14*scale);
+        
+        ctx.save(); ctx.translate(8*scale, -towerH); ctx.rotate(angle);
+
+        let num = type === "HAWT-3" ? 3 : 2;
+        for (let i = 0; i < num; i++) {
+            ctx.rotate((Math.PI * 2) / num);
+            ctx.fillStyle = '#ffffff'; ctx.strokeStyle = '#0284c7'; ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.moveTo(0, -2*scale);
+            ctx.quadraticCurveTo(bladeLen*0.5, -5*scale, bladeLen, 0);
+            ctx.quadraticCurveTo(bladeLen*0.5, 3*scale, 0, 2*scale);
+            ctx.fill(); ctx.stroke();
+        }
+        ctx.restore();
+    } 
+    else if (type === "VAWT-Savonius") {
+        ctx.save(); ctx.translate(0, -towerH);
+        ctx.fillStyle = '#64748b'; ctx.fillRect(-2*scale, -bladeLen, 4*scale, bladeLen*1.1);
+
+        for (let i = 0; i < 2; i++) {
+            let offsetAngle = angle + (i * Math.PI);
+            let cosA = Math.cos(offsetAngle);
+            let bucketW = bladeLen * 0.45 * cosA;
+
+            ctx.fillStyle = Math.sin(offsetAngle) > 0 ? '#38bdf8' : '#0284c7';
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.ellipse(bucketW * 0.5, -bladeLen * 0.5, Math.abs(bucketW), bladeLen * 0.5, 0, 0, Math.PI * 2);
+            ctx.fill(); ctx.stroke();
+        }
+        ctx.restore();
+    } 
+    else if (type === "VAWT-Darrieus") {
+        ctx.save(); ctx.translate(0, -towerH);
+        ctx.fillStyle = '#475569'; ctx.fillRect(-2*scale, -bladeLen*1.1, 4*scale, bladeLen*1.1);
+        ctx.fillRect(-bladeLen*0.5, -bladeLen*1.05, bladeLen, 3*scale);
+        ctx.fillRect(-bladeLen*0.5, -bladeLen*0.05, bladeLen, 3*scale);
+
+        let numBlades = 3;
+        for (let i = 0; i < numBlades; i++) {
+            let bAngle = angle + (i * (Math.PI * 2 / numBlades));
+            let posX = Math.cos(bAngle) * (bladeLen * 0.55);
+            let opacity = (Math.sin(bAngle) + 1) / 2 * 0.7 + 0.3;
+
+            ctx.strokeStyle = `rgba(2, 132, 199, ${opacity})`;
+            ctx.lineWidth = 3 * scale;
+            ctx.beginPath(); ctx.moveTo(0, -bladeLen * 1.05);
+            ctx.quadraticCurveTo(posX * 1.6, -bladeLen * 0.55, 0, -bladeLen * 0.05);
+            ctx.stroke();
+        }
+        ctx.restore();
+    }
+
+    ctx.restore();
+}
+
+function drawProportionalInverter(x, y) {
+    ctx.save(); ctx.translate(x, y);
+    ctx.fillStyle = '#334155'; ctx.fillRect(-15, -22, 30, 22);
+    ctx.strokeStyle = '#0284c7'; ctx.lineWidth = 1.2; ctx.strokeRect(-15, -22, 30, 22);
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, -22); ctx.lineTo(0, 0); ctx.stroke();
+    ctx.fillStyle = '#64748b'; ctx.fillRect(-13, -18, 2, 14); ctx.fillRect(-10, -18, 2, 14);
+    ctx.fillStyle = '#94a3b8'; ctx.fillRect(6, -28, 4, 6);
+    ctx.fillStyle = '#0284c7'; ctx.beginPath(); ctx.arc(8, -29, 3, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = pElectric > 0.1 ? '#22c55e' : '#ef4444';
+    ctx.beginPath(); ctx.arc(8, -14, 2, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+}
+
+function drawTallPowerPole(x, y) {
+    ctx.save(); ctx.translate(x, y);
+    let poleH = 90;
+    let grad = ctx.createLinearGradient(-3, 0, 3, 0);
+    grad.addColorStop(0, '#475569'); grad.addColorStop(0.5, '#cbd5e1'); grad.addColorStop(1, '#334155');
+    ctx.fillStyle = grad; ctx.fillRect(-3, -poleH, 6, poleH);
+    ctx.fillStyle = '#334155';
+    ctx.fillRect(-22, -poleH + 8, 44, 4);
+    ctx.fillRect(-16, -poleH + 22, 32, 4);
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillRect(-20, -poleH + 2, 4, 6); ctx.fillRect(16, -poleH + 2, 4, 6);
+    ctx.fillRect(-14, -poleH + 16, 4, 6); ctx.fillRect(10, -poleH + 16, 4, 6);
+    ctx.restore();
+}
+
+/* GAMBAR SMART VILLA MODERN INTEGRATED 3D ELEGAN */
+function drawIntegratedSmartVilla(x, y, powered) {
+    ctx.save(); ctx.translate(x, y);
+
+    // Bayangan Landasan 3D
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.12)';
+    ctx.beginPath(); ctx.ellipse(0, 2, 60, 14, 0, 0, Math.PI * 2); ctx.fill();
+
+    // 1. DINDING UTAMA VILLA (LANTAI 1)
+    ctx.fillStyle = '#f8fafc'; // Putih Minimalis Front
+    ctx.fillRect(-48, -38, 54, 38);
+    ctx.fillStyle = '#cbd5e1'; // Samping 3D Depth
+    ctx.beginPath(); ctx.moveTo(6, -38); ctx.lineTo(24, -48); ctx.lineTo(24, -14); ctx.lineTo(6, 0); ctx.fill();
+
+    // Kanopi Atap Datar L1
+    ctx.fillStyle = '#1e293b';
+    ctx.fillRect(-52, -42, 62, 4);
+    ctx.beginPath(); ctx.moveTo(10, -42); ctx.lineTo(28, -52); ctx.lineTo(28, -48); ctx.lineTo(10, -38); ctx.fill();
+
+    // 2. LANTAI 2 (LUXURY SUITE EXTENSION)
+    ctx.fillStyle = '#0284c7'; // Accent Cyan Panel
+    ctx.fillRect(-38, -72, 38, 30);
+    ctx.fillStyle = '#0369a1';
+    ctx.beginPath(); ctx.moveTo(0, -72); ctx.lineTo(14, -80); ctx.lineTo(14, -54); ctx.lineTo(0, -42); ctx.fill();
+
+    // Atap Lantai 2
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(-41, -76, 44, 4);
+
+    // 3. PINTU & KACA TERINTEGRASI SEMPURNA (TIDAK TERPISAH)
+    let lightColor = powered ? '#fde047' : '#64748b';
+    let lightGlow = powered ? '#facc15' : 'transparent';
+
+    // Pintu Utama Modern Wood Center Right
+    ctx.fillStyle = '#78350f'; ctx.fillRect(-12, -22, 12, 22);
+    ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(-2, -11, 1.3, 0, Math.PI*2); ctx.fill(); // Gagang Pintu
+    ctx.fillStyle = '#334155'; ctx.fillRect(-14, -25, 16, 3); // Kanopi Pintu
+
+    // Jendela Kaca Panoramic Lantai 1 (Kiri Pintu)
+    ctx.fillStyle = lightColor;
+    if (powered) { ctx.shadowColor = lightGlow; ctx.shadowBlur = 12; }
+    ctx.fillRect(-42, -28, 24, 18);
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = '#475569'; ctx.lineWidth = 1.2;
+    ctx.strokeRect(-42, -28, 24, 18);
+
+    // Jendela Kaca Lantai 2
+    ctx.fillStyle = lightColor;
+    if (powered) { ctx.shadowColor = lightGlow; ctx.shadowBlur = 10; }
+    ctx.fillRect(-32, -66, 24, 16);
+    ctx.shadowBlur = 0;
+    ctx.strokeRect(-32, -66, 24, 16);
+
+    // 4. GARASI TERKONEKSI (SISI KANAN) & MOBIL LISTRIK (EV CAR)
+    ctx.fillStyle = '#e2e8f0'; ctx.fillRect(6, -22, 32, 22);
+    ctx.fillStyle = '#94a3b8'; ctx.fillRect(8, -18, 28, 18);
+
+    // EV Car / Mobil Listrik Modern Sederhana
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillRect(14, -10, 18, 8);
+    ctx.fillStyle = '#0f172a';
+    ctx.beginPath(); ctx.arc(18, -2, 2.5, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(28, -2, 2.5, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = powered ? '#fef08a' : '#64748b';
+    ctx.fillRect(30, -8, 2, 3); // Headlight EV Car
+
+    ctx.restore();
+}
+
+function getSplinePoint(pts, t) {
+    let segs = pts.length - 1;
+    let idx = Math.min(Math.floor(t * segs), segs - 1);
+    let st = (t * segs) - idx;
+    let p1 = pts[idx], p2 = pts[idx + 1];
+    let cpX = (p1.x + p2.x) / 2, cpY = (p1.y + p2.y) / 2 + 8;
+    let x = (1 - st) * (1 - st) * p1.x + 2 * (1 - st) * st * cpX + st * st * p2.x;
+    let y = (1 - st) * (1 - st) * p1.y + 2 * (1 - st) * st * cpY + st * st * p2.y;
+    return {x: x, y: y};
+}
+
+function handleCanvasClick(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left, w = canvas.width;
+    let title = "", desc = "";
+
+    if (x < w * 0.48) {
+        title = selectedTurbine.startsWith("HAWT") ? "Turbin Angin HAWT (Horizontal Axis)" : "Turbin Angin VAWT (Vertical Axis)";
+        desc = selectedTurbine.startsWith("HAWT") ? 
+            "HAWT mengkonversi energi kinetik angin jadi rotasi rotor horizontal. Daya disalurkan via kabel dalam menara ke bawah tanah." :
+            "VAWT berputar omnidirectional dari segala arah angin tanpa perlu mekanika orientasi yaw.";
+    } else if (x >= w * 0.48 && x <= w * 0.62) {
+        title = "Inverter Outdoor & Panel Trafo Step-Up";
+        desc = "Menerima pasokan arus AC dari seluruh turbin lewat kabel bawah tanah, lalu menyesuaikan frekuensi & menaikkan tegangan untuk distribusi.";
+    } else if (x > w * 0.62 && x <= w * 0.82) {
+        title = "Jaringan Tiang Transmisi Listrik (High Voltage)";
+        desc = "Dua unit tiang distribusi menopang kabel udara untuk menyalurkan energi secara stabil ke zona pemukiman.";
+    } else {
+        title = "Integrated Smart Villa & EV Charger Station";
+        desc = "Villa modern berkonsep ramah lingkungan yang dipasok energi bersih PLTB secara realtime. Lampu villa dan EV car charger otomatis terisi saat turbin aktif.";
+    }
+
+    showToast(title, desc);
+    speakText(desc);
+}
+
+function showToast(title, desc) {
+    document.getElementById('toastTitle').innerText = title;
+    document.getElementById('toastDesc').innerText = desc;
+    let toast = document.getElementById('audioToast');
+    toast.style.display = 'flex';
+
+    if(toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => { toast.style.display = 'none'; }, 7000);
+}
+
+function speakText(text) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        let utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'id-ID'; 
+        window.speechSynthesis.speak(utter);
+    }
+}
+
+function toggleSim() {
+    isRunning = !isRunning;
+    document.getElementById('btnPlay').innerText = isRunning ? "⏸ Pause" : "▶ Jalankan";
+}
+
+function randomWind() {
+    let vVal = (Math.random() * 18 + 3).toFixed(1);
+    document.getElementById('inputV').value = vVal;
+    updateSim();
+}
+
+function resetSim() {
+    document.getElementById('inputV').value = 10.5;
+    document.getElementById('inputR').value = 40;
+    document.getElementById('selectTurbine').value = "HAWT-3";
+    isRunning = true; updateSim();
+}
+</script>
+</body>
+</html>
