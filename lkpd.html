@@ -393,6 +393,25 @@
         transition:.2s;
     }
     .lkpd-finish-btn:hover{ background:#15803d; transform:translateY(-3px); }
+
+    .lkpd-posttest-btn{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        margin-left:14px;
+        background:var(--lk-primary);
+        color:#fff;
+        text-decoration:none;
+        border:none;
+        padding:17px 34px;
+        border-radius:999px;
+        font:700 15px 'Plus Jakarta Sans', sans-serif;
+        cursor:pointer;
+        box-shadow:0 14px 28px rgba(36,93,171,.28);
+        transition:.2s;
+    }
+    .lkpd-posttest-btn:hover{ background:var(--lk-primary-dark); transform:translateY(-3px); }
+
     .lkpd-save-status{
         margin-top:14px;
         font-size:12.5px;
@@ -687,6 +706,7 @@ Desa "Sukamakmur" adalah sebuah desa terpencil yang belum dialiri listrik PLN. P
 
 <div class="lkpd-footer-actions">
 <button class="lkpd-finish-btn" onclick="handleFinishLkpd()" type="button">✅ Selesai &amp; Cetak LKPD</button>
+<a class="lkpd-posttest-btn" href="virtuallab.html?goto=posttest" id="btnLanjutPosttest" style="display:none;">📝 Lanjut ke Posttest Virtual Lab →</a>
 <p class="lkpd-save-status" id="lkpdSaveStatus">Jawabanmu otomatis tersimpan di perangkat ini selama pengerjaan.</p>
 </div>
 
@@ -914,6 +934,13 @@ function handleFinishLkpd(){
 
     // Kirim ke Google Sheets di background, tidak menunggu sebelum mencetak.
     sendLkpdToGoogleSheet();
+
+    // Tampilkan tombol lanjut ke Posttest setelah LKPD selesai & valid.
+    const btnPosttest = document.getElementById("btnLanjutPosttest");
+    if(btnPosttest){
+        btnPosttest.style.display = "inline-flex";
+        btnPosttest.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
 
     window.print();
 }
