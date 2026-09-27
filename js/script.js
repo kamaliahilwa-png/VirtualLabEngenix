@@ -7,7 +7,7 @@
 // ===============================
 
 let currentStep = 1;
-const totalStep = 9;
+const totalStep = 10;
 
 let revisionCount = 0;
 const maxRevision = 1;
@@ -726,208 +726,76 @@ function runSimulation(){
         }
 
 // ========================================
-// PRETES & POSTES
+// POSTTEST (ESAI) — VIRTUAL LAB STEP 8
+// Soal identik dengan pretest.html (syarat instrumen gain-score:
+// pretest & posttest harus memakai soal yang sama).
 // ========================================
 
-// Soal Pretes — tingkat DASAR (mengukur pemahaman awal sebelum belajar)
-const PRETEST_QUESTIONS = [
+const POSTTEST_QUESTIONS = [
     {
-        topic: "PLTS",
-        question: "Sebuah sekolah ingin mengurangi penggunaan listrik dari jaringan PLN. Atap sekolah memiliki luas 120 m² dan menerima sinar matahari cukup kuat hampir sepanjang hari. Namun, bagian atap sebelah timur sering tertutup bayangan pohon pada pagi hari. Apa pertanyaan yang paling tepat untuk menjadi dasar proses desain PLTS?",
-        options: [
-            "Apa warna panel surya yang paling menarik?",
-            "Berapa jumlah siswa yang menggunakan listrik di sekolah?",
-            "Bagaimana merancang posisi dan jumlah panel agar kebutuhan listrik sekolah dapat dipenuhi dengan mempertimbangkan luas atap dan kondisi bayangan?",
-            "Mengapa energi matahari termasuk energi terbarukan?",
-            "Apakah panel surya lebih mahal daripada generator?"
-        ],
-        correct: 2
+        tahap: "Identifikasi Masalah (Ask/Identify)",
+        materi: "PLTS",
+        text: "Sebuah sekolah ingin memasang PLTS. Atap sekolah seluas 120 m² menerima sinar matahari cukup kuat hampir sepanjang hari, tetapi bagian atap sebelah timur sering tertutup bayangan pohon pada pagi hari. Identifikasi dan analisislah kendala-kendala yang harus dipertimbangkan sebelum menentukan desain PLTS di sekolah tersebut!"
     },
     {
-        topic: "PLTB",
-        question: "Kelompok siswa akan membuat prototipe turbin angin. Mereka menemukan bahwa kecepatan angin di lokasi sekolah relatif rendah, tetapi berlangsung cukup stabil sepanjang hari. Aspek apa yang paling penting dianalisis sebelum menentukan desain turbin?",
-        options: [
-            "Warna bilah turbin",
-            "Jenis dekorasi pada menara",
-            "Bentuk dan ukuran bilah yang mampu menangkap energi angin pada kecepatan rendah",
-            "Jumlah siswa yang membuat prototipe",
-            "Letak ruang kelas terdekat"
-        ],
-        correct: 2
+        tahap: "Identifikasi Masalah (Ask/Identify)",
+        materi: "PLTB",
+        text: "Data kecepatan angin rata-rata di suatu wilayah adalah 3,2 m/s, sementara turbin angin pada umumnya baru mulai berputar efektif di cut-in speed sekitar 3 m/s dan mencapai daya maksimum sekitar 12 m/s. Identifikasi dan analisislah apakah wilayah tersebut layak untuk pembangunan PLTB!"
     },
     {
-        topic: "PLTMH",
-        question: "Sebuah desa memiliki sungai dengan aliran air relatif stabil dan terdapat perbedaan ketinggian antara bagian atas dan bawah sungai. Siswa diminta merancang PLTMH sederhana untuk menghasilkan listrik. Desain mana yang paling sesuai dengan kondisi tersebut?",
-        options: [
-            "Memasang panel surya di dasar sungai",
-            "Menggunakan turbin yang memanfaatkan energi aliran dan perbedaan ketinggian air",
-            "Memasang turbin angin di permukaan sungai",
-            "Menggunakan baterai tanpa sumber energi",
-            "Menggunakan generator yang digerakkan secara manual"
-        ],
-        correct: 1
+        tahap: "Membayangkan Solusi (Imagine)",
+        materi: "PLTMH",
+        text: "Sebuah sungai memiliki head (beda tinggi) 15 m dan debit air sedang. Bayangkan dan usulkan beberapa alternatif jenis turbin air yang mungkin digunakan untuk kondisi ini, serta jelaskan pertimbangan pemilihan masing-masing alternatif!"
     },
     {
-        topic: "PLTS",
-        question: "Sebuah kelompok akan membuat prototipe PLTS. Mereka memiliki panel surya, kabel, multimeter, lampu LED, dan baterai. Target desainnya adalah menghasilkan listrik yang cukup untuk menyalakan LED selama beberapa jam. Langkah Plan yang paling tepat adalah ...",
-        options: [
-            "Langsung memasang seluruh komponen tanpa menentukan konfigurasi",
-            "Menentukan konfigurasi panel, rangkaian komponen, kebutuhan daya, dan cara pengujian sebelum membuat prototipe",
-            "Memilih warna kabel terlebih dahulu",
-            "Menguji prototipe setelah seluruh proyek selesai",
-            "Membeli komponen sebanyak mungkin agar daya semakin besar"
-        ],
-        correct: 1
+        tahap: "Membayangkan Solusi (Imagine)",
+        materi: "Umum",
+        text: "Suatu wilayah memiliki potensi: intensitas matahari sedang, kecepatan angin sedang, dan terdapat sungai kecil dengan debit stabil. Usulkan beberapa alternatif solusi energi terbarukan yang mungkin diterapkan di wilayah tersebut, lengkap dengan kelebihan dan kekurangan masing-masing alternatif!"
     },
     {
-        topic: "PLTB",
-        question: "Dua kelompok membuat turbin angin dengan generator yang sama. Berdasarkan data berikut, desain mana yang sebaiknya dipilih jika tujuan desain adalah memperoleh tegangan terbesar? Data: Desain A = 2 bilah, 10 cm, 1,8 V; Desain B = 4 bilah, 10 cm, 2,6 V; Desain C = 6 bilah, 10 cm, 2,1 V.",
-        options: [
-            "Memilih desain A karena memiliki bilah paling sedikit",
-            "Memilih desain B karena menghasilkan tegangan tertinggi",
-            "Memilih desain C karena jumlah bilah paling banyak",
-            "Menggabungkan semua desain tanpa pengujian",
-            "Mengabaikan data karena jumlah bilah tidak berpengaruh"
-        ],
-        correct: 1
+        tahap: "Merencanakan (Plan)",
+        materi: "PLTS",
+        text: "Sebuah desa menargetkan energi 24 kWh/hari dari PLTS, dengan irradiance rata-rata G = 800 W/m², efisiensi panel η = 18%, luas 1 panel = 1,6 m², dan sistem beroperasi efektif 5 jam/hari. Gunakan rumus P = A × G × η × N. Rencanakan jumlah panel (N) minimal yang dibutuhkan untuk mencapai target tersebut!"
     },
     {
-        topic: "PLTMH",
-        question: "Siswa membuat tiga prototipe turbin air dengan bentuk sudu berbeda. Hasil pengujian menunjukkan P = 1,2 V, Q = 2,4 V, dan R = 1,7 V. Prototipe Q menghasilkan tegangan paling tinggi, tetapi saat debit air dinaikkan, turbin Q mengalami getaran cukup besar. Tindakan berikutnya yang paling tepat dalam EDP adalah ...",
-        options: [
-            "Menghentikan proyek karena prototipe sudah menghasilkan listrik",
-            "Memilih prototipe Q tanpa melakukan perubahan",
-            "Menganalisis penyebab getaran kemudian memperbaiki desain dan mengujinya kembali",
-            "Mengganti PLTMH menjadi PLTS",
-            "Mengabaikan getaran karena tegangan sudah tinggi"
-        ],
-        correct: 2
+        tahap: "Merencanakan (Plan)",
+        materi: "PLTB",
+        text: "Sebuah tim ingin merancang PLTB dengan target daya sekitar 2 MW pada kecepatan angin rata-rata 10 m/s, menggunakan turbin dengan Cp = 0,4 dan ρ = 1,225 kg/m³. Gunakan rumus P = ½ × ρ × A × v³ × Cp. Rencanakan estimasi luas sapuan rotor (A) yang dibutuhkan (dalam m²)!"
     },
     {
-        topic: "PLTS",
-        question: "Sebuah prototipe PLTS menghasilkan daya 40 W ketika panel terkena cahaya matahari langsung. Setelah dipasang di lokasi sebenarnya, daya hanya mencapai 25 W karena sebagian permukaan panel terkena bayangan. Perbaikan desain yang paling logis adalah ...",
-        options: [
-            "Mengurangi ukuran panel",
-            "Memindahkan atau mengatur posisi panel untuk mengurangi efek bayangan",
-            "Mengurangi intensitas cahaya yang diterima panel",
-            "Mengganti panel dengan turbin angin tanpa analisis lebih lanjut",
-            "Menutup sebagian panel agar suhu meningkat"
-        ],
-        correct: 1
+        tahap: "Membuat (Create)",
+        materi: "PLTMH",
+        text: "Sebuah kelompok memiliki komponen: bak penenang, pipa pesat (penstock), turbin Crossflow, generator, dan kabel penyalur. Rancangan mereka menetapkan head 15 m dan debit sedang. Susunlah langkah pembuatan (Create) purwarupa PLTMH menggunakan komponen tersebut agar sesuai dengan rancangan dan dapat berfungsi optimal!"
     },
     {
-        topic: "PLTB",
-        question: "Sebuah kelompok menguji dua desain bilah turbin angin. Desain A menghasilkan 2,1 V dan Desain B menghasilkan 2,8 V. Keduanya diuji pada kecepatan angin 4 m/s dengan generator yang sama. A memiliki 3 bilah dan B memiliki 5 bilah. Kesimpulan yang paling tepat adalah ...",
-        options: [
-            "Desain A lebih baik karena memiliki lebih sedikit bilah",
-            "Desain B menunjukkan performa listrik lebih tinggi pada kondisi pengujian tersebut",
-            "Desain A pasti lebih efisien pada semua kondisi angin",
-            "Jumlah bilah tidak mungkin memengaruhi keluaran listrik",
-            "Desain B pasti paling baik untuk semua kecepatan angin"
-        ],
-        correct: 1
+        tahap: "Menguji (Test)",
+        materi: "Umum",
+        text: "Tiga purwarupa turbin air diuji coba: Purwarupa P = 1,2 V, Q = 2,4 V, R = 1,7 V. Purwarupa Q menghasilkan tegangan tertinggi, namun saat debit dinaikkan, Q mengalami getaran cukup besar dibanding P dan R. Analisislah hasil pengujian tersebut dan tentukan purwarupa mana yang lebih layak dipilih, sertakan batasan dari kesimpulanmu!"
     },
     {
-        topic: "PLTMH",
-        question: "Sebuah prototipe PLTMH menghasilkan tegangan 1,5 V. Setelah dianalisis, siswa menemukan bahwa aliran air tidak langsung mengenai sudu turbin sehingga sebagian energi air tidak dimanfaatkan secara optimal. Perbaikan desain yang paling sesuai adalah ...",
-        options: [
-            "Mengurangi aliran air sebanyak mungkin",
-            "Mengatur saluran air agar aliran lebih terarah menuju sudu turbin",
-            "Menghilangkan generator",
-            "Mengganti turbin dengan panel surya",
-            "Menambahkan beban listrik tanpa mengubah desain"
-        ],
-        correct: 1
+        tahap: "Memperbaiki (Improve)",
+        materi: "PLTB",
+        text: "Sebuah purwarupa turbin angin menghasilkan tegangan tinggi, tetapi mengalami getaran besar saat kecepatan angin dinaikkan. Evaluasilah kemungkinan penyebab getaran tersebut dan usulkan perbaikan desain yang tepat!"
     },
     {
-        topic: "Umum",
-        question: "Tiga lokasi memiliki karakteristik: A intensitas matahari tinggi dan tidak ada sungai; B angin relatif kuat dan stabil; C sungai mengalir stabil dengan perbedaan ketinggian. Pasangan teknologi yang paling sesuai adalah ...",
-        options: [
-            "A–PLTB, B–PLTMH, C–PLTS",
-            "A–PLTS, B–PLTB, C–PLTMH",
-            "A–PLTMH, B–PLTS, C–PLTB",
-            "A–PLTB, B–PLTS, C–PLTMH",
-            "A–PLTMH, B–PLTB, C–PLTS"
-        ],
-        correct: 1
-    },
-    {
-        topic: "Umum",
-        question: "Sebuah sekolah ingin memasang PLTS dengan tiga ketentuan: biaya pemasangan terbatas, luas atap terbatas, dan sistem harus mampu menyediakan listrik untuk lampu kelas. Dalam EDP, ketiga kondisi tersebut harus dipertimbangkan sebagai ...",
-        options: [
-            "Hasil akhir",
-            "Variabel bebas saja",
-            "Kriteria dan kendala desain",
-            "Hipotesis",
-            "Kesimpulan eksperimen"
-        ],
-        correct: 2
-    },
-    {
-        topic: "Umum",
-        question: "Dua desain PLTB diuji tiga kali. Desain X menghasilkan 2,4 V; 2,5 V; 2,3 V. Desain Y menghasilkan 2,1 V; 2,2 V; 3,0 V. Kelompok menyatakan Desain Y pasti lebih baik karena memiliki hasil tertinggi pada pengujian ketiga. Analisis yang paling tepat adalah ...",
-        options: [
-            "Benar, karena nilai tertinggi selalu menentukan desain terbaik",
-            "Benar, karena pengujian pertama dan kedua tidak perlu diperhatikan",
-            "Kurang tepat, karena seluruh hasil pengujian perlu dipertimbangkan sebelum menentukan desain terbaik",
-            "Salah, karena tegangan tidak dapat digunakan untuk membandingkan desain",
-            "Salah, karena desain harus dipilih berdasarkan jumlah pengujian saja"
-        ],
-        correct: 2
-    },
-    {
-        topic: "PLTS",
-        question: "Sebuah rumah menggunakan PLTS dengan baterai. Pada siang hari energi yang dihasilkan panel cukup besar, tetapi pada malam hari baterai cepat habis sehingga lampu tidak dapat menyala sepanjang malam. Solusi desain yang paling tepat untuk dianalisis terlebih dahulu adalah ...",
-        options: [
-            "Menghilangkan baterai",
-            "Menganalisis kebutuhan energi malam hari dan kapasitas penyimpanan sebelum menentukan perubahan sistem",
-            "Mematikan panel pada siang hari",
-            "Mengurangi jumlah lampu tanpa menghitung kebutuhan energi",
-            "Mengganti PLTS dengan PLTB tanpa menganalisis kondisi lokasi"
-        ],
-        correct: 1
-    },
-    {
-        topic: "Umum",
-        question: "Sebuah kelompok ingin memilih teknologi energi terbarukan untuk sekolah. PLTS menghasilkan energi cukup besar pada siang hari. PLTB tidak stabil karena kecepatan angin berubah-ubah. PLTMH dapat menghasilkan energi lebih stabil, tetapi lokasi sekolah jauh dari sungai. Jika kriteria utama adalah kestabilan sumber energi dan kesesuaian lokasi, keputusan yang paling rasional adalah ...",
-        options: [
-            "Memilih PLTMH karena selalu paling stabil",
-            "Memilih PLTB karena semua sekolah pasti memiliki angin yang cukup",
-            "Mempertimbangkan PLTS sebagai pilihan utama karena sumber energi tersedia di lokasi, kemudian menganalisis kebutuhan penyimpanan energi",
-            "Memilih PLTMH karena tidak membutuhkan aliran air",
-            "Memilih PLTB tanpa mempertimbangkan data lokasi"
-        ],
-        correct: 2
-    },
-    {
-        topic: "PLTS",
-        question: "Sebuah kelompok membuat prototipe PLTS. Pada pengujian pertama daya 30 W. Setelah posisi panel diperbaiki, daya meningkat menjadi 38 W. Namun, ketika sebagian panel tertutup bayangan, daya kembali turun menjadi 24 W. Tindakan yang paling mencerminkan tahap Improve dalam EDP adalah ...",
-        options: [
-            "Menganggap desain pertama sudah berhasil",
-            "Menggunakan hasil 24 W karena merupakan pengujian terakhir",
-            "Mempertahankan perubahan posisi yang meningkatkan daya dan mencari solusi untuk mengurangi pengaruh bayangan",
-            "Menghapus seluruh data pengujian",
-            "Mengganti PLTS dengan sumber energi lain tanpa evaluasi"
-        ],
-        correct: 2
+        tahap: "Memperbaiki (Improve)",
+        materi: "PLTS",
+        text: "Hasil simulasi sebuah desain PLTS menunjukkan energi yang dihasilkan 95 kWh/hari (target 120 kWh/hari) dengan efisiensi sistem 78% (target ≥85%). Evaluasilah penyebab desain belum memenuhi target dan rancanglah perbaikan desain yang terjustifikasi berdasarkan variabel dalam rumus P = A × G × η × N!"
     }
 ];
 
-const POSTTEST_QUESTIONS = PRETEST_QUESTIONS.map(q => ({...q, options:[...q.options]}));
+const POSTTEST_TIME_PER_QUESTION = 300; // detik (5 menit per soal, sama seperti pretest)
 
-
-// Membuat tampilan soal pilihan ganda di dalam sebuah container
 let pretestData = null;
 let posttestData = null;
 let sessionId = localStorage.getItem("engenix_session_id") || "";
 
-// ========================================
-// POSTTEST — ONE QUESTION PER PAGE
-// ========================================
 let postIndex = 0;
-let postAnswers = new Array(POSTTEST_QUESTIONS.length).fill(null);
+let postAnswers = new Array(POSTTEST_QUESTIONS.length).fill("");
 let postTimer = null;
-let postTimeLeft = 90;
+let postTimeLeft = POSTTEST_TIME_PER_QUESTION;
+let posttestIsFinishing = false;
+
 function loadExternalPretestData(){
     try{
         const raw = localStorage.getItem("engenix_pretest_result");
@@ -936,172 +804,171 @@ function loadExternalPretestData(){
             sessionId = pretestData.sessionId || localStorage.getItem("engenix_session_id") || "";
         }
     }catch(err){
-        console.warn("Data pretes tidak dapat dibaca.",err);
+        console.warn("Data pretes tidak dapat dibaca.", err);
     }
 }
 
+// ========================================
+// POSTTEST — SATU SOAL ESAI PER HALAMAN
+// ========================================
+
 function startPosttest(){
+    const nameInput = document.getElementById("posttestNameInput");
+    const typedName = nameInput ? nameInput.value.trim() : "";
+
+    if(!typedName && !(pretestData && pretestData.name)){
+        alert("Silakan tuliskan nama lengkapmu terlebih dahulu sebelum memulai posttest.");
+        if(nameInput) nameInput.focus();
+        return;
+    }
+
+    posttestIsFinishing = false;
     postIndex = 0;
-    postAnswers = new Array(POSTTEST_QUESTIONS.length).fill(null);
-    document.getElementById("posttestStartBox").style.display = "none";
+    postAnswers = new Array(POSTTEST_QUESTIONS.length).fill("");
+
+    document.getElementById("posttestIntro").style.display = "none";
     document.getElementById("prepostSummary").style.display = "none";
-    document.getElementById("posttestWarning").style.display = "none";
     document.getElementById("posttestQuizContainer").style.display = "block";
     document.getElementById("posttestContinueBtn").style.display = "none";
+
     renderPostQuestion();
 }
 
 function renderPostQuestion(){
     clearInterval(postTimer);
+
     const q = POSTTEST_QUESTIONS[postIndex];
     const total = POSTTEST_QUESTIONS.length;
-    const chosen = postAnswers[postIndex];
-    const letters = ["A","B","C","D","E"];
     const container = document.getElementById("posttestQuizContainer");
 
     container.innerHTML = `
-        <div class="lab-quiz-top">
-            <span class="lab-quiz-progress">Soal ${postIndex+1} / ${total}</span>
-            <span class="lab-quiz-timer" id="postTimer">⏱ <span id="postTimerValue">90</span>s</span>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px;flex-wrap:wrap;">
+            <span style="font-weight:700;color:#1e5a97;background:#eef7ff;padding:6px 14px;border-radius:30px;font-size:.85rem;">Soal ${postIndex + 1} / ${total}</span>
+            <span id="postTimer" style="font-weight:800;color:#1e5a97;background:#eef7ff;padding:6px 14px;border-radius:30px;font-size:.9rem;">⏱ <span id="postTimerValue">${POSTTEST_TIME_PER_QUESTION}</span>s</span>
         </div>
-        <div class="lab-quiz-progressbar"><div class="lab-quiz-progressfill" style="width:${(postIndex/total)*100}%"></div></div>
-        <div class="lab-quiz-timerbar"><div class="lab-quiz-timerfill" id="postTimerFill"></div></div>
-        <div class="lab-quiz-label">TOPIK ${q.topic}</div>
-        <div class="lab-quiz-question">${q.question}</div>
-        <div class="lab-quiz-options" id="postOptions"></div>
-        <div class="lab-quiz-actions">
-            <button class="next-btn" id="postNextBtn" ${chosen===null?'disabled':''}>${postIndex===total-1?'Selesai ✓':'Next →'}</button>
+        <div style="width:100%;height:6px;background:#eef1f7;border-radius:10px;overflow:hidden;margin-bottom:10px;">
+            <div style="height:100%;background:linear-gradient(90deg,#245DAB,#4c8ce0);width:${(postIndex / total) * 100}%;"></div>
+        </div>
+        <div style="width:100%;height:4px;background:#eef1f7;border-radius:10px;overflow:hidden;margin-bottom:18px;">
+            <div id="postTimerFill" style="height:100%;background:#22c55e;width:100%;transition:width 1s linear, background .3s ease;"></div>
+        </div>
+        <div style="font-size:.78rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">TAHAP ${q.tahap.toUpperCase()} • MATERI ${q.materi}</div>
+        <div style="font-size:1.15rem;font-weight:700;color:#0f172a;line-height:1.5;margin-bottom:20px;">${q.text}</div>
+        <textarea id="postAnswerInput" rows="7" placeholder="Tulis jawabanmu di sini...">${postAnswers[postIndex] || ""}</textarea>
+        <p id="postAnswerWarning" style="display:none;color:#dc2626;font-size:.85rem;font-weight:600;margin:8px 0 0;">⚠ Silakan tuliskan jawabanmu terlebih dahulu sebelum melanjutkan.</p>
+        <div style="display:flex;justify-content:flex-end;margin-top:16px;">
+            <button class="next-btn" id="postNextBtn" type="button" ${postAnswers[postIndex].trim() === "" ? "disabled" : ""}>${postIndex === total - 1 ? "Selesai ✓" : "Lanjut →"}</button>
         </div>`;
 
-    const options = document.getElementById("postOptions");
-    q.options.forEach((opt,i)=>{
-        const btn=document.createElement("button");
-        btn.type="button";
-        btn.className="lab-quiz-option"+(chosen===i?" selected":"");
-        btn.innerHTML=`<span class="letter">${letters[i]}</span><span>${opt}</span>`;
-        btn.onclick=()=>selectPostAnswer(i);
-        options.appendChild(btn);
-    });
-    document.getElementById("postNextBtn").onclick=nextPostQuestion;
-    startPostTimer();
-}
+    const answerInput = document.getElementById("postAnswerInput");
+    const nextBtn = document.getElementById("postNextBtn");
 
-function selectPostAnswer(index){
-    postAnswers[postIndex]=index;
-    document.querySelectorAll(".lab-quiz-option").forEach((el,i)=>el.classList.toggle("selected",i===index));
-    document.getElementById("postNextBtn").disabled=false;
-    document.getElementById("posttestWarning").style.display="none";
+    answerInput.oninput = () => {
+        postAnswers[postIndex] = answerInput.value;
+        nextBtn.disabled = answerInput.value.trim() === "";
+        document.getElementById("postAnswerWarning").style.display = "none";
+    };
+
+    nextBtn.onclick = () => nextPostQuestion(false);
+
+    startPostTimer();
+    answerInput.focus();
 }
 
 function startPostTimer(){
-    postTimeLeft=90;
+    clearInterval(postTimer);
+    postTimeLeft = POSTTEST_TIME_PER_QUESTION;
     updatePostTimer();
-    postTimer=setInterval(()=>{
+    postTimer = setInterval(() => {
         postTimeLeft--;
         updatePostTimer();
-        if(postTimeLeft<=0){
+        if(postTimeLeft <= 0){
             clearInterval(postTimer);
             nextPostQuestion(true);
         }
-    },1000);
+    }, 1000);
 }
 
 function updatePostTimer(){
-    const value=document.getElementById("postTimerValue");
-    const timer=document.getElementById("postTimer");
-    const fill=document.getElementById("postTimerFill");
+    const value = document.getElementById("postTimerValue");
+    const timer = document.getElementById("postTimer");
+    const fill = document.getElementById("postTimerFill");
     if(!value) return;
-    value.textContent=postTimeLeft;
-    fill.style.width=Math.max(0,(postTimeLeft/90)*100)+"%";
-    const warn=postTimeLeft<=15;
-    timer.classList.toggle("warn",warn);
-    fill.classList.toggle("warn",warn);
+    value.textContent = postTimeLeft;
+    fill.style.width = Math.max(0, (postTimeLeft / POSTTEST_TIME_PER_QUESTION) * 100) + "%";
+    const warn = postTimeLeft <= 45;
+    timer.style.color = warn ? "#dc2626" : "#1e5a97";
+    timer.style.background = warn ? "#fee2e2" : "#eef7ff";
+    fill.style.background = warn ? "#dc2626" : "#22c55e";
 }
 
-function nextPostQuestion(auto=false){
+function nextPostQuestion(auto){
     clearInterval(postTimer);
-    if(!auto && postAnswers[postIndex]===null){
-        document.getElementById("posttestWarning").style.display="block";
+    const total = POSTTEST_QUESTIONS.length;
+
+    if(!auto && postAnswers[postIndex].trim() === ""){
+        document.getElementById("postAnswerWarning").style.display = "block";
         return;
     }
-    if(postIndex<POSTTEST_QUESTIONS.length-1){
+
+    if(postIndex < total - 1){
         postIndex++;
         renderPostQuestion();
     }else{
+        if(posttestIsFinishing) return; // cegah klik/timeout ganda
+        posttestIsFinishing = true;
         finishPosttest();
     }
-}
-
-function summarizeWrongAnswers(answers){
-    const wrong=answers.filter(a=>!a.isCorrect);
-    if(wrong.length===0) return "Tidak ada";
-    return wrong.map(a=>"Soal "+a.number+" ("+a.topic+")").join(", ");
 }
 
 function finishPosttest(){
     clearInterval(postTimer);
 
-    const answers = POSTTEST_QUESTIONS.map((q,i)=>({
-        number:i+1,
-        topic:q.topic,
-        question:q.question,
-        chosen:postAnswers[i]===null ? null : q.options[postAnswers[i]],
-        correctAnswer:q.options[q.correct],
-        isCorrect:postAnswers[i]===q.correct
-    }));
-
-    const correctCount = answers.filter(a=>a.isCorrect).length;
-    const benarNomor = answers.filter(a=>a.isCorrect).map(a=>a.number);
-    const salahNomor = answers.filter(a=>!a.isCorrect).map(a=>a.number);
-
-    posttestData = {
-        score: Math.round(correctCount/POSTTEST_QUESTIONS.length*100),
-        correctCount: correctCount,
-        incorrectCount: POSTTEST_QUESTIONS.length-correctCount,
-        total: POSTTEST_QUESTIONS.length,
-        benarNomor: benarNomor,
-        salahNomor: salahNomor,
-        answers: answers
-    };
-
     if(!pretestData){
         loadExternalPretestData();
     }
 
-    const pre = pretestData || {
-        name:"-",
-        score:0,
-        correctCount:0,
-        incorrectCount:0
+    const nameInput = document.getElementById("posttestNameInput");
+    const typedName = nameInput ? nameInput.value.trim() : "";
+    const name = typedName || (pretestData && pretestData.name) || "-";
+
+    if(!sessionId){
+        sessionId = (pretestData && pretestData.sessionId) ||
+            "ENG-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+        localStorage.setItem("engenix_session_id", sessionId);
+    }
+
+    const answeredCount = postAnswers.filter(a => a && a.trim() !== "").length;
+
+    posttestData = {
+        sessionId: sessionId,
+        name: name,
+        answers: postAnswers.map(a => (a || "").trim()),
+        answeredCount: answeredCount,
+        total: POSTTEST_QUESTIONS.length,
+        stage: "posttest"
     };
 
-    document.getElementById("summaryName").textContent = pre.name || "-";
-    document.getElementById("summaryPretestCorrect").textContent =
-        pre.correctCount + " Benar, " + pre.incorrectCount + " Salah";
-    document.getElementById("summaryPretestScore").textContent =
-        (pre.score || 0) + "%";
-
+    document.getElementById("summaryName").textContent = name;
     document.getElementById("summaryPosttestCorrect").textContent =
-        posttestData.correctCount + " Benar, " + posttestData.incorrectCount + " Salah";
-    document.getElementById("summaryPosttestScore").textContent =
-        posttestData.score + "%";
+        answeredCount + "/" + POSTTEST_QUESTIONS.length + " Soal Terjawab";
 
-    document.getElementById("posttestQuizContainer").style.display="none";
-    document.getElementById("prepostSummary").style.display="block";
-    document.getElementById("posttestContinueBtn").style.display="inline-flex";
+    document.getElementById("posttestQuizContainer").style.display = "none";
+    document.getElementById("prepostSummary").style.display = "block";
+    document.getElementById("posttestContinueBtn").style.display = "inline-flex";
 
     saveResultToGoogleSheet();
 }
 
 // ========================================
 // SIMPAN HASIL KE GOOGLE SHEETS
+// (URL Apps Script sama dengan yang dipakai pretest.html & lkpd.html)
 // ========================================
 
-const GOOGLE_SCRIPT_URL = "PASTE_URL_GOOGLE_APPS_SCRIPT_ANDA_DI_SINI";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-AUDkZF0vZNkZZHESTSLmo-8wRsFxhKyoS3hiFTms6_96KL6WIG1-KT0SmZhDZHoxVg/exec";
 
 function saveResultToGoogleSheet(){
-
-    if(!pretestData || !posttestData){
+    if(!posttestData){
         return;
     }
 
@@ -1109,41 +976,16 @@ function saveResultToGoogleSheet(){
 
     if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.indexOf("PASTE_URL") !== -1){
         if(statusEl){
-            statusEl.textContent =
-                "⚠ URL Google Apps Script belum dikonfigurasi.";
+            statusEl.textContent = "⚠ URL Google Apps Script belum dikonfigurasi.";
         }
         return;
     }
 
-    if(!sessionId){
-        sessionId = pretestData.sessionId || localStorage.getItem("engenix_session_id") || "";
-    }
-
     const payload = {
         action: "posttest",
-        sessionId: sessionId,
-        nama: pretestData.name,
-        email: pretestData.email || localStorage.getItem("engenix_student_email") || "",
-
-        nilaiPretes: pretestData.score,
-        benarPretes: pretestData.correctCount,
-        salahPretes: pretestData.incorrectCount,
-        benarPretesDetail:
-            "Benar " + pretestData.correctCount + " (" +
-            ((pretestData.benarNomor || []).join(", ") || "-") + ")",
-        salahPretesDetail:
-            "Salah " + pretestData.incorrectCount + " (" +
-            ((pretestData.salahNomor || []).join(", ") || "-") + ")",
-
-        nilaiPostes: posttestData.score,
-        benarPostes: posttestData.correctCount,
-        salahPostes: posttestData.incorrectCount,
-        benarPostesDetail:
-            "Benar " + posttestData.correctCount + " (" +
-            ((posttestData.benarNomor || []).join(", ") || "-") + ")",
-        salahPostesDetail:
-            "Salah " + posttestData.incorrectCount + " (" +
-            ((posttestData.salahNomor || []).join(", ") || "-") + ")"
+        sessionId: posttestData.sessionId,
+        nama: posttestData.name,
+        posttestAnswers: posttestData.answers
     };
 
     if(statusEl){
@@ -1156,16 +998,15 @@ function saveResultToGoogleSheet(){
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload)
     })
-    .then(()=>{
+    .then(() => {
         if(statusEl){
             statusEl.textContent = "✅ Hasil pembelajaran tersimpan ke Google Sheets.";
         }
     })
-    .catch((err)=>{
+    .catch((err) => {
         console.error("Gagal menyimpan ke Google Sheets:", err);
         if(statusEl){
-            statusEl.textContent =
-                "❌ Gagal mengirim hasil ke Google Sheets.";
+            statusEl.textContent = "❌ Gagal mengirim hasil ke Google Sheets.";
         }
     });
 }
